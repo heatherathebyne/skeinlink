@@ -22,6 +22,8 @@
     <%= f.text_field :status_name %>
     <%= label_tag :notes %>
     <%= f.text_area :notes %>
+    <%= label_tag :images %>
+    <%= f.file_field :images, multiple: true %>
     <%= f.submit %>
   </div>
 <% end %>
