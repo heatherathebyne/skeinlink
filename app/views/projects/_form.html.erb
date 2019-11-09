@@ -1,0 +1,27 @@
+<%= form_with(model: project, local: true) do |f| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+
+      <ul>
+        <% project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= label_tag :craft %>
+    <%= f.select :craft_id, Craft.all.map {|c| [c.name, c.id]} %>
+    <%= label_tag :name, 'Project name' %>
+    <%= f.text_field :name %>
+    <%= label_tag :pattern_name, 'Pattern name' %>
+    <%= f.text_field :pattern_name %>
+    <%= label_tag :status_name, 'Project status' %>
+    <%= f.text_field :status_name %>
+    <%= label_tag :notes %>
+    <%= f.text_area :notes %>
+    <%= f.submit %>
+  </div>
+<% end %>

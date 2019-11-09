@@ -1,0 +1,17 @@
+<%= form_with(model: yarn, local: true) do |form| %>
+  <% if yarn.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(yarn.errors.count, "error") %> prohibited this yarn from being saved:</h2>
+
+      <ul>
+        <% yarn.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

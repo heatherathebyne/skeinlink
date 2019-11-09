@@ -1,0 +1,10 @@
+<p id="notice"><%= notice %></p>
+
+<p>Craft: <%= @project.craft.name %></p>
+<p>Project name: <%= @project.name %></p>
+<p>Pattern name: <%= @project.pattern_name %></p>
+<p>Project status: <%= @project.status_name %></p>
+<p>Notes: <%= @project.notes %></p>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
