@@ -11,19 +11,29 @@
     </div>
   <% end %>
 
-  <div class="actions">
+  <div class='form-group'>
     <%= label_tag :craft %>
     <%= f.select :craft_id, Craft.all.map {|c| [c.name, c.id]} %>
+  </div>
+  <div class='form-group'>
     <%= label_tag :name, 'Project name' %>
     <%= f.text_field :name %>
+  </div>
+  <div class='form-group'>
     <%= label_tag :pattern_name, 'Pattern name' %>
     <%= f.text_field :pattern_name %>
+  </div>
+  <div class='form-group'>
     <%= label_tag :status_name, 'Project status' %>
     <%= f.text_field :status_name %>
+  </div>
+  <div class='form-group'>
     <%= label_tag :notes %>
     <%= f.text_area :notes %>
+  </div>
+  <div class='form-group'>
     <%= label_tag :images %>
     <%= f.file_field :images, multiple: true %>
-    <%= f.submit %>
   </div>
+  <%= f.submit %>
 <% end %>

@@ -1,10 +1,27 @@
-<p id="notice"><%= notice %></p>
+<h1>
+  <%= @project.name %>
+  <small class='text-muted'><%= @project.status_name %></small>
+</h1>
 
-<p>Craft: <%= @project.craft.name %></p>
-<p>Project name: <%= @project.name %></p>
-<p>Pattern name: <%= @project.pattern_name %></p>
-<p>Project status: <%= @project.status_name %></p>
-<p>Notes: <%= @project.notes %></p>
+<div class='row text-center text-lg-left py-4'>
+  <% @project.images.each do |image| %>
+    <div class='col-lg-3 col-md-4 col-6'>
+      <%= image_tag image, class: 'img-fluid img-thumbnail' %>
+    </div>
+<% end %>
+</div>
+
+<div class='container'>
+  <strong><%= @project.craft.name %></strong> project
+  <% if @project.pattern_name %>
+    &bull; <strong><%= @project.pattern_name %></strong> pattern
+  <% end %>
+</div>
+
+<div class='container'>
+  <h3>Notes</h3>
+  <p><%= @project.notes %></p>
+</div>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
