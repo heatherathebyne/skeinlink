@@ -1,24 +1,33 @@
-# README
+# Skeinlink
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Free and open web application software for tracking fiber arts projects and supplies. Track knitting, crocheting, weaving, and spinning projects, and catalog stash, for 1-10,000+ users. (I pulled that number out of a hat, but it isn't unrealistic.)
 
-Things you may want to cover:
+## Important information
 
-* Ruby version
+**Personal project warning!** I'm writing this for myself first, and features are implemented in
+roughly the order in which they are most important to me. I ❤️ pull requests, though!
 
-* System dependencies
+**This is not desktop software!** If you are here looking for a personal download-and-install project
+tracker, this isn't it. This is a web application designed to be hosted on a web server. You can, of
+course, run it locally on your own system, but there are extra steps involved.
 
-* Configuration
+**This is nowhere near feature complete!** Or even feature adequate.
 
-* Database creation
+## What this software is made of
 
-* Database initialization
+* MRI Ruby 2.6.5
+* Rails 6.0.1
+* ImageMagick
 
-* How to run the test suite
+## How to run locally
 
-* Services (job queues, cache servers, search engines, etc.)
+1. Ensure you have Ruby 2.6.5 with Bundler installed. I like [rbenv](https://github.com/rbenv/rbenv).
+2. Clone this repo.
+3. `cd` to the cloned repo and `bundle`.
+4. Configure a local SQLite database connection by copying `config/database.yml.example` to `config/database.yml`.
+5. Set up the database with `bundle exec rake db:create db:schema:load db:seed`.
+6. Run `bundle exec rails s` and open the URL it displays.
 
-* Deployment instructions
+## Contributing
 
-* ...
+Fork this repo, make your changes there, and send me a pull request.
