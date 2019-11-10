@@ -13,6 +13,10 @@ course, run it locally on your own system, but there are extra steps involved.
 
 **This is nowhere near feature complete!** Or even feature adequate.
 
+**This is currently not safe to put on the public internet!** No authorization system, no file type
+restrictions, ... the list goes on. It's not that the app is *inherently* unsafe, just that I
+haven't yet put in mitigations for certain common methods of abuse.
+
 ## What this software is made of
 
 * MRI Ruby 2.6.5
