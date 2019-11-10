@@ -27,6 +27,9 @@ course, run it locally on your own system, but there are extra steps involved.
 4. Configure a local SQLite database connection by copying `config/database.yml.example` to `config/database.yml`.
 5. Set up the database with `bundle exec rake db:create db:schema:load db:seed`.
 6. Run `bundle exec rails s` and open the URL it displays.
+7. Register as a new user.
+8. Unless you really want to set up Mailcatcher or a local mail server, manually confirm your new user. Open the Rails console with `bundle exec rails c` and run `User.update_all confirmed_at: DateTime.now`, then `exit`.
+9. Log in!
 
 ## Contributing
 
