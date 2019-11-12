@@ -20,7 +20,9 @@
       <% @projects.each do |project| %>
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card">
-          <%= link_to image_tag(project.images.first, class: 'card-img-top'), project %>
+          <% if project.images.first %>
+            <%= link_to image_tag(project.images.first, class: 'card-img-top'), project %>
+          <% end %>
           <div class="card-body">
             <h4 class="card-title">
               <%= link_to project.name, project %>

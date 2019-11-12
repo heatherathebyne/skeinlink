@@ -5,7 +5,8 @@ Free and open web application software for tracking fiber arts projects and supp
 ## Important information
 
 **Personal project warning!** I'm writing this for myself first, and features are implemented in
-roughly the order in which they are most important to me. I ❤️ pull requests, though!
+roughly the order in which they are most important to me. Code quality may be all over the place.
+Specs will happen when I feel like writing them. I ❤️ pull requests!
 
 **This is not desktop software!** If you are here looking for a personal download-and-install project
 tracker, this isn't it. This is a web application designed to be hosted on a web server. You can, of

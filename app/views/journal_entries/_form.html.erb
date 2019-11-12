@@ -1,0 +1,11 @@
+<%= form_with(model: JournalEntry.new(entry_timestamp: Time.current, project_id: @project.id), local: true) do |f| %>
+  <div class='form-group'>
+    <%= f.hidden_field :entry_timestamp %>
+    <!-- Yes, you can tweak the timestamp if you want ;) -->
+  </div>
+  <div class='form-group'>
+    <%= f.text_area :content %>
+  </div>
+  <%= f.hidden_field :project_id %>
+  <%= f.submit %>
+<% end %>

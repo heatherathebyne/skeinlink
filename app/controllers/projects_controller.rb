@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:edit, :update, :destroy, :destroy_image]
 
   # GET /projects
   # GET /projects.json
@@ -10,6 +10,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @project = Project.find(params[:id])
   end
 
   # GET /projects/new
@@ -25,6 +26,8 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(project_params)
+    @project.user_id = current_user.id
+    @project.images = project_images_params
 
     respond_to do |format|
       if @project.save
@@ -40,6 +43,10 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
+    project_images_params[:images].each do |image|
+      @project.images.attach image
+    end if project_images_params[:images]
+
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -61,14 +68,21 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def destroy_image
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @project = Project.find(params[:id])
+      @project = current_user.projects.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:craft_id, :name, :pattern_name, :status_name, :notes, images: [])
+      params.require(:project).permit(:craft_id, :name, :pattern_name, :status_name, :notes)
+    end
+
+    def project_images_params
+      params.require(:project).permit(images: [])
     end
 end

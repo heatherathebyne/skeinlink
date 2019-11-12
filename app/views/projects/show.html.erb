@@ -1,6 +1,6 @@
 <h1>
   <%= @project.name %>
-  <small class='text-muted'><%= @project.status_name %></small>
+  <small class='text-muted'><small><%= @project.status_name %></small></small>
 </h1>
 
 <div class='row text-center text-lg-left py-4'>
@@ -8,7 +8,7 @@
     <div class='col-lg-3 col-md-4 col-6'>
       <%= image_tag image, class: 'img-fluid img-thumbnail' %>
     </div>
-<% end %>
+  <% end %>
 </div>
 
 <div class='container'>
@@ -19,8 +19,26 @@
 </div>
 
 <div class='container'>
-  <h3>Notes</h3>
   <p><%= @project.notes %></p>
+</div>
+
+<hr>
+
+<div class='container'>
+  <h4>
+    Project journal
+    <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
+  </h4>
+
+  <div class='collapse' id='journalForm'>
+    <%= render 'journal_entries/form' %>
+  </div>
+
+  <hr>
+  <% @project.journal_entries.order(entry_timestamp: :desc).each do |j| %>
+    <p><%= j.entry_timestamp %><br><%= j.content %></p>
+    <hr>
+  <% end %>
 </div>
 
 <%= link_to 'Edit', edit_project_path(@project) %> |

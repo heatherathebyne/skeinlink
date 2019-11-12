@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_10_124151) do
+ActiveRecord::Schema.define(version: 2019_11_10_153317) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 2019_11_10_124151) do
 
   create_table "crafts", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "journal_entries", force: :cascade do |t|
+    t.integer "project_id"
+    t.datetime "entry_timestamp", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_timestamp"], name: "index_journal_entries_on_entry_timestamp"
   end
 
   create_table "projects", force: :cascade do |t|
@@ -89,5 +98,6 @@ ActiveRecord::Schema.define(version: 2019_11_10_124151) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "journal_entries", "projects"
   add_foreign_key "projects", "crafts"
 end

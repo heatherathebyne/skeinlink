@@ -3,5 +3,10 @@ Rails.application.routes.draw do
   root 'projects#index'
 
   resources :yarns
-  resources :projects
+  resources :projects do
+    member do
+      delete :destroy_image
+    end
+  end
+  resources :journal_entries, only: [:create, :update, :destroy]
 end
