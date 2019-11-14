@@ -19,7 +19,15 @@
 </div>
 
 <div class='container'>
-  <p><%= @project.notes %></p>
+  <strong>Notes</strong> <%= @project.notes %>
+</div>
+
+<div class='container'>
+  <strong>Private notes</strong> <%= @project.private_notes %>
+</div>
+
+<div class='container'>
+  <strong>Tools</strong> <%= @project.tools_freetext %>
 </div>
 
 <hr>
