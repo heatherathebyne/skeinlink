@@ -1,4 +1,4 @@
-# Skeinlink
+# SkeinLink
 
 Free and open web application software for tracking fiber arts projects and supplies. Track knitting, crocheting, weaving, and spinning projects, and catalog stash, for 1-10,000+ users. (I pulled that number out of a hat, but it isn't unrealistic.)
 
