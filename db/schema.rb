@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_002634) do
+ActiveRecord::Schema.define(version: 2019_11_16_001024) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2019_11_12_002634) do
     t.integer "progress", limit: 1, default: 0
     t.text "private_notes"
     t.string "tools_freetext"
+    t.text "image_order"
     t.index ["craft_id"], name: "index_projects_on_craft_id"
     t.index ["name"], name: "index_projects_on_name"
     t.index ["status"], name: "index_projects_on_status"
