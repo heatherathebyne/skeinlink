@@ -44,7 +44,8 @@
 
   <hr>
   <% @project.journal_entries.order(entry_timestamp: :desc).each do |j| %>
-    <p><%= j.entry_timestamp %><br><%= j.content %></p>
+    <p><%= j.entry_timestamp %> <%= icon('fas', 'edit') %></p>
+    <p><%= j.content %></p>
     <hr>
   <% end %>
 </div>
