@@ -69,6 +69,10 @@ class ProjectsController < ApplicationController
   end
 
   def destroy_image
+    image = @project.images.find(params[:image_id])
+    head :not_found unless image
+    head :ok if image.try(:destroy)
+    head :internal_server_error
   end
 
   private

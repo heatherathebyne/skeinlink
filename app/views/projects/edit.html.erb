@@ -1,5 +1,17 @@
 <h1>Editing Project</h1>
 
+<div class='row text-center text-lg-left py-4'>
+  <% @project.images.each do |image| %>
+    <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
+      <%= image_tag image, class: 'img-fluid img-thumbnail' %>
+      <%= button_to 'Remove image',
+                    { action: 'destroy_image', image_id: image.id },
+                    method: :delete, remote: true, class: 'btn btn-outline-danger',
+                    data: { confirm: 'Are you sure you wish to remove this image?' } %>
+    </div>
+  <% end %>
+</div>
+
 <%= render 'form', project: @project %>
 
 <%= link_to 'Show', @project %> |
