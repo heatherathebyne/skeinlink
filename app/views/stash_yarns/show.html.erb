@@ -1,0 +1,25 @@
+<h1><%= @stash_yarn.name %> <%= link_to icon('far', 'edit'), edit_stash_yarn_path(@stash_yarn) %></h1>
+
+<div class='row'>
+  <div class='col'>
+    <% unless @stash_yarn.image.blank? %>
+      <%= image_tag @stash_yarn.image, class: 'img-fluid border border-primary rounded' %>
+    <% end %>
+  </div>
+  <div class='col'>
+    <% if @stash_yarn.handspun %>
+      <p>Handspun</p>
+    <% end %>
+    <p>Colorway <strong><%= @stash_yarn.colorway_name %></strong></p>
+    <p><%= pluralize(@stash_yarn.skein_quantity, 'skein') %>, <%= @stash_yarn.total_yardage %> total yards</p>
+    <p>
+    <%= "Purchased at #{@stash_yarn.purchased_at_name}" if @stash_yarn.purchased_at_name %>
+    <%= "on #{@stash_yarn.purchase_date}" if @stash_yarn.purchase_date %>
+    <%= "for #{@stash_yarn.purchase_price}" if @stash_yarn.purchase_price %>
+    </p>
+    <% if @stash_yarn.notes %>
+      <h4>Notes</h4>
+      <p><%= @stash_yarn.notes %></p>
+    <% end %>
+  </div>
+</div>

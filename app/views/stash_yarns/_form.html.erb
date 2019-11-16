@@ -1,0 +1,56 @@
+<%= form_with(model: stash_yarn, local: true) do |f| %>
+  <% if stash_yarn.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(stash_yarn.errors.count, "error") %> prohibited this stash entry from being saved:</h2>
+
+      <ul>
+        <% stash_yarn.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='form-group'>
+    <%= f.label :name %> <%= f.text_field :name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :handspun %> <%= f.check_box :handspun %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :colorway_name, 'Colorway' %> <%= f.text_field :colorway_name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :purchase_date %> <%= f.text_field :purchase_date, value: Date.current %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :purchased_at_name, 'I bought this from' %> <%= f.text_field :purchased_at_name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :purchase_price %> <%= f.text_field :purchase_price %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :skein_quantity, 'Number of skeins' %> <%= f.text_field :skein_quantity %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :total_yardage %> <%= f.text_field :total_yardage %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :notes %><br>
+    <%= f.text_area :notes, class: 'form-control' %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit 'Stash it!' %>
+<% end %>

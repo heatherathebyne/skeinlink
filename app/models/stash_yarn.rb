@@ -1,6 +1,7 @@
 class StashYarn < ApplicationRecord
-  belongs_to :yarn_product
-  belongs_to :colorway
+  belongs_to :yarn_product, optional: true
+  belongs_to :colorway, optional: true
   belongs_to :user
-  validates :name, :user, presence: true
+  has_one_attached :image
+  validates :name, presence: true
 end

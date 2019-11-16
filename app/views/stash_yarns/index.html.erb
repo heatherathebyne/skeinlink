@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+
+  <div class="col-lg-3">
+    <h1 class="my-4">My Stash</h1>
+    <div class="list-group">
+      <%= link_to 'Add to My Stash', new_stash_yarn_path, class: 'list-group-item' %>
+    </div>
+  </div>
+  <!-- /.col-lg-3 -->
+
+  <div class="col-lg-9">
+
+    <div class="row">
+
+      <% @stash_yarns.each do |stash_yarn| %>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card">
+          <% unless stash_yarn.image.blank? %>
+            <%= link_to image_tag(stash_yarn.image, class: 'card-img-top'), stash_yarn %>
+          <% end %>
+          <div class="card-body">
+            <h4 class="card-title">
+              <%= link_to stash_yarn.name, stash_yarn %>
+            </h4>
+            <%= stash_yarn.colorway_name %>, <%= pluralize(stash_yarn.skein_quantity, 'skein') %> / <%= stash_yarn.total_yardage %> total yards
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.col-lg-9 -->
+
+</div>
+<!-- /.row -->
