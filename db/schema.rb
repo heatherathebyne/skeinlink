@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_16_001024) do
+ActiveRecord::Schema.define(version: 2019_11_16_103012) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,17 @@ ActiveRecord::Schema.define(version: 2019_11_16_001024) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "colorways", force: :cascade do |t|
+    t.integer "yarn_product_id", null: false
+    t.string "name", null: false
+    t.string "number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_colorways_on_name"
+    t.index ["number"], name: "index_colorways_on_number"
+    t.index ["yarn_product_id"], name: "index_colorways_on_yarn_product_id"
   end
 
   create_table "crafts", force: :cascade do |t|
@@ -66,6 +77,26 @@ ActiveRecord::Schema.define(version: 2019_11_16_001024) do
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
+  create_table "stash_yarns", force: :cascade do |t|
+    t.integer "yarn_product_id"
+    t.integer "colorway_id"
+    t.integer "user_id", null: false
+    t.string "name"
+    t.string "colorway_name"
+    t.date "purchase_date"
+    t.string "purchased_at_name"
+    t.string "purchase_price"
+    t.integer "skein_quantity"
+    t.integer "total_yardage"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["colorway_id"], name: "index_stash_yarns_on_colorway_id"
+    t.index ["purchase_date"], name: "index_stash_yarns_on_purchase_date"
+    t.index ["purchased_at_name"], name: "index_stash_yarns_on_purchased_at_name"
+    t.index ["user_id"], name: "index_stash_yarns_on_user_id"
+    t.index ["yarn_product_id"], name: "index_stash_yarns_on_yarn_product_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -90,6 +121,30 @@ ActiveRecord::Schema.define(version: 2019_11_16_001024) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  end
+
+  create_table "yarn_companies", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_yarn_companies_on_name"
+  end
+
+  create_table "yarn_products", force: :cascade do |t|
+    t.integer "yarn_company_id"
+    t.integer "colorway_id"
+    t.string "name", null: false
+    t.integer "skein_gram_weight"
+    t.integer "skein_yards"
+    t.string "fiber_type_name"
+    t.integer "craft_yarn_council_weight", limit: 1
+    t.string "weight_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"
+    t.index ["craft_yarn_council_weight"], name: "index_yarn_products_on_craft_yarn_council_weight"
+    t.index ["name"], name: "index_yarn_products_on_name"
+    t.index ["yarn_company_id"], name: "index_yarn_products_on_yarn_company_id"
   end
 
   create_table "yarns", force: :cascade do |t|
