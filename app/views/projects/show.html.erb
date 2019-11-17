@@ -1,3 +1,5 @@
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true) %>
+
 <h1>
   <%= @project.name %>
   <small class='text-muted'><small><%= @project.status_name %></small></small>
@@ -39,13 +41,19 @@
   </h4>
 
   <div class='collapse' id='journalForm'>
-    <%= render 'journal_entries/form' %>
+    <%= render 'journal_entries/form', journal_entry: JournalEntry.new(entry_timestamp: Time.current, project_id: @project.id) %>
   </div>
 
   <hr>
   <% @project.journal_entries.order(entry_timestamp: :desc).each do |j| %>
-    <p><%= j.entry_timestamp %> <%= icon('fas', 'edit') %></p>
-    <p><%= j.content %></p>
+    <p>
+      <%= j.entry_timestamp %>
+      <a data-toggle='collapse' href='#journalForm-<%= j.id %>' aria-expanded='false' aria-controls='journalForm-<%= j.id %>'><%= icon('fas', 'edit') %></a>
+      <div class='collapse' id='journalForm-<%= j.id %>'>
+        <%= render 'journal_entries/form', journal_entry: j %>
+      </div>
+    </p>
+    <p><%= ActiveSupport::SafeBuffer.new(markdown.render j.content) %></p>
     <hr>
   <% end %>
 </div>

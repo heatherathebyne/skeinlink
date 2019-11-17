@@ -1,4 +1,4 @@
-<%= form_with(model: JournalEntry.new(entry_timestamp: Time.current, project_id: @project.id), local: true) do |f| %>
+<%= form_with(model: journal_entry, local: true) do |f| %>
   <div class='form-group'>
     <%= f.text_field :entry_timestamp %>
   </div>

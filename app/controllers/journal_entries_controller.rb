@@ -11,6 +11,13 @@ class JournalEntriesController < ApplicationController
   end
 
   def update
+    @journal_entry = @project.journal_entries.find(params[:id])
+
+    if @journal_entry.update(journal_entry_params)
+      redirect_to @project, notice: 'Your journal entry was successfully updated.'
+    else
+      redirect_to @project, alert: "We're sorry, but we couldn't update your journal entry."
+    end
   end
 
   def destroy
