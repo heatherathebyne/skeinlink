@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
   root 'projects#index'
 
-  resources :yarns
+  resources :yarn_database, except: [:destroy]
   resources :projects do
     member do
       delete :destroy_image

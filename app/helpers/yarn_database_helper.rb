@@ -1,0 +1,2 @@
+module YarnDatabaseHelper
+end
