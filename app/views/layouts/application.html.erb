@@ -10,24 +10,27 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-1">
-      <div class="container">
-        <a class="navbar-brand" href="#">SkeinLink</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+    <nav class='navbar navbar-expand-lg navbar-dark bg-primary py-1'>
+      <div class='container'>
+        <a class='navbar-brand' href='#'>SkeinLink</a>
+        <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'>
+          <span class='navbar-toggler-icon'></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
+        <div class='collapse navbar-collapse' id='navbarResponsive'>
+          <ul class='navbar-nav ml-auto'>
+            <li class='nav-item active'>
+              <a class='nav-link' href='#'>Home
+                <span class='sr-only'>(current)</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class='nav-item'>
               <%= link_to 'Projects', projects_path, class: 'nav-link' %>
             </li>
-            <li class="nav-item">
+            <li class='nav-item'>
               <%= link_to 'My Stash', stash_yarns_path, class: 'nav-link' %>
+            </li>
+            <li class='nav-item'>
+              <%= link_to 'Yarn Database', yarn_database_index_path, class: 'nav-link' %>
             </li>
           </ul>
         </div>
@@ -38,25 +41,25 @@
       <% if notice %>
         <div class='alert alert-info alert-dismissible fade show'>
           <%= notice %>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span>
   </button>
         </div>
     <% end %>
     <% if alert %>
       <div class='alert alert-danger alert-dismissible fade show'>
         <%= alert %>
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
+          <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+    <span aria-hidden='true'>&times;</span>
   </button>
       </div>
     <% end %>
       <%= yield %>
     </div>
 
-    <footer class="py-1 bg-primary">
-      <div class="container">
-        <p class="m-0 text-center text-white">:)</p>
+    <footer class='py-1 bg-primary'>
+      <div class='container'>
+        <p class='m-0 text-center text-white'>:)</p>
       </div>
       <!-- /.container -->
     </footer>

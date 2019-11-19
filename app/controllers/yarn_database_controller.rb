@@ -16,7 +16,7 @@ class YarnDatabaseController < ApplicationController
     @yarn_product = YarnProduct.new(yarn_product_params)
 
     if @yarn_product.save
-      redirect_to :show, id: @yarn_product.id, notice: 'Yarn database entry added!'
+      redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry added!'
     else
       render :new
     end
@@ -40,5 +40,6 @@ class YarnDatabaseController < ApplicationController
   end
 
   def yarn_product_params
+    params.require(:yarn_product).permit(:name, :yarn_company_id, :skein_gram_weight, :skein_yards, :fiber_type_name, :weight_name, :craft_yarn_council_weight, :image)
   end
 end

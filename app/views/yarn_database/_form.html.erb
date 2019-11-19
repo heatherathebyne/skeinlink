@@ -1,0 +1,47 @@
+<%= form_with(model: yarn_product, url: yarn_database_index_path, local: true) do |f| %>
+  <% if yarn_product.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(yarn_product.errors.count, "error") %> prohibited this yarn from being saved:</h2>
+
+      <ul>
+        <% yarn_product.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='form-group'>
+    <%= f.label :name %> <%= f.text_field :name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :yarn_company_id %> <%= f.text_field :yarn_company_id %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :skein_gram_weight, 'Skein weight in grams' %> <%= f.text_field :skein_gram_weight %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :skein_yards, 'Skein yardage' %> <%= f.text_field :skein_yards %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :fiber_type_name, 'Fiber types' %> <%= f.text_field :fiber_type_name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :weight_name, 'Yarn weight' %> <%= f.text_field :weight_name %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :craft_yarn_council_weight %> <%= f.text_field :craft_yarn_council_weight %>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit 'Add yarn to database' %>
+<% end %>
