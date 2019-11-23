@@ -10,24 +10,26 @@ class YarnDatabaseController < ApplicationController
 
   def new
     @yarn_product = YarnProduct.new
+    @yarn_companies = YarnCompany.all
   end
 
   def create
     @yarn_product = YarnProduct.new(yarn_product_params)
 
     if @yarn_product.save
-      redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry added!'
+      redirect_to yarn_database_path(@yarn_product.id), notice: 'Yarn database entry added!'
     else
       render :new
     end
   end
 
   def edit
+    @yarn_companies = YarnCompany.all
   end
 
   def update
     if @yarn_product.update(yarn_product_params)
-      redirect_to :show, id: @yarn_product.id, notice: 'Yarn database entry updated!'
+      redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry updated!'
     else
       render :new
     end
@@ -36,10 +38,12 @@ class YarnDatabaseController < ApplicationController
   private
 
   def set_yarn_product
-    @yarn_product = YarnProduct.find(params[:id])
+    @yarn_product = YarnProduct.includes(:yarn_company).find(params[:id])
   end
 
   def yarn_product_params
-    params.require(:yarn_product).permit(:name, :yarn_company_id, :skein_gram_weight, :skein_yards, :fiber_type_name, :weight_name, :craft_yarn_council_weight, :image)
+    params.require(:yarn_product)
+          .permit(:name, :yarn_company_id, :skein_gram_weight, :skein_yards, :fiber_type_name,
+                  :weight_name, :craft_yarn_council_weight, :image)
   end
 end

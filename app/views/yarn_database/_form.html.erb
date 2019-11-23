@@ -1,4 +1,4 @@
-<%= form_with(model: yarn_product, url: yarn_database_index_path, local: true) do |f| %>
+<%= form_with(model: yarn_product, url: url_for_yarn_database, local: true) do |f| %>
   <% if yarn_product.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(yarn_product.errors.count, "error") %> prohibited this yarn from being saved:</h2>
@@ -16,7 +16,8 @@
   </div>
 
   <div class='form-group'>
-    <%= f.label :yarn_company_id %> <%= f.text_field :yarn_company_id %>
+    <%= f.label :yarn_company_id, 'Yarn company' %>
+    <%= f.collection_select(:yarn_company_id, @yarn_companies, :id, :name, include_blank: true) %>
   </div>
 
   <div class='form-group'>

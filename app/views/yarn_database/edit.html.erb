@@ -1,0 +1,3 @@
+<h1>Edit <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
+
+<%= render 'form', yarn_product: @yarn_product, url_for_yarn_database: yarn_database_path(@yarn_product.id) %>
