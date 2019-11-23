@@ -1,0 +1,16 @@
+<div class='row'>
+
+  <div class='col-lg-3'>
+    <h1 class='my-4'>Yarn Companies</h1>
+    <div class='list-group'>
+      <%= link_to 'Add Yarn Company', new_yarn_company_path, class: 'list-group-item' %>
+    </div>
+  </div>
+
+  <div class='col-lg-9'>
+    <% @yarn_companies.each do |company| %>
+      <li><%= company.name %></li>
+    <% end %>
+  </div>
+</div>
+

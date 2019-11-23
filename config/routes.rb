@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   end
   resources :journal_entries, only: [:create, :update, :destroy]
   resources :stash_yarns
+  resources :yarn_companies, except: [:destroy]
 end

@@ -1,0 +1,19 @@
+<%= form_with(model: yarn_company, local: true) do |f| %>
+  <% if yarn_company.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(yarn_company.errors.count, "error") %> prohibited this yarn company from being saved:</h2>
+
+      <ul>
+        <% yarn_company.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='form-group'>
+    <%= f.label :name %> <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit 'Add Yarn Company' %>
+<% end %>
