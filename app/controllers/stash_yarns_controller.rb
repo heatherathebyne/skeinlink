@@ -10,6 +10,7 @@ class StashYarnsController < ApplicationController
 
   def new
     @stash_yarn = StashYarn.new
+    @yarn_products = YarnProduct.all.includes(:yarn_company)
   end
 
   def create
@@ -24,6 +25,7 @@ class StashYarnsController < ApplicationController
   end
 
   def edit
+    @yarn_products = YarnProduct.all.includes(:yarn_company)
   end
 
   def update
@@ -46,6 +48,9 @@ class StashYarnsController < ApplicationController
   end
 
   def stash_yarn_params
-    params.require(:stash_yarn).permit(:yarn_product_id, :colorway_id, :name, :handspun, :colorway_name, :purchase_date, :purchased_at_name, :purchase_price, :skein_quantity, :total_yardage, :image, :notes)
+    params.require(:stash_yarn)
+          .permit(:yarn_product_id, :colorway_id, :name, :handspun, :colorway_name, :purchase_date,
+                  :purchased_at_name, :purchase_price, :skein_quantity, :total_yardage, :image,
+                  :notes)
   end
 end

@@ -13,6 +13,8 @@
 
   <div class='form-group'>
     <%= f.label :name %> <%= f.text_field :name %>
+    or
+    <%= f.label :yarn_product_id %> <%= f.collection_select(:yarn_product_id, @yarn_products, :id, :name_with_company, include_blank: true) %>
   </div>
 
   <div class='form-group'>

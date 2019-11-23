@@ -4,4 +4,8 @@ class YarnProduct < ApplicationRecord
   has_many :colorways, inverse_of: :yarn_product
   has_one_attached :image
   validates :name, presence: true
+
+  def name_with_company
+    "#{yarn_company.name} #{name}"
+  end
 end
