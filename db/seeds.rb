@@ -5,9 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Craft.create(name: 'Knitting', id: 1)
-Craft.create(name: 'Crocheting', id: 2)
-Craft.create(name: 'Weaving', id: 3)
-Craft.create(name: 'Spinning', id: 4)
+Craft.create_or_find_by(id: 1, name: 'Knitting')
+Craft.create_or_find_by(id: 2, name: 'Crocheting')
+Craft.create_or_find_by(id: 3, name: 'Weaving')
+Craft.create_or_find_by(id: 4, name: 'Spinning')
 
-Yarn.create(name: '220', company_name: 'Cascade Yarns', weight_name: 'Worsted')
+YarnCompany.create_or_find_by(name: 'Cascade Yarns')

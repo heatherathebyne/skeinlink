@@ -1,2 +1,0 @@
-class Yarn < ApplicationRecord
-end
