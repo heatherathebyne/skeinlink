@@ -6,6 +6,6 @@ class YarnProduct < ApplicationRecord
   validates :name, presence: true
 
   def name_with_company
-    "#{yarn_company.name} #{name}"
+    "#{yarn_company.try(:name)} #{name}"
   end
 end
