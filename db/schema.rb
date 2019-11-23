@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_16_103012) do
+ActiveRecord::Schema.define(version: 2019_11_23_152250) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -90,7 +90,10 @@ ActiveRecord::Schema.define(version: 2019_11_16_103012) do
     t.integer "total_yardage"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "notes"
+    t.boolean "handspun"
     t.index ["colorway_id"], name: "index_stash_yarns_on_colorway_id"
+    t.index ["handspun"], name: "index_stash_yarns_on_handspun"
     t.index ["purchase_date"], name: "index_stash_yarns_on_purchase_date"
     t.index ["purchased_at_name"], name: "index_stash_yarns_on_purchased_at_name"
     t.index ["user_id"], name: "index_stash_yarns_on_user_id"
@@ -127,7 +130,7 @@ ActiveRecord::Schema.define(version: 2019_11_16_103012) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_yarn_companies_on_name"
+    t.index ["name"], name: "index_yarn_companies_on_name", unique: true
   end
 
   create_table "yarn_products", force: :cascade do |t|
