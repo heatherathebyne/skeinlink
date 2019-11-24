@@ -1,4 +1,4 @@
-<h1><%= @yarn_product.name %> <small>by <%= @yarn_product.yarn_company.try(:name) %></small> <%= link_to icon('far', 'edit'), edit_yarn_database_path(@yarn_product) %></h1>
+<h1><%= @yarn_product.name_with_company %> <%= link_to icon('far', 'edit'), edit_yarn_database_path(@yarn_product) %></h1>
 
 <div class='row'>
   <div class='col'>
