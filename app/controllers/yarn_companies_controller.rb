@@ -2,7 +2,7 @@ class YarnCompaniesController < ApplicationController
   before_action :set_yarn_company, only: [:show, :edit, :update]
 
   def index
-    @yarn_companies = YarnCompany.all
+    @yarn_companies = YarnCompany.all.order(:name)
   end
 
   def show
