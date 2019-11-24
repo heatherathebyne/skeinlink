@@ -1,4 +1,6 @@
 class StashYarn < ApplicationRecord
+  include YarnWeight
+
   belongs_to :yarn_product, optional: true
   belongs_to :colorway, optional: true
   belongs_to :user
@@ -7,6 +9,10 @@ class StashYarn < ApplicationRecord
 
   def name
     yarn_product.try(:name_with_company) || super
+  end
+
+  def weight_name
+    yarn_product.try(:common_weight) || common_weight
   end
 
   private

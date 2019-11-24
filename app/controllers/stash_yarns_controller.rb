@@ -51,6 +51,6 @@ class StashYarnsController < ApplicationController
     params.require(:stash_yarn)
           .permit(:yarn_product_id, :colorway_id, :name, :handspun, :colorway_name, :purchase_date,
                   :purchased_at_name, :purchase_price, :skein_quantity, :total_yardage, :image,
-                  :notes)
+                  :notes, :weight_id)
   end
 end

@@ -12,6 +12,7 @@
     <% end %>
     <p>Colorway <strong><%= @stash_yarn.colorway_name %></strong></p>
     <p><%= pluralize(@stash_yarn.skein_quantity, 'skein') %>, <%= @stash_yarn.total_yardage %> total yards</p>
+    <p><strong><%= @stash_yarn.weight_name %></strong> weight</p>
     <p>
     <%= "Purchased at #{@stash_yarn.purchased_at_name}" if @stash_yarn.purchased_at_name %>
     <%= "on #{@stash_yarn.purchase_date}" if @stash_yarn.purchase_date %>

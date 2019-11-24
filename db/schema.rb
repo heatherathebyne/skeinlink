@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_23_152250) do
+ActiveRecord::Schema.define(version: 2019_11_24_112553) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -92,11 +92,13 @@ ActiveRecord::Schema.define(version: 2019_11_23_152250) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "notes"
     t.boolean "handspun"
+    t.integer "weight_id", limit: 1
     t.index ["colorway_id"], name: "index_stash_yarns_on_colorway_id"
     t.index ["handspun"], name: "index_stash_yarns_on_handspun"
     t.index ["purchase_date"], name: "index_stash_yarns_on_purchase_date"
     t.index ["purchased_at_name"], name: "index_stash_yarns_on_purchased_at_name"
     t.index ["user_id"], name: "index_stash_yarns_on_user_id"
+    t.index ["weight_id"], name: "index_stash_yarns_on_weight_id"
     t.index ["yarn_product_id"], name: "index_stash_yarns_on_yarn_product_id"
   end
 
@@ -141,12 +143,13 @@ ActiveRecord::Schema.define(version: 2019_11_23_152250) do
     t.integer "skein_yards"
     t.string "fiber_type_name"
     t.integer "craft_yarn_council_weight", limit: 1
-    t.string "weight_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "weight_id", limit: 1
     t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"
     t.index ["craft_yarn_council_weight"], name: "index_yarn_products_on_craft_yarn_council_weight"
     t.index ["name"], name: "index_yarn_products_on_name"
+    t.index ["weight_id"], name: "index_yarn_products_on_weight_id"
     t.index ["yarn_company_id"], name: "index_yarn_products_on_yarn_company_id"
   end
 

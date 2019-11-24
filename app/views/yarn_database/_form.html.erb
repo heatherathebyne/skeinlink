@@ -33,11 +33,8 @@
   </div>
 
   <div class='form-group'>
-    <%= f.label :weight_name, 'Yarn weight' %> <%= f.text_field :weight_name %>
-  </div>
-
-  <div class='form-group'>
-    <%= f.label :craft_yarn_council_weight %> <%= f.text_field :craft_yarn_council_weight %>
+    <%= f.label :weight_id, 'Yarn weight' %>
+    <%= f.select :weight_id, options_for_select(yarn_product.common_weight_select_options, yarn_product.weight_id) %>
   </div>
 
   <div class='form-group'>

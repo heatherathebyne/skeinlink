@@ -17,9 +17,11 @@
     <%= f.label :yarn_product_id %> <%= f.collection_select(:yarn_product_id, @yarn_products, :id, :name_with_company, include_blank: true) %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :handspun %> <%= f.check_box :handspun %>
-  </div>
+  <% unless stash_yarn.yarn_product %>
+    <div class='form-group'>
+      <%= f.label :handspun %> <%= f.check_box :handspun %>
+    </div>
+  <% end %>
 
   <div class='form-group'>
     <%= f.label :colorway_name, 'Colorway' %> <%= f.text_field :colorway_name %>
@@ -44,6 +46,13 @@
   <div class='form-group'>
     <%= f.label :total_yardage %> <%= f.text_field :total_yardage %>
   </div>
+
+  <% unless stash_yarn.yarn_product %>
+    <div class='form-group'>
+      <%= f.label :weight_id, 'Yarn weight' %>
+      <%= f.select :weight_id, options_for_select(stash_yarn.common_weight_select_options, stash_yarn.weight_id) %>
+    </div>
+  <% end %>
 
   <div class='form-group'>
     <%= f.label :notes %><br>
