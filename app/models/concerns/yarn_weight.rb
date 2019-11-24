@@ -16,7 +16,7 @@ module YarnWeight
   }.freeze
 
   def common_weight
-    YARN_WEIGHTS[weight_id][:name]
+    YARN_WEIGHTS[weight_id][:name] if weight_id
   end
 
   def common_weight_select_options
