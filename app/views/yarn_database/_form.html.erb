@@ -12,12 +12,12 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :name %> <%= f.text_field :name %>
+    <%= f.label :yarn_company_id, 'Yarn company' %>
+    <%= f.collection_select(:yarn_company_id, @yarn_companies, :id, :name, include_blank: true) %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :yarn_company_id, 'Yarn company' %>
-    <%= f.collection_select(:yarn_company_id, @yarn_companies, :id, :name, include_blank: true) %>
+    <%= f.label :name %> <%= f.text_field :name %>
   </div>
 
   <div class='form-group'>

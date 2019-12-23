@@ -2,7 +2,7 @@ class StashYarnsController < ApplicationController
   before_action :set_stash_yarn, only: [:show, :edit, :update, :destroy]
 
   def index
-    @stash_yarns = StashYarn.where(user_id: current_user.id)
+    @stash_yarns = StashYarn.where(user_id: current_user.id).order(:yarn_product_id)
   end
 
   def show
@@ -18,7 +18,7 @@ class StashYarnsController < ApplicationController
     @stash_yarn.user = current_user
 
     if @stash_yarn.save
-      redirect_to @stash_yarn
+      redirect_to stash_yarns_url
     else
       render :new
     end
