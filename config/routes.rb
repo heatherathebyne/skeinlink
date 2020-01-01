@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+
   root 'projects#index'
 
   resources :yarn_database, except: [:destroy]
@@ -11,4 +12,11 @@ Rails.application.routes.draw do
   resources :journal_entries, only: [:create, :update, :destroy]
   resources :stash_yarns
   resources :yarn_companies, except: [:destroy]
+
+  resources :crafters, only: [:show] do
+    member do
+      get :projects
+      get :stash
+    end
+  end
 end

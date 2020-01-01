@@ -1,8 +1,8 @@
 <div class="row">
 
   <div class="col-lg-3">
-    <h1 class="my-4">Projects</h1>
-    <% if user_signed_in? %>
+    <h1 class="my-4"><%= @project_user.try(:name) || 'Anonymous Crafter' %>'s Projects</h1>
+    <% if @project_user == current_user %>
       <div class="list-group">
         <%= link_to 'New Project', new_project_path, class: 'list-group-item' %>
       </div>
