@@ -21,5 +21,11 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8mb4 # very important if you like emoji
+  collation: utf8mb4_unicode_ci
+  host: localhost
+  port: 3306
+  database: skeinlink
+  username: skeinlink_app
+  password: hunter2

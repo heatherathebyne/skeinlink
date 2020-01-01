@@ -5,6 +5,7 @@ ruby '2.6.5'
 
 gem 'rails', '~> 6.0.1'
 gem 'sqlite3', '~> 1.4'
+gem 'mysql2'
 gem 'puma', '~> 4.3'
 gem 'sass-rails', '>= 6'
 gem 'jbuilder', '~> 2.7'
@@ -23,6 +24,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'font-awesome-sass'
 gem 'redcarpet'
+gem 'mini_racer'
 
 group :development, :test do
   gem 'awesome_print', require: 'awesome_print'
@@ -32,6 +34,12 @@ group :development, :test do
 end
 
 group :development do
+  gem "capistrano", "~> 3.10", require: false
+  gem "capistrano-rails", "~> 1.3", require: false
+  gem 'capistrano-bundler'
+  gem 'capistrano-passenger'
+  gem 'ed25519'
+  gem 'bcrypt_pbkdf'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
