@@ -27,3 +27,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore Capistrano configuration
+/config/deploy/*.rb
+/config/deploy.rb
