@@ -1,16 +1,31 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:edit, :update, :destroy, :destroy_image]
+  skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all.order(id: :desc)
+    if user_signed_in?
+      @projects = Project.all.order(id: :desc)
+    else
+      @projects = Project.where(publicly_visible: true).order(id: :desc)
+    end
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @project = Project.find(params[:id])
+    if user_signed_in?
+      @project = Project.find(params[:id])
+    else
+      @project = Project.where(publicly_visible: true).find_by(id: params[:id])
+    end
+
+    unless @project
+      flash[:notice] = "That project isn't public, or it doesn't exist."
+      redirect_back(fallback_location: root_path)
+      return
+    end
   end
 
   # GET /projects/new
@@ -83,7 +98,10 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:craft_id, :name, :pattern_name, :status_name, :notes, :private_notes, :tools_freetext)
+      params.require(:project).permit(
+        :craft_id, :name, :pattern_name, :status_name, :notes, :private_notes, :tools_freetext,
+        :publicly_visible
+      )
     end
 
     def project_images_params

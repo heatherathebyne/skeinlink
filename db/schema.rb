@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_24_112553) do
+ActiveRecord::Schema.define(version: 2020_01_01_131540) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -71,8 +71,10 @@ ActiveRecord::Schema.define(version: 2019_11_24_112553) do
     t.text "private_notes"
     t.string "tools_freetext"
     t.text "image_order"
+    t.boolean "publicly_visible", default: false, null: false
     t.index ["craft_id"], name: "index_projects_on_craft_id"
     t.index ["name"], name: "index_projects_on_name"
+    t.index ["publicly_visible"], name: "index_projects_on_publicly_visible"
     t.index ["status"], name: "index_projects_on_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
   end

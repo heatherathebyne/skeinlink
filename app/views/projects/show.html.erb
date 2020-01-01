@@ -21,15 +21,19 @@
 </div>
 
 <div class='container'>
+  <strong>Tools</strong> <%= @project.tools_freetext %>
+</div>
+
+<div class='container'>
+  Visible to <strong><%= @project.publicly_visible? ? 'Everyone, even if they are not a member' : 'Only logged in members' %></strong>
+</div>
+
+<div class='container'>
   <strong>Notes</strong> <%= @project.notes %>
 </div>
 
 <div class='container'>
   <strong>Private notes</strong> <%= @project.private_notes %>
-</div>
-
-<div class='container'>
-  <strong>Tools</strong> <%= @project.tools_freetext %>
 </div>
 
 <hr>
@@ -58,5 +62,7 @@
   <% end %>
 </div>
 
+<% if user_signed_in? && @project.user == current_user %>
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>
+<% end %>
