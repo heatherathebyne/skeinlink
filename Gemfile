@@ -5,6 +5,7 @@ ruby '2.6.5'
 
 gem 'rails', '~> 6.0.1'
 gem 'sqlite3', '~> 1.4'
+gem 'mysql2'
 gem 'puma', '~> 4.3'
 gem 'sass-rails', '>= 6'
 gem 'jbuilder', '~> 2.7'
@@ -23,6 +24,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'font-awesome-sass'
 gem 'redcarpet'
+gem 'mini_racer'
 
 group :development, :test do
   gem 'awesome_print', require: 'awesome_print'

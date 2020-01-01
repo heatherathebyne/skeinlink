@@ -22,7 +22,11 @@ haven't yet put in mitigations for certain common methods of abuse.
 
 * MRI Ruby 2.6.5
 * Rails 6.0.1
+
+## Additional requirements
+
 * ImageMagick
+* MariaDB 10.4
 
 ## How to run locally
 
