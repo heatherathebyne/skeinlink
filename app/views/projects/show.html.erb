@@ -3,6 +3,7 @@
 <h1>
   <%= @project.name %>
   <small class='text-muted'><small><%= @project.status_name %></small></small>
+  <%= link_to icon('far', 'edit'), edit_project_path(@project) %></h1>
 </h1>
 
 <div class='row text-center text-lg-left py-4'>
@@ -16,57 +17,59 @@
 </div>
 
 <div class='container'>
-  <strong><%= @project.craft.name %></strong> project
-  <% if @project.pattern_name %>
-    &bull; <strong><%= @project.pattern_name %></strong> pattern
-  <% end %>
-</div>
+  <dl class='row'>
+    <dd class='col-sm-1 text-right'>Craft</dd> <dt class='col-sm-11'><%= @project.craft.name %></dt>
 
-<div class='container'>
-  <strong>Tools</strong> <%= @project.tools_freetext %>
-</div>
+    <% if @project.pattern_name %>
+      <dd class='col-sm-1 text-right'>Pattern</dd> <dt class='col-sm-11'><%= @project.pattern_name %></dt>
+    <% end %>
 
-<div class='container'>
-  Visible to <strong><%= @project.publicly_visible? ? 'Everyone, even if they are not a member' : 'Only logged in members' %></strong>
-</div>
+    <% if @project.tools_freetext %>
+      <dd class='col-sm-1 text-right'>Tools</dd> <dt class='col-sm-11'><%= @project.tools_freetext %></dt>
+    <% end %>
 
-<div class='container'>
-  <strong>Notes</strong> <%= @project.notes %>
-</div>
+    <% if user_signed_in? %>
+      <dd class='col-sm-1 text-right'>Visible to</dd> <dt class='col-sm-11'><%= @project.publicly_visible? ? 'Everyone, even if they are not a member' : 'Only logged in members' %></dt>
+    <% end %>
 
-<% if user_signed_in? && @project.user == current_user %>
-<div class='container'>
-  <strong>Private notes</strong> <%= @project.private_notes %>
+    <% unless @project.notes.blank? %>
+      <dd class='col-sm-1 text-right'>Notes</dd> <dt class='col-sm-11'><%= @project.notes %></dt>
+    <% end %>
+
+    <% if user_signed_in? && @project.user == current_user && !@project.private_notes.blank? %>
+      <dd class='col-sm-1 text-right'>Private notes</dd> <dt class='col-sm-11'><%= @project.private_notes %></dt>
+    <% end %>
+  </dl>
 </div>
-<% end %>
 
 <hr>
 
 <div class='container'>
   <h4>
     Project journal
-    <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
+    <% if user_signed_in? && @project.user == current_user %>
+      <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
+    <% end %>
   </h4>
 
   <div class='collapse' id='journalForm'>
     <%= render 'journal_entries/form', journal_entry: JournalEntry.new(entry_timestamp: Time.current, project_id: @project.id) %>
   </div>
 
-  <hr>
   <% @project.journal_entries.order(entry_timestamp: :desc).each do |j| %>
     <p>
-      <%= j.entry_timestamp %>
+    <strong><%= j.entry_timestamp %></strong>
+
+    <% if user_signed_in? && @project.user == current_user %>
       <a data-toggle='collapse' href='#journalForm-<%= j.id %>' aria-expanded='false' aria-controls='journalForm-<%= j.id %>'><%= icon('fas', 'edit') %></a>
-      <div class='collapse' id='journalForm-<%= j.id %>'>
-        <%= render 'journal_entries/form', journal_entry: j %>
-      </div>
+    <% end %>
+
+    <div class='collapse' id='journalForm-<%= j.id %>'>
+      <%= render 'journal_entries/form', journal_entry: j %>
+    </div>
     </p>
+
     <p><%= ActiveSupport::SafeBuffer.new(markdown.render j.content) %></p>
     <hr>
   <% end %>
 </div>
-
-<% if user_signed_in? && @project.user == current_user %>
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
-<% end %>
