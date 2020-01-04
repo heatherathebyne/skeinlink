@@ -1,11 +1,11 @@
 <h1>Editing Project</h1>
 
 <div class='row text-center text-lg-left py-4'>
-  <% @project.images.each do |image| %>
-    <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
-      <%= image_tag image, class: 'img-fluid img-thumbnail' %>
+  <% @project.thumb_images_with_attachment_id.each do |image| %>
+    <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image[:attachment_id] %>'>
+      <%= image_tag image[:thumb], class: 'img-fluid img-thumbnail' %>
       <%= button_to 'Remove image',
-                    { action: 'destroy_image', image_id: image.id },
+                    { action: 'destroy_image', image_id: image[:attachment_id] },
                     method: :delete, remote: true, class: 'btn btn-outline-danger',
                     data: { confirm: 'Are you sure you wish to remove this image?' } %>
     </div>

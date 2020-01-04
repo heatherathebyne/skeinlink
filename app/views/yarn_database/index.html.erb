@@ -18,7 +18,7 @@
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card">
           <% unless product.image.blank? %>
-            <%= image_tag(product.image, class: 'card-img-top') %>
+            <%= image_tag(product.thumb_image, class: 'card-img-top') %>
           <% end %>
           <div class="card-body">
             <h4 class="card-title">
