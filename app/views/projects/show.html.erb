@@ -6,9 +6,11 @@
 </h1>
 
 <div class='row text-center text-lg-left py-4'>
-  <% @project.images.each do |image| %>
+  <% @project.thumb_and_full_images.each do |variants| %>
     <div class='col-lg-3 col-md-4 col-6'>
-      <%= image_tag image, class: 'img-fluid img-thumbnail' %>
+      <a href='<%= url_for(variants[:full]) %>' target='_blank'>
+        <%= image_tag variants[:thumb], class: 'img-fluid img-thumbnail' %>
+      </a>
     </div>
   <% end %>
 </div>
