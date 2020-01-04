@@ -11,12 +11,24 @@ module ImageTools
       end
     end
 
+    def full_image
+      image.variant(**FULL_SIZE_VARIANT_OPTIONS)
+    end
+
+    def thumb_image
+      image.variant(**THUMBNAIL_VARIANT_OPTIONS)
+    end
+
     private
 
     def replace_image_filenames
       images.each do |image|
         image.blob.filename = SecureRandom.hex(8) # This is only persisted on new images
       end
+    end
+
+    def replace_image_filename
+      image.blob.filename = SecureRandom.hex(8) # This is only persisted on new images
     end
   end
 end

@@ -3,7 +3,7 @@
 <div class='row'>
   <div class='col'>
     <% unless @stash_yarn.image.blank? %>
-      <%= image_tag @stash_yarn.image, class: 'img-fluid border border-primary rounded' %>
+      <%= image_tag @stash_yarn.full_image, class: 'img-fluid border border-primary rounded' %>
     <% end %>
   </div>
   <div class='col'>

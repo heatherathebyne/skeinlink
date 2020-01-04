@@ -13,8 +13,6 @@ class Project < ApplicationRecord
 
   serialize :image_order, Array
 
-  attr_accessor :process_images
-
   before_save :replace_image_filenames
 
   def self.public_for_user(user_id)
