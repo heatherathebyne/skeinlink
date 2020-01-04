@@ -42,7 +42,8 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     @project.user_id = current_user.id
-    @project.images = project_images_params
+
+    attach_images
 
     respond_to do |format|
       if @project.save
@@ -58,9 +59,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    project_images_params[:images].each do |image|
-      @project.images.attach image
-    end if project_images_params[:images]
+    attach_images
 
     respond_to do |format|
       if @project.update(project_params)
@@ -91,20 +90,26 @@ class ProjectsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_project
-      @project = current_user.projects.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def project_params
-      params.require(:project).permit(
-        :craft_id, :name, :pattern_name, :status_name, :notes, :private_notes, :tools_freetext,
-        :publicly_visible
-      )
-    end
+  def attach_images
+    project_images_params[:images].each do |image|
+      @project.images.attach image
+    end if project_images_params[:images]
+  end
 
-    def project_images_params
-      params.require(:project).permit(images: [])
-    end
+  def set_project
+    @project = current_user.projects.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def project_params
+    params.require(:project).permit(
+      :craft_id, :name, :pattern_name, :status_name, :notes, :private_notes, :tools_freetext,
+      :publicly_visible
+    )
+  end
+
+  def project_images_params
+    params.require(:project).permit(images: [])
+  end
 end
