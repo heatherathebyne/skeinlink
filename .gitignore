@@ -32,3 +32,6 @@
 # Ignore Capistrano configuration
 /config/deploy/*.rb
 /config/deploy.rb
+
+# Site-specific configuration
+/config/skeinlink.yml

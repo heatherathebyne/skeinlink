@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SkeinLink</title>
+    <title><%= Rails.configuration.skeinlink[:community_name] %> SkeinLink</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
   <body>
     <nav class='navbar navbar-expand-lg navbar-dark bg-primary py-1'>
       <div class='container'>
-        <a class='navbar-brand' href='#'>SkeinLink</a>
+        <a class='navbar-brand' href='#'><%= Rails.configuration.skeinlink[:community_name] %> SkeinLink</a>
 
         <button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarResponsive' aria-controls='navbarResponsive' aria-expanded='false' aria-label='Toggle navigation'>
           <span class='navbar-toggler-icon'></span>
