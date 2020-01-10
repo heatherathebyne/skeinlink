@@ -1,0 +1,4 @@
+development:
+  community_name: My Fiber Community (Development)
+production:
+  community_name: My Fiber Community

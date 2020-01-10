@@ -1,0 +1,4 @@
+development:
+  community_name: Configuration Defaults Loaded - Check config/skeinlink.yml
+production:
+  community_name: Configuration Defaults Loaded - Check configuration
