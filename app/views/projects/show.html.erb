@@ -73,3 +73,9 @@
     <hr>
   <% end %>
 </div>
+
+<% if belongs_to_current_user?(@project) %>
+<div class='container'>
+  <%= link_to 'New Project', new_project_path, class: 'btn btn-primary' %>
+</div>
+<% end %>

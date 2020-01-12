@@ -24,3 +24,9 @@
     <% end %>
   </div>
 </div>
+
+<% if belongs_to_current_user?(@stash_yarn) %>
+<div class='container'>
+  <%= link_to 'Add to My Stash', new_stash_yarn_path, class: 'btn btn-primary' %>
+</div>
+<% end %>
