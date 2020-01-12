@@ -1,4 +1,6 @@
 development:
   community_name: My Fiber Community (Development)
+  exception_notifier_email: 'skeinlink@example.com'
 production:
   community_name: My Fiber Community
+  exception_notifier_email: 'skeinlink@example.com'

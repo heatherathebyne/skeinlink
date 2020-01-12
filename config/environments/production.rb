@@ -110,4 +110,11 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  Rails.application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    email_prefix: '[SKEINLINK] ',
+    sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
+    exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]]
+  }
 end

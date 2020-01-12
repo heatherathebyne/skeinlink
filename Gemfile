@@ -14,18 +14,19 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Active Storage variant
+# Use Active Storage image variants
 gem 'image_processing', '~> 1.2'
 gem 'active_storage_validations'
 
-gem 'sprockets'
-gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'devise'
+gem 'exception_notification'
 gem 'font-awesome-sass'
-gem 'redcarpet'
 gem 'mini_racer'
+gem 'redcarpet'
+gem 'sprockets'
+gem 'sprockets-rails', require: 'sprockets/railtie'
 
 group :development, :test do
   gem 'awesome_print', require: 'awesome_print'
