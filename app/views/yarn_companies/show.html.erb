@@ -1,1 +1,5 @@
 <h1><%= @yarn_company.name %> <%= link_to icon('far', 'edit'), edit_yarn_company_path(@yarn_company) %></h1>
+
+<div class='container'>
+  <%= link_to 'Add Another Yarn Company', new_yarn_company_path, class: 'btn btn-primary' %>
+</div>

@@ -9,7 +9,7 @@
 
   <div class='col-lg-9'>
     <% @yarn_companies.each do |company| %>
-      <li><%= company.name %></li>
+      <li><%= link_to company.name, yarn_company_path(company) %></li>
     <% end %>
   </div>
 </div>
