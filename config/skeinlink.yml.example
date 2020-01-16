@@ -1,6 +1,14 @@
 development:
   community_name: My Fiber Community (Development)
   exception_notifier_email: 'skeinlink@example.com'
+  object_storage_service: local
 production:
   community_name: My Fiber Community
   exception_notifier_email: 'skeinlink@example.com'
+  s3_region: us-east-1
+  s3_bucket: your-bucket-here
+# Specify a different endpoint for S3-compatible services like DigitalOcean
+# s3_endpoint: https://s3.us-east-1.amazonaws.com
+  object_storage_service: amazon # see config/storage.yml
+# storage_service_mirror_primary: local
+# storage_service_mirrors: [local]
