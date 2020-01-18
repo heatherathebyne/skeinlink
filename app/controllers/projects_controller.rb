@@ -92,9 +92,12 @@ class ProjectsController < ApplicationController
   private
 
   def attach_images
-    project_images_params[:images].each do |image|
-      @project.images.attach image
-    end if project_images_params[:images]
+    if project_images_params[:images] # I must have had a reason to check this explicitly but I don't know what it was
+      project_images_params[:images].each do |image|
+        process_original_image(image) # auto rotate, strip metadata, resize
+        @project.images.attach image
+      end
+    end
   end
 
   def set_project
