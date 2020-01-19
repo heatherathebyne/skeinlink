@@ -10,8 +10,6 @@ class StashYarn < ApplicationRecord
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
                      size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
 
-  before_save :replace_image_filename
-
   def name
     yarn_product.try(:name_with_company) || super
   end

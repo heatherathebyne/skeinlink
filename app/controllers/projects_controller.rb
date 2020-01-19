@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:edit, :update, :destroy, :destroy_image]
+  before_action :set_project, only: [:update, :destroy, :destroy_image]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /projects
@@ -16,9 +16,9 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     if user_signed_in?
-      @project = Project.find(params[:id])
+      @project = Project.with_attached_images.find(params[:id])
     else
-      @project = Project.where(publicly_visible: true).find_by(id: params[:id])
+      @project = Project.with_attached_images.where(publicly_visible: true).find_by(id: params[:id])
     end
 
     unless @project
@@ -35,6 +35,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @project = current_user.projects.with_attached_images.find(params[:id])
   end
 
   # POST /projects

@@ -11,6 +11,7 @@ class ImageAttachmentService
     images.each do |image|
       begin
         validate_image(image)
+        rename_image(image)
         process_image(image)
         attach_image(image)
       rescue StandardError => e
@@ -28,6 +29,10 @@ class ImageAttachmentService
 
   def validate_image(image)
     raise 'Not a jpg or png image' unless ['image/png', 'image/jpg', 'image/jpeg'].include?(image.content_type)
+  end
+
+  def rename_image(image)
+    image.original_filename = SecureRandom.hex(8)
   end
 
   def process_image(image)

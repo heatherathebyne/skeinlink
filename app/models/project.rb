@@ -15,8 +15,6 @@ class Project < ApplicationRecord
 
   serialize :image_order, Array
 
-  before_save :replace_image_filenames
-
   def self.public_for_user(user_id)
     where(user_id: user_id, publicly_visible: true)
   end
