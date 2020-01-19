@@ -64,9 +64,12 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-    email_prefix: '[SKEINLINK] ',
-    sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
-    exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]]
-  }
+    email: {
+      email_prefix: '[SKEINLINK] ',
+      sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
+      exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]],
+      sections: ['request', 'backtrace'],
+      background_sections: ['backtrace']
+    },
+    error_grouping: true
 end
