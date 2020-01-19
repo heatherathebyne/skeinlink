@@ -1,6 +1,18 @@
 development:
   community_name: Configuration Defaults Loaded - Check config/skeinlink.yml
   exception_notifier_email: 'skeinlink@example.com'
+  s3_region: us-east-1
+  s3_bucket: your-bucket-here
+  s3_endpoint: https://s3.us-east-1.amazonaws.com
+  object_storage_service: local
+  storage_service_mirror_primary: local
+  storage_service_mirrors: [local]
 production:
   community_name: Configuration Defaults Loaded - Check configuration
   exception_notifier_email: 'skeinlink@example.com'
+  s3_region: us-east-1
+  s3_bucket: your-bucket-here
+  s3_endpoint: https://s3.us-east-1.amazonaws.com
+  object_storage_service: local
+  storage_service_mirror_primary: local
+  storage_service_mirrors: [local]

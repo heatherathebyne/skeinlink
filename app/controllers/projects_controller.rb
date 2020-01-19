@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user_id = current_user.id
 
-    attach_images
+    ImageAttachmentService.new(record: @project, images: project_images_params[:images]).call
 
     respond_to do |format|
       if @project.save
@@ -59,7 +59,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    attach_images
+    ImageAttachmentService.new(record: @project, images: project_images_params[:images]).call
 
     respond_to do |format|
       if @project.update(project_params)
@@ -90,12 +90,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
-  def attach_images
-    project_images_params[:images].each do |image|
-      @project.images.attach image
-    end if project_images_params[:images]
-  end
 
   def set_project
     @project = current_user.projects.find(params[:id])

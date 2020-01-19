@@ -28,8 +28,7 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = Rails.configuration.skeinlink[:object_storage_service].to_sym
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
@@ -65,9 +64,12 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-    email_prefix: '[SKEINLINK] ',
-    sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
-    exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]]
-  }
+    email: {
+      email_prefix: '[SKEINLINK] ',
+      sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
+      exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]],
+      sections: ['request', 'backtrace'],
+      background_sections: ['backtrace']
+    },
+    error_grouping: true
 end

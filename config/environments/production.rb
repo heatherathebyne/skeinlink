@@ -35,8 +35,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = Rails.configuration.skeinlink[:object_storage_service].to_sym
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -112,9 +111,12 @@ Rails.application.configure do
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
 
   Rails.application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-    email_prefix: '[SKEINLINK] ',
-    sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
-    exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]]
-  }
+    email: {
+      email_prefix: '[SKEINLINK] ',
+      sender_address: %{"notifier" <exception_notifier@skeinlink.com>},
+      exception_recipients: [Rails.configuration.skeinlink[:exception_notifier_email]],
+      sections: ['request', 'backtrace'],
+      background_sections: ['backtrace']
+    },
+    error_grouping: true
 end

@@ -18,6 +18,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'image_processing', '~> 1.2'
 gem 'active_storage_validations'
 
+gem 'aws-sdk-s3', require: false
 gem 'bootstrap'
 gem 'jquery-rails'
 gem 'devise'

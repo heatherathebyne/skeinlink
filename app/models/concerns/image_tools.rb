@@ -1,5 +1,4 @@
 THUMBNAIL_VARIANT_OPTIONS = { resize_to_limit: [250, 250], auto_orient: true, strip: true }.freeze
-FULL_SIZE_VARIANT_OPTIONS = { resize_to_limit: [1280, 1280], auto_orient: true, strip: true }.freeze
 
 module ImageTools
   extend ActiveSupport::Concern
@@ -7,14 +6,12 @@ module ImageTools
   included do
     def thumb_and_full_images
       images.map do |image|
-        { thumb: image.variant(**THUMBNAIL_VARIANT_OPTIONS), full: image.variant(**FULL_SIZE_VARIANT_OPTIONS) }
+        { thumb: image.variant(**THUMBNAIL_VARIANT_OPTIONS), full: image }
       end
     end
 
     def full_images
-      images.map do |image|
-        image.variant(**FULL_SIZE_VARIANT_OPTIONS)
-      end
+      images
     end
 
     def thumb_images
@@ -30,7 +27,7 @@ module ImageTools
     end
 
     def full_image
-      image.variant(**FULL_SIZE_VARIANT_OPTIONS)
+      image
     end
 
     def thumb_image
