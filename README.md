@@ -1,12 +1,15 @@
 # SkeinLink
 
-Free and open web application software for tracking fiber arts projects and supplies. Track knitting, crocheting, weaving, and spinning projects, and catalog stash, for 1-10,000+ users. (I pulled that number out of a hat, but it isn't unrealistic.)
+Free and open web application software for tracking fiber arts projects and supplies. Track
+knitting, crocheting, weaving, and spinning projects, and catalog stash, for an entire fiber arts
+community.
 
 ## Important information
 
-**Personal project warning!** I'm writing this for myself first, and features are implemented in
-roughly the order in which they are most important to me. Code quality may be all over the place.
-Specs will happen when I feel like writing them. I ❤️ pull requests!
+**Personal project warning!** I am writing this on my own time as a personal project. If you're here
+to check out my code quality, welcome! Know that this isn't my most polished work, and for the sake
+of my time, I make some choices here that I wouldn't make on a larger team. We can chat if you have
+questions.
 
 **This is not desktop software!** If you are here looking for a personal download-and-install project
 tracker, this isn't it. This is a web application designed to be hosted on a web server. You can, of
@@ -14,14 +17,10 @@ course, run it locally on your own system, but there are extra steps involved.
 
 **This is nowhere near feature complete!** Or even feature adequate.
 
-**This is currently not safe to put on the public internet!** No authorization system, no file type
-restrictions, ... the list goes on. It's not that the app is *inherently* unsafe, just that I
-haven't yet put in mitigations for certain common methods of abuse.
-
 ## What this software is made of
 
 * MRI Ruby 2.6.5
-* Rails 6.0.1
+* Rails 6.0
 
 ## Additional requirements
 
