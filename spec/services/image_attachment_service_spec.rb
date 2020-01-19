@@ -2,10 +2,45 @@ require 'rails_helper'
 include ActionDispatch::TestProcess::FixtureFile
 
 RSpec.describe ImageAttachmentService do
-  let(:png_image) { fixture_file_upload('files/images/png-test-1.png', 'image/png') }
-  let(:jpg_image) { fixture_file_upload('files/images/jpg-test-1.jpg', 'image/jpeg') }
-  let(:non_image_1) { fixture_file_upload('files/not_an_image1.txt', 'text/plain') }
-  let(:non_image_2) { fixture_file_upload('files/not_an_image2.txt', 'text/plain') }
+  # These image tempfiles get mutated in place; don't mutate the originals
+  let(:tempfile_dir) { File.join(Rails.root, 'tmp', 'image_attachment_service_spec') }
+
+  before do
+    FileUtils.mkdir_p(tempfile_dir)
+    FileUtils.cp([file_fixture('images/jpg-test-1.jpg'),
+                  file_fixture('images/png-test-1.png'),
+                  file_fixture('not_an_image1.txt')],
+                 tempfile_dir
+                )
+  end
+
+  after do
+    FileUtils.rm_r(tempfile_dir)
+  end
+
+  let(:png_image) do
+    ActionDispatch::Http::UploadedFile.new({
+      filename: 'png-test-1.png',
+      type: 'image/png',
+      tempfile: File.open(File.join(tempfile_dir, 'png-test-1.png'))
+    })
+  end
+
+  let(:jpg_image) do
+    ActionDispatch::Http::UploadedFile.new({
+      filename: 'jpg-test-1.jpg',
+      type: 'image/jpeg',
+      tempfile: File.open(File.join(tempfile_dir, 'jpg-test-1.jpg'))
+    })
+  end
+
+  let(:non_image_1) do
+    ActionDispatch::Http::UploadedFile.new({
+      filename: 'not_an_image1.txt',
+      type: 'text/plain',
+      tempfile: File.open(File.join(tempfile_dir, 'not_an_image1.txt'))
+    })
+  end
 
   let(:multi_image_record) { double('AR record') }
   let(:single_image_record) { double('AR record with single image') }
@@ -39,11 +74,17 @@ RSpec.describe ImageAttachmentService do
 
   context 'when many valid images are provided' do
     let(:images) { [png_image, jpg_image] }
-    before { subject }
 
     it 'attaches all images to the record' do
+      subject
       expect(record_images).to have_received(:attach).with(png_image).ordered
       expect(record_images).to have_received(:attach).with(jpg_image).ordered
+    end
+
+    it 'renames the files' do
+      expect(png_image).to receive(:original_filename=)
+      expect(jpg_image).to receive(:original_filename=)
+      subject
     end
   end
 
@@ -81,34 +122,41 @@ RSpec.describe ImageAttachmentService do
     end
   end
 
-  context 'when attempting to attach one image to a record which has_one_attached :image' do
-    let(:record) { single_image_record }
-    let(:images) { png_image }
+  context 'when record has_one_attached :image' do
+    context 'when attempting to attach one image' do
+      let(:record) { single_image_record }
+      let(:images) { png_image }
 
-    it 'attaches the images to the record' do
-      subject
-      expect(record_images).to have_received(:attach).with(png_image)
+      it 'attaches the image to the record' do
+        subject
+        expect(record_images).to have_received(:attach).with(png_image)
+      end
+
+      it 'renames the file' do
+        expect(png_image).to receive(:original_filename=)
+        subject
+      end
     end
-  end
 
-  context 'when no images are provided to has_one_attached :image' do
-    let(:record) { single_image_record }
-    let(:images) { [] }
+    context 'when no images are provided to has_one_attached :image' do
+      let(:record) { single_image_record }
+      let(:images) { [] }
 
-    it 'does not blow up' do
-      expect{ subject }.to_not raise_error
+      it 'does not blow up' do
+        expect{ subject }.to_not raise_error
+      end
     end
-  end
 
-  context 'when attempting to attach many images to a record which has_one_attached :image' do
-    let(:record) { single_image_record }
-    let(:images) { [png_image, non_image_1, jpg_image] }
+    context 'when attempting to attach many images' do
+      let(:record) { single_image_record }
+      let(:images) { [png_image, non_image_1, jpg_image] }
 
-    it 'attaches the last successful image to the record' do
-      subject
-      expect(record_images).to have_received(:attach).with(png_image).ordered
-      expect(record_images).to have_received(:attach).with(jpg_image).ordered
-      expect(record_images).to_not have_received(:attach).with(non_image_1)
+      it 'attaches the last successful image to the record' do
+        subject
+        expect(record_images).to have_received(:attach).with(png_image).ordered
+        expect(record_images).to have_received(:attach).with(jpg_image).ordered
+        expect(record_images).to_not have_received(:attach).with(non_image_1)
+      end
     end
   end
 end
