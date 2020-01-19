@@ -16,6 +16,8 @@ class YarnDatabaseController < ApplicationController
   def create
     @yarn_product = YarnProduct.new(yarn_product_params)
 
+    ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+
     if @yarn_product.save
       redirect_to yarn_database_path(@yarn_product.id), notice: 'Yarn database entry added!'
     else
@@ -28,6 +30,8 @@ class YarnDatabaseController < ApplicationController
   end
 
   def update
+    ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+
     if @yarn_product.update(yarn_product_params)
       redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry updated!'
     else
@@ -44,6 +48,10 @@ class YarnDatabaseController < ApplicationController
   def yarn_product_params
     params.require(:yarn_product)
           .permit(:name, :yarn_company_id, :skein_gram_weight, :skein_yards, :fiber_type_name,
-                  :weight_name, :craft_yarn_council_weight, :weight_id, :image)
+                  :weight_name, :craft_yarn_council_weight, :weight_id)
+  end
+
+  def yarn_product_image_params
+    params.require(:yarn_product).permit(:image)
   end
 end
