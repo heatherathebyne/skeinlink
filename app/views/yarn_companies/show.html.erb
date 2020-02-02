@@ -1,18 +1,20 @@
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true) %>
+
 <h1><%= @yarn_company.name %> <%= link_to icon('far', 'edit'), edit_yarn_company_path(@yarn_company) %></h1>
 
-<div class='row'>
-  <div class='col'>
-    <% unless @yarn_company.website.blank? %>
-      <div><%= link_to 'Website', @yarn_company.website %></div>
-    <% end %>
+<% unless @yarn_company.website.blank? %>
+  <div>Visit at <%= link_to @yarn_company.website, @yarn_company.website %></div>
+<% end %>
 
-    <div><%= @yarn_company.description %></div>
+<% unless @yarn_company.referral_link.blank? || @yarn_company.referral_partner.blank? %>
+  <div><%= link_to "Buy at #{@yarn_company.referral_partner}", @yarn_company.referral_link, class: 'btn btn-outline-primary' %></div>
+<% end %>
 
-    <% unless @yarn_company.referral_link.blank? || @yarn_company.referral_partner.blank? %>
-      <div><%= link_to "Buy at #{@yarn_company.referral_partner}", @yarn_company.referral_link %></div>
-    <% end %>
-  </div>
-</div>
+<hr>
+
+<div><%= ActiveSupport::SafeBuffer.new(markdown.render @yarn_company.description) %></div>
+
+<hr>
 
 <div class='container'>
   <%= link_to 'Add Another Yarn Company', new_yarn_company_path, class: 'btn btn-primary' %>
