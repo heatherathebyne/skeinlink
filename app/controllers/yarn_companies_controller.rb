@@ -40,6 +40,6 @@ class YarnCompaniesController < ApplicationController
   end
 
   def yarn_company_params
-    params.require(:yarn_company).permit(:name)
+    params.require(:yarn_company).permit(:name, :website, :referral_link, :description, :referral_partner)
   end
 end

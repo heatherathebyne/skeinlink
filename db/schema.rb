@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_25_113514) do
+ActiveRecord::Schema.define(version: 2020_02_02_133126) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -142,6 +142,10 @@ ActiveRecord::Schema.define(version: 2020_01_25_113514) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "website"
+    t.text "description"
+    t.string "referral_link"
+    t.string "referral_partner"
     t.index ["name"], name: "index_yarn_companies_on_name", unique: true
   end
 
