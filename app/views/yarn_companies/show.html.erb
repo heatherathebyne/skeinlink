@@ -12,7 +12,9 @@
 
 <hr>
 
-<div><%= ActiveSupport::SafeBuffer.new(markdown.render @yarn_company.description) %></div>
+<% unless @yarn_company.description.blank? %>
+  <div><%= ActiveSupport::SafeBuffer.new(markdown.render @yarn_company.description) %></div>
+<% end %>
 
 <hr>
 
