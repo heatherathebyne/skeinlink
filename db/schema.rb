@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_02_133126) do
+ActiveRecord::Schema.define(version: 2020_02_06_221753) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -128,8 +128,13 @@ ActiveRecord::Schema.define(version: 2020_02_02_133126) do
     t.boolean "role_admin", default: false, null: false
     t.boolean "role_maintainer", default: false, null: false
     t.boolean "role_moderator", default: false, null: false
+    t.string "name", default: "Anonymous Crafter", null: false
+    t.text "about_me", default: "", null: false
+    t.boolean "active", default: true, null: false
+    t.index ["active"], name: "index_users_on_active"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["name"], name: "index_users_on_name"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["role_admin"], name: "index_users_on_role_admin"
     t.index ["role_maintainer"], name: "index_users_on_role_maintainer"

@@ -19,4 +19,13 @@ Rails.application.routes.draw do
       get :stash
     end
   end
+
+  namespace :admin do
+    resources :users, except: [:destroy] do
+      member do
+        patch :enable
+        patch :disable
+      end
+    end
+  end
 end
