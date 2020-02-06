@@ -43,6 +43,11 @@
               <li class='nav-item'>
                 <%= link_to 'Yarn Companies', yarn_companies_path, class: 'nav-link' %>
               </li>
+              <% if current_user.admin? %>
+                <li class='nav-item'>
+                  <%= link_to 'Admin CP', admin_users_path, class: 'nav-link' %>
+                </li>
+              <% end %>
               <li>
                 <%= link_to('Logout', destroy_user_session_path, class: 'nav-link', method: :delete) %>
               </li>
