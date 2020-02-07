@@ -16,9 +16,11 @@
 
       <% @yarn_products.each do |product| %>
       <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card">
+        <div class="card h-100">
           <% unless product.image.blank? %>
-            <%= image_tag(product.thumb_image, class: 'card-img-top') %>
+            <div class='square-container'>
+              <%= image_tag(product.thumb_image, class: 'card-img-top') %>
+            </div>
           <% end %>
           <div class="card-body">
             <h4 class="card-title">
