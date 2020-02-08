@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_221753) do
+ActiveRecord::Schema.define(version: 2020_02_08_104019) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -165,6 +165,9 @@ ActiveRecord::Schema.define(version: 2020_02_06_221753) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "weight_id", limit: 1
+    t.text "description", default: "", null: false
+    t.string "referral_link"
+    t.string "referral_partner"
     t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"
     t.index ["craft_yarn_council_weight"], name: "index_yarn_products_on_craft_yarn_council_weight"
     t.index ["name"], name: "index_yarn_products_on_name"

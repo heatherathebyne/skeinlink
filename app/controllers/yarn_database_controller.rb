@@ -48,7 +48,8 @@ class YarnDatabaseController < ApplicationController
   def yarn_product_params
     params.require(:yarn_product)
           .permit(:name, :yarn_company_id, :skein_gram_weight, :skein_yards, :fiber_type_name,
-                  :weight_name, :craft_yarn_council_weight, :weight_id)
+                  :weight_name, :craft_yarn_council_weight, :weight_id, :description,
+                  :referral_link, :referral_partner)
   end
 
   def yarn_product_image_params
