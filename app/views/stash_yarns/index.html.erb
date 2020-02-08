@@ -14,9 +14,11 @@
 
       <% @stash_yarns.each do |stash_yarn| %>
       <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card">
+        <div class="card h-100">
           <% unless stash_yarn.image.blank? %>
-            <%= image_tag(stash_yarn.thumb_image, class: 'card-img-top') %>
+            <div class='square-container'>
+              <%= image_tag(stash_yarn.thumb_image, class: 'card-img-top') %>
+            </div>
           <% end %>
           <div class="card-body">
             <h4 class="card-title">

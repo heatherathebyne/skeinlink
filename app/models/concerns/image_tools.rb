@@ -1,4 +1,4 @@
-THUMBNAIL_VARIANT_OPTIONS = { resize_to_limit: [250, 250], auto_orient: true, strip: true }.freeze
+THUMBNAIL_VARIANT_OPTIONS = { resize: "500x500^", auto_orient: true, strip: true }.freeze
 
 module ImageTools
   extend ActiveSupport::Concern

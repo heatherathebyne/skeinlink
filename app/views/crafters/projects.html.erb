@@ -16,9 +16,11 @@
 
       <% @projects.each do |project| %>
       <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card">
+        <div class="card h-100">
           <% if project.thumb_images.first %>
-            <%= image_tag(project.thumb_images.first, class: 'card-img-top') %>
+            <div class='square-container'>
+              <%= image_tag(project.thumb_images.first, class: 'card-img-top') %>
+            </div>
           <% end %>
           <div class="card-body">
             <h4 class="card-title">
