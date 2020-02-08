@@ -1,3 +1,5 @@
+<% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true) %>
+
 <h1><%= @yarn_product.name_with_company %> <%= link_to icon('far', 'edit'), edit_yarn_database_path(@yarn_product) %></h1>
 
 <div class='row'>
@@ -11,6 +13,18 @@
     <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
 
     <div><strong><%= @yarn_product.common_weight %></strong> weight</div>
+
+    <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
+      <div><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary' %></div>
+    <% end %>
+
+    <hr>
+
+    <% unless @yarn_product.description.blank? %>
+      <div><%= ActiveSupport::SafeBuffer.new(markdown.render @yarn_product.description) %></div>
+    <% end %>
+
+    <hr>
   </div>
 </div>
 
