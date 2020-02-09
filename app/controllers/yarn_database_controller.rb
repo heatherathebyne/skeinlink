@@ -1,5 +1,6 @@
 class YarnDatabaseController < ApplicationController
   before_action :set_yarn_product, only: [:show, :edit, :update]
+  before_action :require_maintainer, only: [:new, :create, :edit, :update]
 
   def index
     @yarn_products = YarnProduct.all.order(created_at: :desc)
@@ -15,12 +16,14 @@ class YarnDatabaseController < ApplicationController
 
   def create
     @yarn_product = YarnProduct.new(yarn_product_params)
+    authorize @yarn_product, :create?
 
     ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
 
     if @yarn_product.save
       redirect_to yarn_database_path(@yarn_product.id), notice: 'Yarn database entry added!'
     else
+      @yarn_companies = YarnCompany.all
       render :new
     end
   end
@@ -30,12 +33,14 @@ class YarnDatabaseController < ApplicationController
   end
 
   def update
+    authorize @yarn_product, :update?
     ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
 
     if @yarn_product.update(yarn_product_params)
       redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry updated!'
     else
-      render :new
+      @yarn_companies = YarnCompany.all
+      render :edit
     end
   end
 
