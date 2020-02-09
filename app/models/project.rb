@@ -18,4 +18,8 @@ class Project < ApplicationRecord
   def self.public_for_user(user_id)
     where(user_id: user_id, publicly_visible: true)
   end
+
+  def default_image_owner
+    user.name
+  end
 end

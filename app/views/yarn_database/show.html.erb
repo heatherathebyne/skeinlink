@@ -6,6 +6,7 @@
   <div class='col'>
     <% unless @yarn_product.image.blank? %>
       <%= image_tag @yarn_product.full_image, class: 'img-fluid border border-primary rounded' %>
+      <%= image_attribution(@yarn_product.image) %>
     <% end %>
 
     <div><strong><%= @yarn_product.skein_yards %></strong> yards / <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein</div>
