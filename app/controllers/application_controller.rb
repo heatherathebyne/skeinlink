@@ -23,7 +23,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_maintainer
-    throw :abort unless current_user.maintainer?
+    unless current_user.maintainer?
+      flash[:alert] = 'Only maintainers can change this.'
+      redirect_back(fallback_location: root_path)
+      return
+    end
   end
 
   def require_moderator
