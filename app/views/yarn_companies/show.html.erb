@@ -7,7 +7,7 @@
 <% end %>
 
 <% unless @yarn_company.referral_link.blank? || @yarn_company.referral_partner.blank? %>
-  <div><%= link_to "Buy at #{@yarn_company.referral_partner}", @yarn_company.referral_link, class: 'btn btn-outline-primary' %></div>
+  <div><%= link_to "Buy at #{@yarn_company.referral_partner}", @yarn_company.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
 <% end %>
 
 <hr>
