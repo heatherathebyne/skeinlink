@@ -15,7 +15,7 @@
     <div><strong><%= @yarn_product.common_weight %></strong> weight</div>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
-      <div><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary' %></div>
+      <div><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
     <% end %>
 
     <hr>
