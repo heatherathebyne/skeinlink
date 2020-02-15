@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :projects do
     member do
       delete :destroy_image
+      patch :update_attribution
     end
   end
   resources :journal_entries, only: [:create, :update, :destroy]

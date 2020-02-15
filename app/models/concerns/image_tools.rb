@@ -26,6 +26,12 @@ module ImageTools
       end
     end
 
+    def images_with_attachment_id
+      images.map do |image|
+        { thumb: image.variant(**THUMBNAIL_VARIANT_OPTIONS), full: image, attachment_id: image.id }
+      end
+    end
+
     def full_image
       image
     end

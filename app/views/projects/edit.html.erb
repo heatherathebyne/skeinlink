@@ -1,18 +1,52 @@
-<h1>Editing Project</h1>
+<h1>Editing <%= @project.name %></h1>
 
 <div class='row text-center text-lg-left py-4'>
-  <% @project.thumb_images_with_attachment_id.each do |image| %>
+  <% @project.images_with_attachment_id.each do |image| %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image[:attachment_id] %>'>
       <%= image_tag image[:thumb], class: 'img-fluid img-thumbnail' %>
-      <%= button_to 'Remove image',
+      <%= content_tag('small', image[:full].image_attribution, class: 'text-muted',
+                      id: "attribution_#{image[:attachment_id]}") %>
+
+      <a class='btn btn-outline-primary btn-sm'
+         data-toggle='collapse'
+         href='#image_<%= image[:attachment_id] %>'
+         role='button'
+         aria-expanded='false'
+         aria-controls='image_<%= image[:attachment_id] %>'>
+         <%= icon('far', 'edit') %>
+      </a>
+
+      <div class='collapse'
+           id='image_<%= image[:attachment_id] %>'
+           data-which-form='attribution'
+           data-image-id='<%= image[:attachment_id] %>'>
+        <%= render 'shared/image_attribution_form', image: image[:full], project: @project %>
+      </div>
+
+      <%= link_to icon('far', 'trash-alt'),
                     { action: 'destroy_image', image_id: image[:attachment_id] },
-                    method: :delete, remote: true, class: 'btn btn-outline-danger',
-                    data: { confirm: 'Are you sure you wish to remove this image?' } %>
+                    method: :delete, remote: true, class: 'btn btn-outline-danger btn-sm',
+                    data: { confirm: 'Are you sure you wish to remove this image?',
+                            'which-form' => 'destroy_image', 'image-id' => image[:attachment_id] } %>
     </div>
   <% end %>
 </div>
 
 <%= render 'form', project: @project %>
 
-<%= link_to 'Show', @project %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Cancel and go back', @project %>
+
+<script type='text/javascript'>
+  $(document).ready(_ => {
+    $('[data-which-form="attribution"] > form').on('ajax:success', event => {
+      parentDiv = $(event.currentTarget).parent();
+      attributionTag = $('#attribution_' + parentDiv.data('image-id'));
+      parentDiv.collapse('hide');
+      attributionTag.html(event.detail[0]);
+    });
+
+    $('[data-which-form="destroy_image"]').on('ajax:complete', event => {
+      $('#project-image-' + $(event.currentTarget).data('image-id')).hide();
+    });
+  })
+</script>
