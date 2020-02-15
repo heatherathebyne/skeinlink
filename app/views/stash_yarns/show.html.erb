@@ -4,7 +4,7 @@
   <div class='col'>
     <% unless @stash_yarn.image.blank? %>
       <%= image_tag @stash_yarn.full_image, class: 'img-fluid border border-primary rounded' %>
-      <%= image_attribution @stash_yarn.image %>
+      <%= @stash_yarn.image.image_attribution %>
     <% end %>
   </div>
   <div class='col'>

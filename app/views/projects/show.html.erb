@@ -12,7 +12,7 @@
       <a href='<%= url_for(variants[:full]) %>' target='_blank'>
         <%= image_tag variants[:thumb], class: 'img-fluid img-thumbnail' %>
       </a>
-      <%= image_attribution(variants[:full]) %>
+      <%= variants[:full].image_attribution %>
     </div>
   <% end %>
 </div>

@@ -24,5 +24,9 @@ module Skeinlink
     # the framework and any gems in your application.
 
     config.autoload_paths += ["#{config.root}/app/services"]
+
+    config.to_prepare do
+      ActiveStorage::Attachment.include CoreExtensions::ActiveStorage::Attachment::AttachmentMetadata
+    end
   end
 end
