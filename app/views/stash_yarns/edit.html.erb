@@ -1,5 +1,6 @@
 <h1>Edit <%= @stash_yarn.name %></h1>
 
+<% unless @stash_yarn.image.blank? %>
 <div class='row text-center text-lg-left py-4'>
   <% image = @stash_yarn.image %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
@@ -25,4 +26,6 @@
       </div>
     </div>
 </div>
+<% end %>
+
 <%= render 'form', stash_yarn: @stash_yarn %>

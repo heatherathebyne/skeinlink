@@ -1,5 +1,6 @@
 <h1>Edit <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
 
+<% unless @yarn_product.image.blank? %>
 <div class='row text-center text-lg-left py-4'>
   <% image = @yarn_product.image %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
@@ -25,5 +26,6 @@
       </div>
     </div>
 </div>
+<% end %>
 
 <%= render 'form', yarn_product: @yarn_product, url_for_yarn_database: yarn_database_path(@yarn_product.id) %>

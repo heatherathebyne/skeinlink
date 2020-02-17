@@ -7,14 +7,14 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
+require 'rspec/rails'
+# Add additional requires below this line. Rails is not loaded until this point!
+
 # Clearly I haven't decided whether or not Craft actually needs to be an AR model,
 # and don't want to embarrass myself by using model fixtures in 2020.
 # This is a third option, just as foolish; but I've never tried it before!
 # It'll be fun.
 require "#{Rails.root}/db/seeds.rb"
-
-require 'rspec/rails'
-# Add additional requires below this line. Rails is not loaded until this point!
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
