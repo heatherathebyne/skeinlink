@@ -61,6 +61,7 @@
 
   <div class='form-group'>
     <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+    <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
 
   <%= f.submit 'Stash it!' %>
