@@ -1,5 +1,5 @@
 class StashYarnsController < ApplicationController
-  before_action :set_stash_yarn, only: [:show, :edit, :update, :destroy]
+  before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
 
   def index
     @stash_yarns = StashYarn.where(user_id: current_user.id).order(:yarn_product_id)
@@ -37,6 +37,16 @@ class StashYarnsController < ApplicationController
       redirect_to @stash_yarn
     else
       render :edit
+    end
+  end
+
+  def update_attribution
+    image = @stash_yarn.image
+    head :not_found && return unless image
+    if image.try(:update, attribution: params[:attribution])
+      render plain: image.image_attribution
+    else
+      head :internal_server_error
     end
   end
 

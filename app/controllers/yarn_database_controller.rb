@@ -1,6 +1,6 @@
 class YarnDatabaseController < ApplicationController
-  before_action :set_yarn_product, only: [:show, :edit, :update]
-  before_action :require_maintainer, only: [:new, :create, :edit, :update]
+  before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
+  before_action :require_maintainer, only: [:new, :create, :edit, :update, :update_attribution]
 
   def index
     @yarn_products = YarnProduct.all.order(created_at: :desc)
@@ -41,6 +41,16 @@ class YarnDatabaseController < ApplicationController
     else
       @yarn_companies = YarnCompany.all
       render :edit
+    end
+  end
+
+  def update_attribution
+    image = @yarn_product.image
+    head :not_found && return unless image
+    if image.try(:update, attribution: params[:attribution])
+      render plain: image.image_attribution
+    else
+      head :internal_server_error
     end
   end
 

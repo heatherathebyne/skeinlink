@@ -1,4 +1,4 @@
-<%= form_with(url: update_attribution_project_path(image_id: image.id), method: :patch) do %>
+<%= form_with(url: submit_to, method: :patch) do %>
   image ©<%= text_field_tag :attribution, image.attribution %>
   <%= submit_tag 'Update' %>
 <% end %>

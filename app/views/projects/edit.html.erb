@@ -20,7 +20,8 @@
            id='image_<%= image[:attachment_id] %>'
            data-which-form='attribution'
            data-image-id='<%= image[:attachment_id] %>'>
-        <%= render 'shared/image_attribution_form', image: image[:full], project: @project %>
+           <%= render 'shared/image_attribution_form', image: image[:full],
+                      submit_to: update_attribution_project_path(image_id: image[:full].id) %>
       </div>
 
       <%= link_to icon('far', 'trash-alt'),
@@ -38,13 +39,6 @@
 
 <script type='text/javascript'>
   $(document).ready(_ => {
-    $('[data-which-form="attribution"] > form').on('ajax:success', event => {
-      parentDiv = $(event.currentTarget).parent();
-      attributionTag = $('#attribution_' + parentDiv.data('image-id'));
-      parentDiv.collapse('hide');
-      attributionTag.html(event.detail[0]);
-    });
-
     $('[data-which-form="destroy_image"]').on('ajax:complete', event => {
       $('#project-image-' + $(event.currentTarget).data('image-id')).hide();
     });

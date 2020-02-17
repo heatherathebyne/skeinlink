@@ -1,2 +1,28 @@
-<h1><%= @stash_yarn.name %></h1>
+<h1>Edit <%= @stash_yarn.name %></h1>
+
+<div class='row text-center text-lg-left py-4'>
+  <% image = @stash_yarn.image %>
+    <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
+      <%= image_tag image.thumbnail, class: 'img-fluid img-thumbnail' %>
+      <%= content_tag('small', image.image_attribution, class: 'text-muted',
+                      id: "attribution_#{image.id}") %>
+
+      <a class='btn btn-outline-primary btn-sm'
+         data-toggle='collapse'
+         href='#image_<%= image.id %>'
+         role='button'
+         aria-expanded='false'
+         aria-controls='image_<%= image.id %>'>
+         <%= icon('far', 'edit') %>
+      </a>
+
+      <div class='collapse'
+           id='image_<%= image.id %>'
+           data-which-form='attribution'
+           data-image-id='<%= image.id %>'>
+           <%= render 'shared/image_attribution_form', image: image,
+                      submit_to: update_attribution_stash_yarn_path(image_id: image.id) %>
+      </div>
+    </div>
+</div>
 <%= render 'form', stash_yarn: @stash_yarn %>

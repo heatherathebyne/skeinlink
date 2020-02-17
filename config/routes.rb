@@ -3,15 +3,27 @@ Rails.application.routes.draw do
 
   root 'projects#index'
 
-  resources :yarn_database, except: [:destroy]
+  resources :yarn_database, except: [:destroy] do
+    member do
+      patch :update_attribution
+    end
+  end
+
   resources :projects do
     member do
       delete :destroy_image
       patch :update_attribution
     end
   end
+
   resources :journal_entries, only: [:create, :update, :destroy]
-  resources :stash_yarns
+
+  resources :stash_yarns do
+    member do
+      patch :update_attribution
+    end
+  end
+
   resources :yarn_companies, except: [:destroy]
 
   resources :crafters, only: [:show] do

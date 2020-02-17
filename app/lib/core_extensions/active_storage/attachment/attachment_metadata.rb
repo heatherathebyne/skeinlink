@@ -10,6 +10,10 @@ module CoreExtensions
                                end
           "image ©#{attribution_string}"
         end
+
+        def thumbnail
+          variant(**THUMBNAIL_VARIANT_OPTIONS)
+        end
       end
     end
   end
