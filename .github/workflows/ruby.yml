@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -13,6 +12,9 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+    - name: Install sqlite
+      run: |
+        sudo apt-get install libsqlite3-dev  
     - name: Build and test with RSpec
       run: |
         gem install bundler
