@@ -7,4 +7,8 @@ module ApplicationHelper
     return false unless current_user and something.user_id
     current_user.id == something.user_id
   end
+
+  def image_attribution_notice
+    'Please only upload images which you own or which you have received permission to use :)'
+  end
 end

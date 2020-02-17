@@ -1,5 +1,7 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:update, :destroy, :destroy_image]
+  include UpdateAttributionAction
+
+  before_action :set_project, only: [:update, :destroy, :destroy_image, :update_attribution]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
   # GET /projects
@@ -85,9 +87,16 @@ class ProjectsController < ApplicationController
 
   def destroy_image
     image = @project.images.find(params[:image_id])
-    head :not_found unless image
-    head :ok if image.try(:destroy)
-    head :internal_server_error
+    head :not_found && return unless image
+    if image.try(:destroy)
+      head :ok
+    else
+      head :internal_server_error
+    end
+  end
+
+  def update_attribution
+    update_image_attribution @project.images.find(params[:image_id])
   end
 
   private

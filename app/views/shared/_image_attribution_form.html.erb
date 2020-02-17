@@ -1,0 +1,4 @@
+<%= form_with(url: submit_to, method: :patch) do %>
+  image ©<%= text_field_tag :attribution, image.attribution %>
+  <%= submit_tag 'Update' %>
+<% end %>

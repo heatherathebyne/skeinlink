@@ -1,5 +1,7 @@
 class StashYarnsController < ApplicationController
-  before_action :set_stash_yarn, only: [:show, :edit, :update, :destroy]
+  include UpdateAttributionAction
+
+  before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
 
   def index
     @stash_yarns = StashYarn.where(user_id: current_user.id).order(:yarn_product_id)
@@ -38,6 +40,10 @@ class StashYarnsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def update_attribution
+    update_image_attribution @stash_yarn.image
   end
 
   def destroy

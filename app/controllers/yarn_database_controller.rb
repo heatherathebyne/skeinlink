@@ -1,6 +1,8 @@
 class YarnDatabaseController < ApplicationController
-  before_action :set_yarn_product, only: [:show, :edit, :update]
-  before_action :require_maintainer, only: [:new, :create, :edit, :update]
+  include UpdateAttributionAction
+
+  before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
+  before_action :require_maintainer, only: [:new, :create, :edit, :update, :update_attribution]
 
   def index
     @yarn_products = YarnProduct.all.order(created_at: :desc)
@@ -42,6 +44,10 @@ class YarnDatabaseController < ApplicationController
       @yarn_companies = YarnCompany.all
       render :edit
     end
+  end
+
+  def update_attribution
+    update_image_attribution @yarn_product.image
   end
 
   private

@@ -18,6 +18,10 @@ class StashYarn < ApplicationRecord
     yarn_product.try(:common_weight) || common_weight
   end
 
+  def default_image_owner
+    user.name
+  end
+
   private
 
   def has_a_name_or_product

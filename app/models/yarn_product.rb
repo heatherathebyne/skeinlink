@@ -13,4 +13,8 @@ class YarnProduct < ApplicationRecord
   def name_with_company
     "#{yarn_company.try(:name)} #{name}"
   end
+
+  def default_image_owner
+    yarn_company.name
+  end
 end

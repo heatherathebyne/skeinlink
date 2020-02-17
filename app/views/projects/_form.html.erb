@@ -49,6 +49,7 @@
   <div class='form-group'>
     <%= label_tag :images %>
     <%= f.file_field :images, multiple: true %>
+    <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
   <%= f.submit %>
 <% end %>
