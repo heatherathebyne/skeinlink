@@ -1,4 +1,6 @@
 class ProjectsController < ApplicationController
+  include UpdateAttributionAction
+
   before_action :set_project, only: [:update, :destroy, :destroy_image, :update_attribution]
   skip_before_action :authenticate_user!, only: [:index, :show]
 
@@ -94,13 +96,7 @@ class ProjectsController < ApplicationController
   end
 
   def update_attribution
-    image = @project.images.find(params[:image_id])
-    head :not_found && return unless image
-    if image.try(:update, attribution: params[:attribution])
-      render plain: image.image_attribution
-    else
-      head :internal_server_error
-    end
+    update_image_attribution @project.images.find(params[:image_id])
   end
 
   private

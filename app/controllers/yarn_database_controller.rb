@@ -1,4 +1,6 @@
 class YarnDatabaseController < ApplicationController
+  include UpdateAttributionAction
+
   before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
   before_action :require_maintainer, only: [:new, :create, :edit, :update, :update_attribution]
 
@@ -45,13 +47,7 @@ class YarnDatabaseController < ApplicationController
   end
 
   def update_attribution
-    image = @yarn_product.image
-    head :not_found && return unless image
-    if image.try(:update, attribution: params[:attribution])
-      render plain: image.image_attribution
-    else
-      head :internal_server_error
-    end
+    update_image_attribution @yarn_product.image
   end
 
   private

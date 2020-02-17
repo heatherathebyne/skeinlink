@@ -1,4 +1,6 @@
 class StashYarnsController < ApplicationController
+  include UpdateAttributionAction
+
   before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
 
   def index
@@ -41,13 +43,7 @@ class StashYarnsController < ApplicationController
   end
 
   def update_attribution
-    image = @stash_yarn.image
-    head :not_found && return unless image
-    if image.try(:update, attribution: params[:attribution])
-      render plain: image.image_attribution
-    else
-      head :internal_server_error
-    end
+    update_image_attribution @stash_yarn.image
   end
 
   def destroy
