@@ -12,7 +12,8 @@ module YarnWeight
     16 => { name: 'Aran', craft_yarn_council_weight: 4 },
     17 => { name: 'Bulky', craft_yarn_council_weight: 5 },
     18 => { name: 'Super Bulky', craft_yarn_council_weight: 6 },
-    19 => { name: 'Jumbo', craft_yarn_council_weight: 7 }
+    19 => { name: 'Jumbo', craft_yarn_council_weight: 7 },
+    20 => { name: 'Thread', craft_yarn_council_weight: 0 }
   }.freeze
 
   def common_weight
