@@ -8,15 +8,20 @@
       <%= image_tag @yarn_product.full_image, class: 'img-fluid border border-primary rounded' %>
       <%= @yarn_product.image.image_attribution %>
     <% end %>
+  </div>
+  <div class='col'>
+    <div class='my-1'><strong><%= @yarn_product.skein_yards %></strong> yards / <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein</div>
 
-    <div><strong><%= @yarn_product.skein_yards %></strong> yards / <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein</div>
+    <div class='my-1'><strong><%= @yarn_product.common_weight %></strong> weight</div>
 
-    <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
-
-    <div><strong><%= @yarn_product.common_weight %></strong> weight</div>
+    <% if @yarn_product.fiber_content.any? %>
+      <div class='my-1'><%= @yarn_product.fiber_content.join(', ') %></div>
+    <% else %>
+      <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
+    <% end %>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
-      <div><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
+      <div class='my-3'><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
     <% end %>
 
     <hr>
@@ -24,10 +29,10 @@
     <% unless @yarn_product.description.blank? %>
       <div><%= ActiveSupport::SafeBuffer.new(markdown.render @yarn_product.description) %></div>
     <% end %>
-
-    <hr>
   </div>
 </div>
+
+<hr>
 
 <div class='container'>
   <%= link_to 'Add More Yarn', new_yarn_database_path, class: 'btn btn-primary' %>

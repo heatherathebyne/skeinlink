@@ -3,6 +3,8 @@ class YarnProduct < ApplicationRecord
   include YarnWeight
   include ImageTools
 
+  acts_as_taggable_on :fiber_content
+
   belongs_to :yarn_company, optional: true
   has_many :colorways, inverse_of: :yarn_product
   has_one_attached :image
