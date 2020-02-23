@@ -5,7 +5,7 @@
   <div class="col-lg-3">
     <h1 class="my-4">Yarn Database</h1>
     <div class="list-group">
-      <%= link_to 'Add Yarn', new_yarn_database_path, class: 'list-group-item' %>
+      <%= link_to 'Add Yarn', new_yarn_product_path, class: 'list-group-item' %>
     </div>
   </div>
   <!-- /.col-lg-3 -->
@@ -24,7 +24,7 @@
           <% end %>
           <div class="card-body">
             <h4 class="card-title">
-              <%= link_to product.name_with_company, yarn_database_path(product), class: 'stretched-link' %>
+              <%= link_to product.name_with_company, yarn_product_path(product), class: 'stretched-link' %>
             </h4>
           </div>
         </div>

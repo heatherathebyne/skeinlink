@@ -21,12 +21,12 @@
            data-which-form='attribution'
            data-image-id='<%= image.id %>'>
            <%= render 'shared/image_attribution_form', image: image,
-             submit_to: update_attribution_yarn_database_path(image_id: image.id) %>
+             submit_to: update_attribution_yarn_product_path(image_id: image.id) %>
       </div>
     </div>
   <% end %>
 
   <div class='col'>
-    <%= render 'form', yarn_product: @yarn_product, url_for_yarn_database: yarn_database_path(@yarn_product.id) %>
+    <%= render 'form', yarn_product: @yarn_product %>
   </div>
 </div>

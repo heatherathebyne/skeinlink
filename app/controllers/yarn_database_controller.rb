@@ -25,7 +25,7 @@ class YarnDatabaseController < ApplicationController
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
     if @yarn_product.save
-      redirect_to yarn_database_path(@yarn_product.id), notice: 'Yarn database entry added!'
+      redirect_to @yarn_product, notice: 'Yarn database entry added!'
     else
       @yarn_companies = YarnCompany.all
       render :new
@@ -44,7 +44,7 @@ class YarnDatabaseController < ApplicationController
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
     if @yarn_product.update(yarn_product_params)
-      redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry updated!'
+      redirect_to @yarn_product, notice: 'Yarn database entry updated!'
     else
       @yarn_companies = YarnCompany.all
       render :edit
