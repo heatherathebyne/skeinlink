@@ -26,7 +26,7 @@ ActsAsTaggableOnMigration.class_eval do
       t.datetime :created_at
     end
 
-    add_index ActsAsTaggableOn.taggings_table, :tag_id
+    #add_index ActsAsTaggableOn.taggings_table, :tag_id
     add_index ActsAsTaggableOn.taggings_table, [:taggable_id, :taggable_type, :context], name: 'taggings_taggable_context_idx'
   end
 
