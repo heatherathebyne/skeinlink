@@ -22,6 +22,8 @@ class YarnDatabaseController < ApplicationController
 
     ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
 
+    @yarn_product.fiber_content_list = filtered_fiber_content_tags
+
     if @yarn_product.save
       redirect_to yarn_database_path(@yarn_product.id), notice: 'Yarn database entry added!'
     else
@@ -36,7 +38,10 @@ class YarnDatabaseController < ApplicationController
 
   def update
     authorize @yarn_product, :update?
+
     ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+
+    @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
     if @yarn_product.update(yarn_product_params)
       redirect_to yarn_database_path, id: @yarn_product.id, notice: 'Yarn database entry updated!'
@@ -65,5 +70,11 @@ class YarnDatabaseController < ApplicationController
 
   def yarn_product_image_params
     params.require(:yarn_product).permit(:image)
+  end
+
+  def filtered_fiber_content_tags
+    tags = params[:fiber_content_tags]
+    return if tags.blank?
+    JSON.parse(params[:fiber_content_tags]) & FIBER_TYPES.flatten(2)
   end
 end

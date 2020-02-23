@@ -1,12 +1,11 @@
-<h1>Edit <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
+<h1>Editing <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
 
-<% unless @yarn_product.image.blank? %>
 <div class='row text-center text-lg-left py-4'>
-  <% image = @yarn_product.image %>
+  <% unless @yarn_product.image.blank? %>
+    <% image = @yarn_product.image %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
       <%= image_tag image.thumbnail, class: 'img-fluid img-thumbnail' %>
-      <%= content_tag('small', image.image_attribution, class: 'text-muted',
-                      id: "attribution_#{image.id}") %>
+      <%= content_tag('small', image.image_attribution, class: 'text-muted', id: "attribution_#{image.id}") %>
 
       <a class='btn btn-outline-primary btn-sm'
          data-toggle='collapse'
@@ -22,10 +21,12 @@
            data-which-form='attribution'
            data-image-id='<%= image.id %>'>
            <%= render 'shared/image_attribution_form', image: image,
-                      submit_to: update_attribution_yarn_database_path(image_id: image.id) %>
+             submit_to: update_attribution_yarn_database_path(image_id: image.id) %>
       </div>
     </div>
-</div>
-<% end %>
+  <% end %>
 
-<%= render 'form', yarn_product: @yarn_product, url_for_yarn_database: yarn_database_path(@yarn_product.id) %>
+  <div class='col'>
+    <%= render 'form', yarn_product: @yarn_product, url_for_yarn_database: yarn_database_path(@yarn_product.id) %>
+  </div>
+</div>

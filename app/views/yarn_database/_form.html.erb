@@ -29,7 +29,23 @@
   </div>
 
   <div class='form-group'>
-    <%= f.label :fiber_type_name, 'Fiber types' %> <%= f.text_field :fiber_type_name %>
+    <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name %>
+  </div>
+
+  <div class='form-group' id='its_full_of_tags'>
+    <% yarn_product.fiber_content_list.each do |tag| %>
+      <span class='badge badge-primary badge-pill font-weight-normal'>
+        <%= tag %><%= link_to icon('far', 'trash-alt'), '#', class: 'text-white pl-2', 'data-tag-name' => tag %>
+      </span>
+    <% end %>
+    <span id='proto' class='badge badge-primary badge-pill font-weight-normal' style='display:none'>
+      <%= link_to icon('far', 'trash-alt'), '#', class: 'text-white pl-2' %>
+    </span>
+  </div>
+
+  <div class='form-group'>
+    <input type='text' id='tag-add' placeholder='Type to add a new tag' autocomplete='off'>
+    <%= hidden_field_tag :fiber_content_tags, yarn_product.fiber_content_list.to_json %>
   </div>
 
   <div class='form-group'>
@@ -56,3 +72,34 @@
 
   <%= f.submit 'Add yarn to database' %>
 <% end %>
+
+<script type='text/javascript'>
+  $(document).ready(_ => {
+    var src = <%= ActiveSupport::SafeBuffer.new(FIBER_TYPES.flatten(2).map{|e| [e,e]}.to_h.to_json) %>;
+    $('#tag-add').autocomplete({ source: src, treshold: 1, onSelectItem: addTag });
+  });
+
+  // add a tag
+  function addTag(item, element) {
+    newElement = $('#proto').clone(true);
+    newElement.removeAttr('id');
+    $(newElement).children('a').data('tagName', item.value);
+    $(newElement).prepend(item.value);
+    newElement.show();
+    tags = JSON.parse($('#fiber_content_tags').val());
+    tags.push(item.value);
+    $('#fiber_content_tags').val(JSON.stringify(tags));
+    $('#its_full_of_tags').append(newElement);
+  }
+
+  // delete a tag
+  $('.fa-trash-alt').click(event => {
+    link = $(event.currentTarget).parent();
+    tag_name = $(link).data('tag-name');
+    tags = JSON.parse($('#fiber_content_tags').val());
+    tagIndex = tags.indexOf(tag_name);
+    tags.splice(tagIndex, 1);
+    $('#fiber_content_tags').val(JSON.stringify(tags));
+    link.parent().remove();
+  });
+</script>
