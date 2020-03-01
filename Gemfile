@@ -4,7 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 gem 'rails', '~> 6.0.1'
-gem 'sqlite3', '~> 1.4'
 gem 'mysql2'
 gem 'puma', '~> 4.3'
 gem 'sass-rails', '>= 6'
@@ -18,6 +17,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'image_processing', '~> 1.2'
 gem 'active_storage_validations'
 
+gem 'activerecord-nulldb-adapter'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'aws-sdk-s3', require: false
 gem 'bootstrap'
@@ -36,6 +36,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
+  gem 'sqlite3', '~> 1.4'
 end
 
 group :development do
