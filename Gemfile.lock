@@ -47,6 +47,8 @@ GEM
     activerecord (6.0.2.1)
       activemodel (= 6.0.2.1)
       activesupport (= 6.0.2.1)
+    activerecord-nulldb-adapter (0.4.0)
+      activerecord (>= 2.0.0)
     activestorage (6.0.2.1)
       actionpack (= 6.0.2.1)
       activejob (= 6.0.2.1)
@@ -308,6 +310,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_storage_validations
+  activerecord-nulldb-adapter
   acts-as-taggable-on (~> 6.0)
   awesome_print
   aws-sdk-s3
