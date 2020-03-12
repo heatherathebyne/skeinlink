@@ -1,6 +1,9 @@
 <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true) %>
 
-<h1><%= @yarn_product.name_with_company %> <%= link_to icon('far', 'edit'), edit_yarn_product_path(@yarn_product) %></h1>
+<h1>
+  <%= @yarn_product.name_with_company %>
+  <%= link_to icon('far', 'edit'), edit_yarn_product_path(@yarn_product) %>
+</h1>
 
 <div class='row'>
   <div class='col'>
@@ -10,7 +13,10 @@
     <% end %>
   </div>
   <div class='col'>
-    <div class='my-1'><strong><%= @yarn_product.skein_yards %></strong> yards / <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein</div>
+    <div class='my-1'>
+      <strong><%= @yarn_product.skein_yards %></strong> yards /
+      <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein
+    </div>
 
     <div class='my-1'><strong><%= @yarn_product.common_weight %></strong> weight</div>
 
@@ -21,7 +27,11 @@
     <% end %>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
-      <div class='my-3'><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
+      <div class='my-3'>
+        <%= link_to "Buy at #{@yarn_product.referral_partner}",
+                    @yarn_product.referral_link,
+                    class: 'btn btn-outline-primary', target: '_blank' %>
+      </div>
     <% end %>
 
     <hr>
@@ -36,7 +46,8 @@
 
 <h4>
   Colorways
-  <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#colorwayForm' role='button' aria-expanded='false' aria-controls='colorwayForm'>New colorway</a>
+  <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#colorwayForm'
+     role='button' aria-expanded='false' aria-controls='colorwayForm'>New colorway</a>
 </h4>
 
 <div class='collapse' id='colorwayForm'>
@@ -45,7 +56,7 @@
 
 <div class='row'>
   <% @yarn_product.colorways.each do |c| %>
-    <div class='col mb-4'>
+    <div class='col-6 col-md-2 mb-4'>
       <div class='card h-100'>
         <% unless c.image.blank? %>
           <div class='square-container'>
