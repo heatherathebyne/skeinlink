@@ -11,9 +11,9 @@ class ColorwaysController < ApplicationController
     ImageAttachmentService.new(record: @colorway, images: colorway_image_params[:image]).call
 
     if @colorway.save
-      redirect_to yarn_database_path(@yarn_product), notice: 'Colorway added!'
+      redirect_to @yarn_product, notice: 'Colorway added!'
     else
-      redirect_to yarn_database_path(@yarn_product), alert: "We're sorry, but we couldn't create that colorway: #{@colorway.errors.messages}"
+      redirect_to @yarn_product, alert: "We're sorry, but we couldn't create that colorway: #{@colorway.errors.messages}"
     end
   end
 
