@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       patch :update_attribution
     end
 
-    resources :colorways, only: [:edit, :create, :update] do
+    resources :colorways, only: [:index, :edit, :create, :update] do
       patch :update_attribution, on: :member
     end
   end

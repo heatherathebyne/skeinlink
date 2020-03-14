@@ -4,6 +4,10 @@ class ColorwaysController < ApplicationController
   before_action :require_maintainer, :set_yarn_product
   before_action :set_colorway, only: [:edit, :update, :update_attribution]
 
+  def index
+    @colorways = @yarn_product.colorways
+  end
+
   def create
     @colorway = Colorway.new(colorway_params)
     @colorway.yarn_product = @yarn_product
