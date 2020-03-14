@@ -2,7 +2,8 @@ class Admin::UsersController < AdminController
   before_action :find_user, only: [:show, :edit, :update, :enable, :disable]
 
   def index
-    @users = User.all
+    @users = User.all.page(params[:page])
+
   end
 
   def show
