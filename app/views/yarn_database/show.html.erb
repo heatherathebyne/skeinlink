@@ -1,6 +1,9 @@
 <% markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, strikethrough: true) %>
 
-<h1><%= @yarn_product.name_with_company %> <%= link_to icon('far', 'edit'), edit_yarn_database_path(@yarn_product) %></h1>
+<h1>
+  <%= @yarn_product.name_with_company %>
+  <%= link_to icon('far', 'edit'), edit_yarn_product_path(@yarn_product) %>
+</h1>
 
 <div class='row'>
   <div class='col'>
@@ -10,7 +13,10 @@
     <% end %>
   </div>
   <div class='col'>
-    <div class='my-1'><strong><%= @yarn_product.skein_yards %></strong> yards / <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein</div>
+    <div class='my-1'>
+      <strong><%= @yarn_product.skein_yards %></strong> yards /
+      <strong><%= @yarn_product.skein_gram_weight %></strong> grams per skein
+    </div>
 
     <div class='my-1'><strong><%= @yarn_product.common_weight %></strong> weight</div>
 
@@ -21,7 +27,11 @@
     <% end %>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
-      <div class='my-3'><%= link_to "Buy at #{@yarn_product.referral_partner}", @yarn_product.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
+      <div class='my-3'>
+        <%= link_to "Buy at #{@yarn_product.referral_partner}",
+                    @yarn_product.referral_link,
+                    class: 'btn btn-outline-primary', target: '_blank' %>
+      </div>
     <% end %>
 
     <hr>
@@ -34,6 +44,34 @@
 
 <hr>
 
+<h4>
+  Colorways
+  <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#colorwayForm'
+     role='button' aria-expanded='false' aria-controls='colorwayForm'>New colorway</a>
+</h4>
+
+<div class='collapse' id='colorwayForm'>
+  <%= render 'colorways/form', yarn_product: @yarn_product, colorway: Colorway.new %>
+</div>
+
+<div class='row'>
+  <% @yarn_product.colorways.each do |c| %>
+    <div class='col-6 col-md-2 mb-4'>
+      <div class='card h-100'>
+        <% unless c.image.blank? %>
+          <div class='square-container'>
+            <%= image_tag(c.thumb_image, class: 'card-img-top', title: c.image.image_attribution) %>
+          </div>
+        <% end %>
+        <div class='card-body'>
+          <span class='card-title'><%= c.number %> <%= c.name %></span>
+          <%= link_to icon('far', 'edit'), edit_yarn_product_colorway_path(yarn_product_id: @yarn_product.id, id: c.id) %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
 <div class='container'>
-  <%= link_to 'Add More Yarn', new_yarn_database_path, class: 'btn btn-primary' %>
+  <%= link_to 'Add More Yarn', new_yarn_product_path, class: 'btn btn-primary' %>
 </div>

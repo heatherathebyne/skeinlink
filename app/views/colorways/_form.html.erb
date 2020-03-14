@@ -1,0 +1,13 @@
+<%= form_with(model: [yarn_product, colorway], local: true) do |f| %>
+  <div class='form-group'>
+    <%= f.label :name %> <%= f.text_field :name %>
+  </div>
+  <div class='form-group'>
+    <%= f.label :number %> <%= f.text_field :number %>
+  </div>
+  <div class='form-group'>
+    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+    <p class='text-muted'><small><%= image_attribution_notice %></small></p>
+  </div>
+  <%= f.submit %>
+<% end %>

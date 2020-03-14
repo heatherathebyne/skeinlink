@@ -10,12 +10,6 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
-# Clearly I haven't decided whether or not Craft actually needs to be an AR model,
-# and don't want to embarrass myself by using model fixtures in 2020.
-# This is a third option, just as foolish; but I've never tried it before!
-# It'll be fun.
-require "#{Rails.root}/db/seeds.rb"
-
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -41,6 +35,12 @@ rescue ActiveRecord::PendingMigrationError => e
   puts e.to_s.strip
   exit 1
 end
+
+# Clearly I haven't decided whether or not Craft actually needs to be an AR model,
+# and don't want to embarrass myself by using model fixtures in 2020.
+# This is a third option, just as foolish; but I've never tried it before!
+# It'll be fun.
+require "#{Rails.root}/db/seeds.rb"
 
 RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"

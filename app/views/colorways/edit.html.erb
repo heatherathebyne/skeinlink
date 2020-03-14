@@ -1,8 +1,8 @@
-<h1>Editing <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
+<h1>Editing <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %> <%= @colorway.number %> <%= @colorway.name %></h1>
 
 <div class='row text-center text-lg-left py-4'>
-  <% unless @yarn_product.image.blank? %>
-    <% image = @yarn_product.image %>
+  <% unless @colorway.image.blank? %>
+    <% image = @colorway.image %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>
       <%= image_tag image.thumbnail, class: 'img-fluid img-thumbnail' %>
       <%= content_tag('small', image.image_attribution, class: 'text-muted', id: "attribution_#{image.id}") %>
@@ -21,12 +21,12 @@
            data-which-form='attribution'
            data-image-id='<%= image.id %>'>
            <%= render 'shared/image_attribution_form', image: image,
-             submit_to: update_attribution_yarn_product_path(image_id: image.id) %>
+             submit_to: update_attribution_yarn_product_colorway_path(yarn_database_id: @yarn_product.id, image_id: image.id) %>
       </div>
     </div>
   <% end %>
 
   <div class='col'>
-    <%= render 'form', yarn_product: @yarn_product %>
+    <%= render 'colorways/form', yarn_product: @yarn_product, colorway: @colorway %>
   </div>
 </div>
