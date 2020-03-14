@@ -4,7 +4,8 @@ class StashYarnsController < ApplicationController
   before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
 
   def index
-    @stash_yarns = StashYarn.where(user_id: current_user.id).order(:yarn_product_id)
+    @stash_yarns = StashYarn.where(user_id: current_user.id).order(:yarn_product_id).page(params[:page])
+
   end
 
   def show

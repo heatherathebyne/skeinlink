@@ -5,7 +5,7 @@ class YarnDatabaseController < ApplicationController
   before_action :require_maintainer, only: [:new, :create, :edit, :update, :update_attribution]
 
   def index
-    @yarn_products = YarnProduct.all.order(created_at: :desc)
+    @yarn_products = YarnProduct.all.order(created_at: :desc).page(params[:page])
   end
 
   def show

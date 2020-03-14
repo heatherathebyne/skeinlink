@@ -3,7 +3,7 @@ class YarnCompaniesController < ApplicationController
   before_action :require_maintainer, only: [:new, :create, :edit, :update]
 
   def index
-    @yarn_companies = YarnCompany.all.order(:name)
+    @yarn_companies = YarnCompany.all.order(:name).page(params[:page])
   end
 
   def show

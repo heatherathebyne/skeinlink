@@ -12,5 +12,8 @@
       <li><%= link_to company.name, yarn_company_path(company) %></li>
     <% end %>
   </div>
+
+  <div class='row'><div class='col'><%= page_entries_info(@yarn_companies, entry_name: 'items') %></div></div>
+  <div class='row'><div class='col'><%= paginate @yarn_companies %></div></div>
 </div>
 

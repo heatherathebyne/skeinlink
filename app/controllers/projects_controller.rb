@@ -8,9 +8,9 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     if user_signed_in?
-      @projects = Project.all.order(id: :desc)
+      @projects = Project.all.order(id: :desc).page(params[:page])
     else
-      @projects = Project.where(publicly_visible: true).order(id: :desc)
+      @projects = Project.where(publicly_visible: true).order(id: :desc).page(params[:page])
     end
   end
 
