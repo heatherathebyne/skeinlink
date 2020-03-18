@@ -28,7 +28,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :yarn_companies, except: [:destroy]
+  resources :yarn_companies, except: [:destroy] do
+    collection do
+      get :autocomplete_name
+    end
+  end
 
   resources :crafters, only: [:show] do
     member do
