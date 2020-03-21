@@ -12,29 +12,25 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :name %> <%= f.text_field :name %>
-  </div>
-
-  <div class='form-group'>
     <%= label_tag 'yarn_company_search', 'Yarn company' %>
-    <%= text_field_tag 'yarn_company_search' %>
+    <%= text_field_tag 'yarn_company_search', stash_yarn&.yarn_product&.yarn_company&.name %>
     <%= hidden_field_tag 'yarn_company_id' %>
   </div>
 
   <div class='form-group'>
     <%= label_tag 'yarn_product_search', 'Yarn name' %>
-    <%= text_field_tag 'yarn_product_search' %>
+    <%= text_field_tag 'yarn_product_search', stash_yarn&.yarn_product&.name %>
     <%= f.hidden_field :yarn_product_id %>
   </div>
 
   <div class='form-group'>
     <%= label_tag 'colorway_search', 'Colorway' %>
-    <%= text_field_tag 'colorway_search' %>
+    <%= text_field_tag 'colorway_search', stash_yarn.colorway_name %>
     <%= f.hidden_field :colorway_id %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :purchase_date %> <%= f.text_field :purchase_date, value: Date.current %>
+    <%= f.label :purchase_date %> <%= f.text_field :purchase_date, placeholder: "example: #{Date.current}" %>
   </div>
 
   <div class='form-group'>

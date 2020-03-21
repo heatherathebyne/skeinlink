@@ -14,6 +14,10 @@ class StashYarn < ApplicationRecord
     yarn_product.try(:name_with_company) || super
   end
 
+  def colorway_name
+    colorway.try(:name) || super
+  end
+
   def weight_name
     yarn_product.try(:common_weight) || common_weight
   end
