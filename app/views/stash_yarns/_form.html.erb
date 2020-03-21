@@ -13,18 +13,24 @@
 
   <div class='form-group'>
     <%= f.label :name %> <%= f.text_field :name %>
-    or
-    <%= f.label :yarn_product_id %> <%= f.collection_select(:yarn_product_id, @yarn_products, :id, :name_with_company, include_blank: true) %>
   </div>
 
-  <% unless stash_yarn.yarn_product %>
-    <div class='form-group'>
-      <%= f.label :handspun %> <%= f.check_box :handspun %>
-    </div>
-  <% end %>
+  <div class='form-group'>
+    <%= label_tag 'yarn_company_search', 'Yarn company' %>
+    <%= text_field_tag 'yarn_company_search' %>
+    <%= hidden_field_tag 'yarn_company_id' %>
+  </div>
 
   <div class='form-group'>
-    <%= f.label :colorway_name, 'Colorway' %> <%= f.text_field :colorway_name %>
+    <%= label_tag 'yarn_product_search', 'Yarn name' %>
+    <%= text_field_tag 'yarn_product_search' %>
+    <%= f.hidden_field :yarn_product_id %>
+  </div>
+
+  <div class='form-group'>
+    <%= label_tag 'colorway_search', 'Colorway' %>
+    <%= text_field_tag 'colorway_search' %>
+    <%= f.hidden_field :colorway_id %>
   </div>
 
   <div class='form-group'>
@@ -66,3 +72,55 @@
 
   <%= f.submit 'Stash it!' %>
 <% end %>
+
+<script type='text/javascript'>
+  $(document).ready(_ => {
+    $('#yarn_company_search').easyAutocomplete({
+      url: search_term => { return '/yarn_companies/autocomplete_name.json?name=' + search_term },
+      getValue: 'name',
+      placeholder: 'Type a yarn company name',
+      requestDelay: 500,
+      list: {
+        sort: { enabled: true },
+        onChooseEvent: _ => {
+          var itemValue = $('#yarn_company_search').getSelectedItemData().id;
+          $('#yarn_company_id').val(itemValue);
+        }
+      }
+    });
+
+    $('#yarn_product_search').easyAutocomplete({
+      getValue: 'name',
+      placeholder: 'Type the name of the yarn',
+      requestDelay: 500,
+      url: search_term => {
+        companyId = $('#yarn_company_id').val();
+        return '/yarn_database/autocomplete_name.json?name=' + search_term + '&id=' + companyId;
+      },
+      list: {
+        sort: { enabled: true },
+        onChooseEvent: _ => {
+          itemValue = $('#yarn_product_search').getSelectedItemData().id;
+          $('#stash_yarn_yarn_product_id').val(itemValue);
+        }
+      }
+    });
+
+    $('#colorway_search').easyAutocomplete({
+      getValue: 'name',
+      placeholder: 'Type the name of the colorway',
+      requestDelay: 500,
+      url: search_term => {
+        productId = $('#stash_yarn_yarn_product_id').val();
+        return '/yarn_database/' + productId + '/colorways/autocomplete_name_or_number.json?term=' + search_term;
+      },
+      list: {
+        sort: { enabled: true },
+        onChooseEvent: _ => {
+          itemValue = $('#colorway_search').getSelectedItemData().id;
+          $('#stash_yarn_colorway_id').val(itemValue);
+        }
+      }
+    });
+  });
+</script>

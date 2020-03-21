@@ -37,7 +37,8 @@ class YarnCompaniesController < ApplicationController
   end
 
   def autocomplete_name
-    render json: YarnCompany.where("name LIKE ?", "%#{params[:name]}%").limit(10)
+    @yarn_companies = YarnCompany.where("name LIKE ?", "%#{params[:name]}%").limit(6)
+    render :index
   end
 
   private
