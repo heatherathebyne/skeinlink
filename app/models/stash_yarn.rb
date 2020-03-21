@@ -11,7 +11,7 @@ class StashYarn < ApplicationRecord
                      size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
 
   def name
-    yarn_product.try(:name_with_company) || super
+    yarn_product.try(:name) || super
   end
 
   def colorway_name
