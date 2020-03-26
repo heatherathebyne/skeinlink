@@ -39,6 +39,15 @@ class ColorwaysController < ApplicationController
     update_image_attribution @colorway.image
   end
 
+  def autocomplete_name_or_number
+    @colorways = Colorway.where(yarn_product_id: params[:yarn_product_id])
+                         .where("name LIKE ? OR number LIKE ?",
+                                "%#{params[:term]}%",
+                                "%#{params[:term]}%")
+                         .limit(6)
+    render :index
+  end
+
   private
 
   def colorway_params

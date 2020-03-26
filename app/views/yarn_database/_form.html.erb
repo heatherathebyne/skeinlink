@@ -12,12 +12,12 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :yarn_company_id, 'Yarn company' %>
-    <%= f.collection_select(:yarn_company_id, @yarn_companies, :id, :name, include_blank: true) %>
+    <%= label_tag 'Yarn company name' %> <%= text_field_tag :yarn_company_search, yarn_product&.yarn_company&.name %>
+    <%= f.hidden_field :yarn_company_id %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :name %> <%= f.text_field :name %>
+    <%= f.label :name, 'Yarn name' %> <%= f.text_field :name %>
   </div>
 
   <div class='form-group'>
@@ -44,7 +44,7 @@
   </div>
 
   <div class='form-group'>
-    <input type='text' id='tag-add' placeholder='Type to add a new tag' autocomplete='off'>
+    <%= text_field_tag 'tag-add' %>
     <%= hidden_field_tag :fiber_content_tags, yarn_product.fiber_content_list.to_json %>
   </div>
 
@@ -75,19 +75,45 @@
 
 <script type='text/javascript'>
   $(document).ready(_ => {
-    var src = <%= ActiveSupport::SafeBuffer.new(FIBER_TYPES.flatten(2).map{|e| [e,e]}.to_h.to_json) %>;
-    $('#tag-add').autocomplete({ source: src, treshold: 1, onSelectItem: addTag });
+    var fiberTypes = <%= ActiveSupport::SafeBuffer.new(FIBER_TYPES.flatten(2).to_json) %>;
+    $('#tag-add').easyAutocomplete({
+      data: fiberTypes,
+      placeholder: 'Type to add a new tag',
+      list: {
+        match: { enabled: true },
+        sort: { enabled: true },
+        onChooseEvent: _ => {
+          var itemValue = $('#tag-add').getSelectedItemData();
+          addTag(itemValue);
+          $('#tag-add').val('');
+        }
+      }
+    });
+
+    $('#yarn_company_search').easyAutocomplete({
+      url: function(search_term) { return '/yarn_companies/autocomplete_name.json?name=' + search_term },
+      getValue: 'name',
+      placeholder: 'Type a yarn company name',
+      requestDelay: 500,
+      list: {
+        sort: { enabled: true },
+        onChooseEvent: function() {
+          var itemValue = $('#yarn_company_search').getSelectedItemData().id;
+          $('#yarn_product_yarn_company_id').val(itemValue);
+        }
+      }
+    });
   });
 
   // add a tag
-  function addTag(item, element) {
+  function addTag(item) {
     newElement = $('#proto').clone(true);
     newElement.removeAttr('id');
-    $(newElement).children('a').data('tagName', item.value);
-    $(newElement).prepend(item.value);
+    $(newElement).children('a').data('tagName', item);
+    $(newElement).prepend(item);
     newElement.show();
     tags = JSON.parse($('#fiber_content_tags').val());
-    tags.push(item.value);
+    tags.push(item);
     $('#fiber_content_tags').val(JSON.stringify(tags));
     $('#its_full_of_tags').append(newElement);
   }

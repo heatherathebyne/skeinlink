@@ -55,6 +55,12 @@ class YarnDatabaseController < ApplicationController
     update_image_attribution @yarn_product.image
   end
 
+  def autocomplete_name
+    @yarn_products = YarnProduct.where(yarn_company_id: params[:id])
+                                .where("name LIKE ?", "%#{params[:name]}%").limit(6)
+    render :index
+  end
+
   private
 
   def set_yarn_product

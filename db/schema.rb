@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_12_204751) do
+ActiveRecord::Schema.define(version: 2020_03_26_115340) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -36,14 +36,14 @@ ActiveRecord::Schema.define(version: 2020_03_12_204751) do
 
   create_table "colorways", force: :cascade do |t|
     t.integer "yarn_product_id", null: false
-    t.string "name", null: false
+    t.string "name"
     t.string "number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_colorways_on_name"
     t.index ["number"], name: "index_colorways_on_number"
-    t.index ["yarn_product_id", "name"], name: "index_colorways_on_yarn_product_id_and_name", unique: true
-    t.index ["yarn_product_id", "number"], name: "index_colorways_on_yarn_product_id_and_number", unique: true
+    t.index ["yarn_product_id", "name"], name: "index_colorways_on_yarn_product_id_and_name"
+    t.index ["yarn_product_id", "number"], name: "index_colorways_on_yarn_product_id_and_number"
     t.index ["yarn_product_id"], name: "index_colorways_on_yarn_product_id"
   end
 

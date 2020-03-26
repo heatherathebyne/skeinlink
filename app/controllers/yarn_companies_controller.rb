@@ -36,6 +36,11 @@ class YarnCompaniesController < ApplicationController
     end
   end
 
+  def autocomplete_name
+    @yarn_companies = YarnCompany.where("name LIKE ?", "%#{params[:name]}%").limit(6)
+    render :index
+  end
+
   private
 
   def set_yarn_company

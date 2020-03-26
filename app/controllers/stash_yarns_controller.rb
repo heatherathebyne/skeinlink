@@ -13,7 +13,6 @@ class StashYarnsController < ApplicationController
 
   def new
     @stash_yarn = StashYarn.new
-    @yarn_products = YarnProduct.all.includes(:yarn_company)
   end
 
   def create
@@ -30,7 +29,6 @@ class StashYarnsController < ApplicationController
   end
 
   def edit
-    @yarn_products = YarnProduct.all.includes(:yarn_company)
   end
 
   def update
@@ -55,7 +53,9 @@ class StashYarnsController < ApplicationController
   private
 
   def set_stash_yarn
-    @stash_yarn = StashYarn.where(user_id: current_user.id).find(params[:id])
+    @stash_yarn = StashYarn.where(user_id: current_user.id)
+                           .includes(yarn_product: :yarn_company)
+                           .find(params[:id])
   end
 
   def stash_yarn_params
