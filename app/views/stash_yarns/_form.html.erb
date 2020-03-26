@@ -103,7 +103,9 @@
     });
 
     $('#colorway_search').easyAutocomplete({
-      getValue: 'name',
+      getValue: (item) => {
+        return item.name + ' ' + item.number;
+      },
       placeholder: 'Type the name of the colorway',
       requestDelay: 500,
       url: search_term => {
