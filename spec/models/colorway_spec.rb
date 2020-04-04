@@ -1,6 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Colorway do
+  describe '#default_image_owner' do
+    subject { Colorway.new(yarn_product: yarn_product).default_image_owner }
+
+    let(:yarn_product) { build(:yarn_product) }
+    before { allow(yarn_product).to receive(:yarn_company_name).and_return('Lion Brand') }
+
+    it { is_expected.to eq 'Lion Brand' }
+  end
+
   describe 'validations' do
     subject { Colorway.new(yarn_product: yarn_product, name: name, number: number) }
 

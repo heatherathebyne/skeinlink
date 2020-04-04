@@ -10,7 +10,7 @@ class Colorway < ApplicationRecord
   validate :name_or_number_present
 
   def default_image_owner
-    yarn_product.yarn_company.name
+    yarn_product.yarn_company_name
   end
 
   private
