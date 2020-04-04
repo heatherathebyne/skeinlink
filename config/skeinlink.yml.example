@@ -12,3 +12,4 @@ production:
   object_storage_service: amazon # see config/storage.yml
 # storage_service_mirror_primary: local
 # storage_service_mirrors: [local]
+  smtp_address: localhost
