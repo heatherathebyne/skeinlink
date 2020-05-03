@@ -14,9 +14,10 @@ jobs:
         ruby-version: 2.6.x
     - name: Install sqlite
       run: |
-        sudo apt-get install libsqlite3-dev  
+        sudo apt-get install libsqlite3-dev
     - name: Bundle
       run: |
+        cp config/database.yml.example config/database.yml
         gem install bundler
         bundle install --jobs 4 --retry 3
     - name: DB setup
