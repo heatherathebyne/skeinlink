@@ -35,3 +35,4 @@
 
 # Site-specific configuration
 /config/skeinlink.yml
+/config/database.yml
