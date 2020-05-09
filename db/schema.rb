@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_26_115340) do
+ActiveRecord::Schema.define(version: 2020_05_09_140512) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_115340) do
     t.boolean "role_maintainer", default: false, null: false
     t.boolean "role_moderator", default: false, null: false
     t.string "name", default: "Anonymous Crafter", null: false
-    t.text "about_me", default: "", null: false
+    t.text "about_me"
     t.boolean "active", default: true, null: false
     t.index ["active"], name: "index_users_on_active"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(version: 2020_03_26_115340) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "weight_id", limit: 1
-    t.text "description", default: "", null: false
+    t.text "description"
     t.string "referral_link"
     t.string "referral_partner"
     t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"

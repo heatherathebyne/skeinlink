@@ -12,16 +12,19 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Install sqlite
+    - name: Set up environment
+      run: echo '::set-env name=RAILS_ENV::test'
+    - name: Start MySQL
       run: |
-        sudo apt-get install libsqlite3-dev
+        sudo /etc/init.d/mysql start
     - name: Bundle
       run: |
-        cp config/database.yml.example config/database.yml
         gem install bundler
         bundle install --jobs 4 --retry 3
     - name: DB setup
       run: |
+        mysql -uroot -proot -h127.0.0.1 -e 'CREATE DATABASE IF NOT EXISTS skeinlink_test;'
+        cp config/database.yml.ci config/database.yml
         bin/rails db:setup
     - name: RSpec
       run: |

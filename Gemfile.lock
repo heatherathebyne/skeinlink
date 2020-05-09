@@ -293,7 +293,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     sshkit (1.20.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -364,7 +363,6 @@ DEPENDENCIES
   spring-commands-rspec
   sprockets
   sprockets-rails
-  sqlite3 (~> 1.4)
   web-console (>= 3.3.0)
   webdrivers
 
