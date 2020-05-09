@@ -1,0 +1,12 @@
+default: &default
+  adapter: mysql2
+  read_timeout: 30
+  write_timeout: 30
+  connect_timeout: 30
+  host: localhost
+  username: root
+  password: root
+  encoding: utf8mb4
+test:
+  <<: *default
+  database: skeinlink_test
