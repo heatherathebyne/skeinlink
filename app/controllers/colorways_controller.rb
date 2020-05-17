@@ -11,7 +11,10 @@ class ColorwaysController < ApplicationController
   def create
     @colorway = Colorway.new(colorway_params)
     @colorway.yarn_product = @yarn_product
+    @colorway.created_by = current_user.id
+
     authorize @colorway, :create?
+
     ImageAttachmentService.new(record: @colorway, images: colorway_image_params[:image]).call
 
     if @colorway.save

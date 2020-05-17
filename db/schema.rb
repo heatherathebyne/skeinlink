@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_230401) do
+ActiveRecord::Schema.define(version: 2020_05_17_231858) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2020_05_17_230401) do
     t.string "number"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "created_by"
+    t.index ["created_by"], name: "fk_rails_f8e8660301"
     t.index ["name"], name: "index_colorways_on_name"
     t.index ["number"], name: "index_colorways_on_number"
     t.index ["yarn_product_id", "name"], name: "index_colorways_on_yarn_product_id_and_name"
@@ -205,6 +207,8 @@ ActiveRecord::Schema.define(version: 2020_05_17_230401) do
     t.text "description"
     t.string "referral_link"
     t.string "referral_partner"
+    t.bigint "created_by"
+    t.index ["created_by"], name: "fk_rails_c80fbf6c34"
     t.index ["name"], name: "index_yarn_companies_on_name", unique: true
   end
 
@@ -223,8 +227,10 @@ ActiveRecord::Schema.define(version: 2020_05_17_230401) do
     t.string "referral_link"
     t.string "referral_partner"
     t.string "yarn_company_name_freetext"
+    t.bigint "created_by"
     t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"
     t.index ["craft_yarn_council_weight"], name: "index_yarn_products_on_craft_yarn_council_weight"
+    t.index ["created_by"], name: "fk_rails_c5bb2391ee"
     t.index ["name"], name: "index_yarn_products_on_name"
     t.index ["weight_id"], name: "index_yarn_products_on_weight_id"
     t.index ["yarn_company_id"], name: "index_yarn_products_on_yarn_company_id"
@@ -232,7 +238,10 @@ ActiveRecord::Schema.define(version: 2020_05_17_230401) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "colorways", "users", column: "created_by"
   add_foreign_key "journal_entries", "projects"
   add_foreign_key "projects", "crafts"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "yarn_companies", "users", column: "created_by"
+  add_foreign_key "yarn_products", "users", column: "created_by"
 end
