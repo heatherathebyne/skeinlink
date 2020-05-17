@@ -19,6 +19,7 @@ gem 'active_storage_validations'
 
 gem 'activerecord-nulldb-adapter'
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'audited'
 gem 'aws-sdk-s3', require: false
 gem 'bootstrap'
 gem 'jquery-rails'
