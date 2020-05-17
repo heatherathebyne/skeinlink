@@ -2,6 +2,8 @@ class StashYarn < ApplicationRecord
   include YarnWeight
   include ImageTools
 
+  audited
+
   belongs_to :yarn_product, optional: true
   belongs_to :colorway, optional: true
   belongs_to :user

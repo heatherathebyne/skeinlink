@@ -3,6 +3,8 @@ class YarnProduct < ApplicationRecord
   include YarnWeight
   include ImageTools
 
+  audited
+
   acts_as_taggable_on :fiber_content
 
   belongs_to :yarn_company, optional: true # y tho

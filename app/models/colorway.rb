@@ -1,6 +1,8 @@
 class Colorway < ApplicationRecord
   include ImageTools
 
+  audited
+
   belongs_to :yarn_product
   has_many :stash_yarns, inverse_of: :colorway
   has_one_attached :image
