@@ -53,7 +53,7 @@ RSpec.describe ImageAttachmentService do
     allow(single_image_record).to receive(:image).and_return(record_images)
   end
 
-  subject { ImageAttachmentService.new(record: record, images: images).call }
+  subject { ImageAttachmentService.call(record: record, images: images) }
 
   context 'when one image is provided' do
     let(:images) { png_image }

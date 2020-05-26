@@ -7,6 +7,10 @@ class ImageAttachmentService
     @rejected_images = []
   end
 
+  def self.call(record:, images:)
+    self.new(record: record, images: images).call
+  end
+
   def call
     images.each do |image|
       begin

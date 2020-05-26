@@ -22,7 +22,7 @@ class YarnDatabaseController < ApplicationController
 
     authorize @yarn_product, :create?
 
-    ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+    ImageAttachmentService.call(record: @yarn_product, images: yarn_product_image_params[:image])
 
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
