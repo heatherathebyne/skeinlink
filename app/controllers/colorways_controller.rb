@@ -15,7 +15,7 @@ class ColorwaysController < ApplicationController
 
     authorize @colorway, :create?
 
-    ImageAttachmentService.new(record: @colorway, images: colorway_image_params[:image]).call
+    ImageAttachmentService.call(record: @colorway, images: colorway_image_params[:image])
 
     if @colorway.save
       redirect_to @yarn_product, notice: 'Colorway added!'
@@ -29,7 +29,7 @@ class ColorwaysController < ApplicationController
 
   def update
     authorize @colorway, :update?
-    ImageAttachmentService.new(record: @colorway, images: colorway_image_params[:image]).call
+    ImageAttachmentService.call(record: @colorway, images: colorway_image_params[:image])
 
     if @colorway.update(colorway_params)
       redirect_to @yarn_product, notice: 'Colorway added!'

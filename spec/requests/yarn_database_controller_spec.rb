@@ -1,21 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe YarnDatabaseController, type: :request do
-  describe '#index' do
-    subject { get '/yarn_database' }
-
-    context 'when no user is logged in' do
-      before { subject }
-      it_behaves_like 'redirects to login'
-    end
-
-    context 'when user is logged in' do
-      let(:user) { create(:user) }
-      before { sign_in user; subject }
-      it_behaves_like 'successful response'
-    end
-  end
-
   describe '#show' do
     subject { get "/yarn_database/#{yarn_product.id}" }
     let!(:yarn_product) { create(:yarn_product) }
@@ -50,7 +35,7 @@ RSpec.describe YarnDatabaseController, type: :request do
 
       context 'when user is not a maintainer' do
         let(:user) { create(:user) }
-        it_behaves_like 'redirects back to projects'
+        it_behaves_like 'redirects to root path'
       end
     end
   end
@@ -58,11 +43,6 @@ RSpec.describe YarnDatabaseController, type: :request do
   describe '#create' do
     subject { post '/yarn_database', params: params, headers: { HTTP_REFERER: projects_path } }
     let(:params) { {} }
-
-    context 'when user is not logged in' do
-      before { subject }
-      it_behaves_like 'redirects to login'
-    end
 
     context 'when user is logged in' do
       before { sign_in user }
@@ -85,12 +65,6 @@ RSpec.describe YarnDatabaseController, type: :request do
             expect{ subject }.to_not change(YarnProduct, :count)
           end
         end
-      end
-
-      context 'when user is not a maintainer' do
-        before { subject }
-        let(:user) { create(:user) }
-        it_behaves_like 'redirects back to projects'
       end
     end
   end
@@ -131,7 +105,7 @@ RSpec.describe YarnDatabaseController, type: :request do
       context 'when user is not a maintainer' do
         before { subject }
         let(:user) { create(:user) }
-        it_behaves_like 'redirects back to projects'
+        it_behaves_like 'redirects to root path'
       end
     end
   end

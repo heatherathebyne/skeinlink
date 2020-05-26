@@ -31,29 +31,36 @@ RSpec.describe YarnCompaniesController do
     end
 
     context 'when user is authenticated' do
-      let(:params) { build(:yarn_company, :with_optional_fields).attributes }
+      let(:yarn_company_attrs) do
+        build(:yarn_company, :with_optional_fields)
+          .attributes
+          .slice('name', 'website', 'referral_link', 'description', 'referral_partner')
+      end
 
       before do
         sign_in user
-        post :create, params: params
+        post :create, params: { yarn_company: yarn_company_attrs }
       end
 
       context 'when user is not authorized to create a yarn company' do
         let(:user) { create :user }
 
         it_behaves_like 'displays maintainer flash'
-
-        it 'nopes out' do
-          expect(response).to redirect_to root_path
-        end
+        it_behaves_like 'redirects to root path'
       end
 
       context 'when user is authorized to create a yarn company' do
         let(:user) { create :user, :maintainer }
 
-        it 'saves the new yarn company with the expected attributes'
+        # implicit 'redirects to the new yarn company'
 
-        it 'sets the id of the creating user'
+        it 'creates the new yarn company with the expected attributes' do
+          expect(assigns[:yarn_company].attributes).to include(yarn_company_attrs)
+        end
+
+        it 'sets the id of the creating user' do
+          expect(assigns[:yarn_company].created_by).to eq user.id
+        end
       end
     end
   end
