@@ -15,6 +15,8 @@ class YarnCompaniesController < ApplicationController
 
   def create
     @yarn_company = YarnCompany.new(yarn_company_params)
+    @yarn_company.created_by = current_user.id
+
     authorize @yarn_company, :create?
 
     if @yarn_company.save

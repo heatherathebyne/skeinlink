@@ -66,6 +66,8 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    audited (4.9.0)
+      activerecord (>= 4.2, < 6.1)
     autoprefixer-rails (9.7.6)
       execjs
     awesome_print (1.8.0)
@@ -225,6 +227,10 @@ GEM
       bundler (>= 1.3.0)
       railties (= 6.0.3.1)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.4)
+      actionpack (>= 5.0.1.x)
+      actionview (>= 5.0.1.x)
+      activesupport (>= 5.0.1.x)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -326,6 +332,7 @@ DEPENDENCIES
   active_storage_validations
   activerecord-nulldb-adapter
   acts-as-taggable-on (~> 6.0)
+  audited
   awesome_print
   aws-sdk-s3
   bcrypt_pbkdf
@@ -354,6 +361,7 @@ DEPENDENCIES
   puma (~> 4.3)
   pundit
   rails (~> 6.0.2)
+  rails-controller-testing
   redcarpet
   rspec
   rspec-rails

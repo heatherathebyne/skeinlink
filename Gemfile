@@ -19,6 +19,7 @@ gem 'active_storage_validations'
 
 gem 'activerecord-nulldb-adapter'
 gem 'acts-as-taggable-on', '~> 6.0'
+gem 'audited'
 gem 'aws-sdk-s3', require: false
 gem 'bootstrap'
 gem 'jquery-rails'
@@ -59,6 +60,7 @@ group :test do
   gem 'factory_bot'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'rails-controller-testing'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'selenium-webdriver'

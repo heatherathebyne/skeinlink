@@ -18,9 +18,11 @@ class YarnDatabaseController < ApplicationController
 
   def create
     @yarn_product = YarnProduct.new(yarn_product_params)
+    @yarn_product.created_by = current_user.id
+
     authorize @yarn_product, :create?
 
-    ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+    ImageAttachmentService.call(record: @yarn_product, images: yarn_product_image_params[:image])
 
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
