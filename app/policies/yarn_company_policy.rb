@@ -1,9 +1,11 @@
 class YarnCompanyPolicy < ApplicationPolicy
   def create?
-    user.maintainer?
+    true
   end
 
   def update?
-    user.maintainer?
+    return true if user.maintainer?
+    record_age = Time.current - record.created_at
+    record.created_by == user.id && record_age <= 8.days
   end
 end
