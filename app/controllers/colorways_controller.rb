@@ -1,7 +1,7 @@
 class ColorwaysController < ApplicationController
   include UpdateAttributionAction
 
-  before_action :require_maintainer, :set_yarn_product
+  before_action :set_yarn_product
   before_action :set_colorway, only: [:edit, :update, :update_attribution]
 
   def index
@@ -39,6 +39,7 @@ class ColorwaysController < ApplicationController
   end
 
   def update_attribution
+    authorize @colorway, :update?
     update_image_attribution @colorway.image
   end
 

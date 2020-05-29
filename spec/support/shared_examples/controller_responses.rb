@@ -27,3 +27,9 @@ RSpec.shared_examples 'displays maintainer flash' do
     expect(flash[:alert]).to eq 'Only maintainers can change this.'
   end
 end
+
+RSpec.shared_examples 'displays unauthorized flash' do
+  it 'displays unauthorized flash' do
+    expect(flash[:alert]).to eq "Sorry, but you don't have permission to do that."
+  end
+end
