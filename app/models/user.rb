@@ -1,5 +1,6 @@
 class User < ApplicationRecord
-  audited except: [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token]
+  audited except: [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token,
+                   :remember_created_at]
 
   devise :database_authenticatable, :rememberable,
          :trackable, :timeoutable, :validatable
