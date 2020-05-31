@@ -1,6 +1,5 @@
 class YarnCompaniesController < ApplicationController
   before_action :set_yarn_company, only: [:show, :edit, :update]
-  before_action :require_maintainer, only: [:new, :create, :edit, :update]
 
   def index
     @yarn_companies = YarnCompany.all.order(:name).page(params[:page])
@@ -27,6 +26,7 @@ class YarnCompaniesController < ApplicationController
   end
 
   def edit
+    authorize @yarn_company, :update?
   end
 
   def update

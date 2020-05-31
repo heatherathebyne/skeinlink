@@ -32,11 +32,6 @@ RSpec.describe YarnDatabaseController, type: :request do
         let(:user) { create(:user, :maintainer) }
         it_behaves_like 'successful response'
       end
-
-      context 'when user is not a maintainer' do
-        let(:user) { create(:user) }
-        it_behaves_like 'redirects to root path'
-      end
     end
   end
 
@@ -100,12 +95,6 @@ RSpec.describe YarnDatabaseController, type: :request do
             expect(yarn_product.reload.name).to_not eq 'some other yarn name'
           end
         end
-      end
-
-      context 'when user is not a maintainer' do
-        before { subject }
-        let(:user) { create(:user) }
-        it_behaves_like 'redirects to root path'
       end
     end
   end

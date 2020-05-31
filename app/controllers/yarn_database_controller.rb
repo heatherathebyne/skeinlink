@@ -2,7 +2,6 @@ class YarnDatabaseController < ApplicationController
   include UpdateAttributionAction
 
   before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
-  before_action :require_maintainer, only: [:new, :create, :edit, :update, :update_attribution]
 
   def index
     @yarn_products = YarnProduct.all.order(created_at: :desc).page(params[:page])
@@ -35,13 +34,14 @@ class YarnDatabaseController < ApplicationController
   end
 
   def edit
+    authorize @yarn_product, :update?
     @yarn_companies = YarnCompany.all
   end
 
   def update
     authorize @yarn_product, :update?
 
-    ImageAttachmentService.new(record: @yarn_product, images: yarn_product_image_params[:image]).call
+    ImageAttachmentService.call(record: @yarn_product, images: yarn_product_image_params[:image])
 
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
@@ -54,6 +54,7 @@ class YarnDatabaseController < ApplicationController
   end
 
   def update_attribution
+    authorize @yarn_product, :update?
     update_image_attribution @yarn_product.image
   end
 
