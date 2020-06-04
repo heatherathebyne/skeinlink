@@ -64,6 +64,13 @@ class YarnDatabaseController < ApplicationController
     render :index
   end
 
+  def autocomplete_name_for_stash
+    @yarn_products = YarnProduct.where(yarn_company_id: params[:id])
+      .where("name LIKE ?", "%#{params[:name]}%").limit(6).order(name: :asc).to_a
+    @yarn_products << YarnProduct.new(id: -3, name: 'Tell us about another yarn')
+    render :index
+  end
+
   private
 
   def set_yarn_product

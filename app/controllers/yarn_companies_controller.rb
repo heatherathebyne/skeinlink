@@ -18,10 +18,21 @@ class YarnCompaniesController < ApplicationController
 
     authorize @yarn_company, :create?
 
-    if @yarn_company.save
-      redirect_to @yarn_company
-    else
-      render :new
+    respond_to do |format|
+      format.html do
+        if @yarn_company.save
+          redirect_to @yarn_company
+        else
+          render :new
+        end
+      end
+      format.js do
+        if @yarn_company.save
+          render status: :ok, json: { id: @yarn_company.id, name: @yarn_company.name }
+        else
+          render status: :not_acceptable, json: { errors: @yarn_company.errors.full_messages }
+        end
+      end
     end
   end
 
@@ -40,6 +51,14 @@ class YarnCompaniesController < ApplicationController
 
   def autocomplete_name
     @yarn_companies = YarnCompany.where("name LIKE ?", "%#{params[:name]}%").limit(6)
+    render :index
+  end
+
+  def autocomplete_name_for_stash
+    @yarn_companies = YarnCompany.where("name LIKE ?", "%#{params[:name]}%").limit(6).order(name: :asc).to_a
+    @yarn_companies << YarnCompany.new(id: -3, name: 'Tell us about another yarn maker')
+    @yarn_companies << YarnCompany.new(id: -1, name: 'I made this yarn')
+    @yarn_companies << YarnCompany.new(id: -2, name: "I don't know who made this yarn")
     render :index
   end
 

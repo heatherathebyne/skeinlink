@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :autocomplete_name
+      get :autocomplete_name_for_stash
     end
 
     resources :colorways, only: [:index, :edit, :create, :update] do
@@ -37,6 +38,7 @@ Rails.application.routes.draw do
   resources :yarn_companies, except: [:destroy] do
     collection do
       get :autocomplete_name
+      get :autocomplete_name_for_stash
     end
   end
 

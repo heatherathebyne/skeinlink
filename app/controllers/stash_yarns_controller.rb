@@ -13,6 +13,11 @@ class StashYarnsController < ApplicationController
 
   def new
     @stash_yarn = StashYarn.new
+    if params[:new_form]
+      render :new_new
+    else
+      render :new
+    end
   end
 
   def create
