@@ -7,18 +7,26 @@
       <%= @stash_yarn.image.image_attribution %>
     <% end %>
   </div>
+
   <div class='col'>
     <% if @stash_yarn.handspun %>
       <p>Handspun</p>
     <% end %>
+
     <p>Colorway <strong><%= @stash_yarn.colorway_name %></strong></p>
+
     <p><%= pluralize(@stash_yarn.skein_quantity, 'skein') %>, <%= @stash_yarn.total_yardage %> total yards</p>
+
     <p><strong><%= @stash_yarn.weight_name %></strong> weight</p>
-    <p>
-    <%= "Purchased at #{@stash_yarn.purchased_at_name}" if @stash_yarn.purchased_at_name %>
-    <%= "on #{@stash_yarn.purchase_date}" if @stash_yarn.purchase_date %>
-    <%= "for #{@stash_yarn.purchase_price}" if @stash_yarn.purchase_price %>
-    </p>
+
+    <% if belongs_to_current_user?(@stash_yarn) %>
+      <p>
+      <%= "Purchased at #{@stash_yarn.purchased_at_name}" if @stash_yarn.purchased_at_name %>
+      <%= "on #{@stash_yarn.purchase_date}" if @stash_yarn.purchase_date %>
+      <%= "for #{@stash_yarn.purchase_price}" if @stash_yarn.purchase_price %>
+      </p>
+    <% end %>
+
     <% if @stash_yarn.notes %>
       <h4>Notes</h4>
       <p><%= @stash_yarn.notes %></p>

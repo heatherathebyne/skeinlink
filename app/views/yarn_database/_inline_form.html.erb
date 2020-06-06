@@ -15,19 +15,19 @@
   <%= f.hidden_field :yarn_company_id %>
 
   <div class='form-group'>
-    <%= f.label :name, 'Yarn name' %> <%= f.text_field :name %>
+    <%= f.label :name, 'Yarn name' %> <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :skein_gram_weight, 'Skein weight in grams' %> <%= f.text_field :skein_gram_weight %>
+    <%= f.label :skein_gram_weight, 'Skein weight in grams' %> <%= f.text_field :skein_gram_weight, class: 'form-control' %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :skein_yards, 'Skein yardage' %> <%= f.text_field :skein_yards %>
+    <%= f.label :skein_yards, 'Skein yardage' %> <%= f.text_field :skein_yards, class: 'form-control' %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name %>
+    <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name, class: 'form-control' %>
   </div>
 
   <div class='form-group' id='its_full_of_tags'>
@@ -42,7 +42,7 @@
   </div>
 
   <div class='form-group'>
-    <%= text_field_tag 'tag-add' %>
+    <%= text_field_tag 'tag-add', '', class: 'form-control' %>
     <%= hidden_field_tag :fiber_content_tags, yarn_product.fiber_content_list.to_json %>
   </div>
 
@@ -53,24 +53,24 @@
 
   <% if policy(yarn_product).edit_referral_links? %>
     <div class='form-group'>
-      <%= f.label :referral_link %> <%= f.text_field :referral_link %>
+      <%= f.label :referral_link %> <%= f.text_field :referral_link, class: 'form-control' %>
     </div>
 
     <div class='form-group'>
-      <%= f.label :referral_partner %> <%= f.text_field :referral_partner %>
+      <%= f.label :referral_partner %> <%= f.text_field :referral_partner, class: 'form-control' %>
     </div>
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :description %> <%= f.text_area :description %>
+    <%= f.label :description %> <%= f.text_area :description, class: 'form-control' %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image, class: 'form-control' %>
     <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
 
-  <%= f.submit 'Add yarn to database' %>
+  <%= f.submit 'Add yarn to database', class: 'btn btn-primary' %>
 <% end %>
 
 <script type='text/javascript'>
