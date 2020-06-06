@@ -12,10 +12,7 @@
     </div>
   <% end %>
 
-  <div class='form-group'>
-    <%= label_tag 'Yarn company name' %> <%= text_field_tag :yarn_company_search, yarn_product&.yarn_company&.name %>
-    <%= f.hidden_field :yarn_company_id %>
-  </div>
+  <%= f.hidden_field :yarn_company_id %>
 
   <div class='form-group'>
     <%= f.label :name, 'Yarn name' %> <%= f.text_field :name %>
@@ -82,6 +79,7 @@
     $('#tag-add').easyAutocomplete({
       data: fiberTypes,
       placeholder: 'Type to add a new tag',
+      adjustWidth: false,
       list: {
         match: { enabled: true },
         sort: { enabled: true },
@@ -89,20 +87,6 @@
           var itemValue = $('#tag-add').getSelectedItemData();
           addTag(itemValue);
           $('#tag-add').val('');
-        }
-      }
-    });
-
-    $('#yarn_company_search').easyAutocomplete({
-      url: function(search_term) { return '/yarn_companies/autocomplete_name.json?name=' + search_term },
-      getValue: 'name',
-      placeholder: 'Type a yarn company name',
-      requestDelay: 500,
-      list: {
-        sort: { enabled: true },
-        onChooseEvent: function() {
-          var itemValue = $('#yarn_company_search').getSelectedItemData().id;
-          $('#yarn_product_yarn_company_id').val(itemValue);
         }
       }
     });

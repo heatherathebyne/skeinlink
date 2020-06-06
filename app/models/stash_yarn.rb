@@ -14,7 +14,7 @@ class StashYarn < ApplicationRecord
   validate :has_a_name_or_product
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
                     size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
-  validates :other_maker_type, inclusion: { in: [0..2] }, allow_nil: true
+  validates :other_maker_type, inclusion: { in: 0..2 }, allow_nil: true
 
   def name
     yarn_product.try(:name) || super

@@ -25,11 +25,22 @@ class YarnDatabaseController < ApplicationController
 
     @yarn_product.fiber_content_list = filtered_fiber_content_tags
 
-    if @yarn_product.save
-      redirect_to @yarn_product, notice: 'Yarn database entry added!'
-    else
-      @yarn_companies = YarnCompany.all
-      render :new
+    respond_to do |format|
+      format.html do
+        if @yarn_product.save
+          redirect_to @yarn_product, notice: 'Yarn database entry added!'
+        else
+          @yarn_companies = YarnCompany.all
+          render :new
+        end
+      end
+      format.js do
+        if @yarn_product.save
+          render status: :ok, json: { id: @yarn_product.id, name: @yarn_product.name }
+        else
+          render status: :not_acceptable, json: { errors: @yarn_product.errors.full_messages }
+        end
+      end
     end
   end
 
