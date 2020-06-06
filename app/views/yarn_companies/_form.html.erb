@@ -20,13 +20,15 @@
     <%= f.label :website%> <%= f.text_field :website %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :referral_link %> <%= f.text_field :referral_link %>
-  </div>
+  <% if policy(yarn_company).edit_referral_links? %>
+    <div class='form-group'>
+      <%= f.label :referral_link %> <%= f.text_field :referral_link %>
+    </div>
 
-  <div class='form-group'>
-    <%= f.label :referral_partner %> <%= f.text_field :referral_partner %>
-  </div>
+    <div class='form-group'>
+      <%= f.label :referral_partner %> <%= f.text_field :referral_partner %>
+    </div>
+  <% end %>
 
   <div class='form-group'>
     <%= f.label :description %> <%= f.text_area :description %>
