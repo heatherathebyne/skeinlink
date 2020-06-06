@@ -71,8 +71,8 @@
       <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
     </div>
     <div class='form-group collapse' id='unknown_colorway'>
-      <p>Tell us about another colorway</p>
-      <input type='text' class='form-control' placeholder='What color is this yarn?'>
+      <h3>What color is this yarn?</h3>
+      <%= f.text_field :colorway_name, class: 'form-control' %>
     </div>
 
     <div class='form-group collapse' id='more_details'>
@@ -117,7 +117,7 @@
     </div>
 
     <div class='form-group'>
-      <input type='submit' value='Stash It!' class='btn btn-primary' disabled>
+      <input type='submit' value='Stash It!' class='btn btn-primary' id='submit_button' disabled>
     </div>
   <% end %>
 </div>
@@ -172,22 +172,32 @@
       $('#known_yarn_name').collapse('show');
       $('#static_attrs').collapse('hide');
       $('#new_yarn_maker').collapse('hide');
+      $('#static_attrs').collapse('hide');
+      $('#submit_button').prop('disabled', true);
     });
 
     $('#i_made_this').click(_ => {
       $('#stash_yarn_other_maker_type').val(1);
       $('#unknown_yarn_name').collapse('show');
       $('#known_yarn_name').collapse('hide');
-      $('#static_attrs').collapse('show');
       $('#new_yarn_maker').collapse('hide');
+      $('#known_colorway').collapse('hide');
+      $('#unknown_colorway').collapse('show');
+      $('#more_details').collapse('show');
+      $('#static_attrs').collapse('show');
+      $('#submit_button').prop('disabled', false);
     });
 
     $('#idk_who_made_this').click(_ => {
       $('#stash_yarn_other_maker_type').val(2);
       $('#unknown_yarn_name').collapse('show');
       $('#known_yarn_name').collapse('hide');
-      $('#static_attrs').collapse('show');
       $('#new_yarn_maker').collapse('hide');
+      $('#known_colorway').collapse('hide');
+      $('#unknown_colorway').collapse('show');
+      $('#more_details').collapse('show');
+      $('#static_attrs').collapse('show');
+      $('#submit_button').prop('disabled', false);
     });
 
     $('#yarn_company_form').on('ajax:success', (event) => {
