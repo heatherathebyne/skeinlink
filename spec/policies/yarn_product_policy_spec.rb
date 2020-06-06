@@ -36,4 +36,20 @@ RSpec.describe YarnProductPolicy do
       end
     end
   end
+
+  permissions :edit_referral_links? do
+    let(:record) { build :yarn_product }
+
+    context 'when user is a maintainer' do
+      let(:user) { build :user, :maintainer }
+
+      it { is_expected.to permit user, record }
+    end
+
+    context 'when user is not a maintainer' do
+      let(:user) { build :user }
+
+      it { is_expected.to_not permit user, record }
+    end
+  end
 end

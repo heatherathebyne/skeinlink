@@ -42,8 +42,9 @@ RSpec.describe YarnDatabaseController do
 
       before do
         allow(ImageAttachmentService).to receive(:call)
-        allow(YarnProductPolicy).to receive(:new)
-                                .and_return(instance_double('YarnProductPolicy', create?: permit))
+        allow(YarnProductPolicy).to receive(:new).and_return(
+          instance_double('YarnProductPolicy', create?: permit, edit_referral_links?: permit_referral)
+        )
         sign_in user
         post :create, params: {
           yarn_product: yarn_product_attrs.merge({image: sample_image_data}),
@@ -53,6 +54,7 @@ RSpec.describe YarnDatabaseController do
 
       context 'when user is not authorized to create a yarn product' do
         let(:permit) { false }
+        let(:permit_referral) { false }
 
         it_behaves_like 'displays unauthorized flash'
         it_behaves_like 'redirects to root path'
@@ -62,27 +64,41 @@ RSpec.describe YarnDatabaseController do
         let(:permit) { true }
         let(:yarn_product) { YarnProduct.find_by(name: yarn_product_attrs['name']) }
 
-        it 'redirects to new yarn product' do
-          expect(response).to redirect_to yarn_product_path(yarn_product)
+        context 'when user is not authorized to create referral links' do
+          let(:permit_referral) { false }
+
+          it 'creates the new yarn product with the expected attributes' do
+            expect(yarn_product.attributes).to include(yarn_product_attrs.reject { |k,v| k =~ /referral/ })
+            expect(yarn_product.created_by).to eq user.id
+            expect(yarn_product.referral_link).to_not eq yarn_product_attrs['referral_link']
+          end
         end
 
-        it 'creates the new yarn product with the expected attributes' do
-          expect(yarn_product.attributes).to include(yarn_product_attrs)
-          expect(yarn_product.created_by).to eq user.id
-        end
+        context 'when user is authorized to create referral links' do
+          let(:permit_referral) { true }
 
-        it 'attaches the uploaded image' do
-          expect(ImageAttachmentService).to have_received(:call).with(hash_including(
-            images: kind_of(ActionDispatch::Http::UploadedFile), record: kind_of(YarnProduct)
-          ))
-        end
+          it 'redirects to new yarn product' do
+            expect(response).to redirect_to yarn_product_path(yarn_product)
+          end
 
-        it 'sets the expected fiber content tags' do
-          expect(yarn_product.fiber_content.map(&:name)).to include 'Wool'
-        end
+          it 'creates the new yarn product with the expected attributes' do
+            expect(yarn_product.attributes).to include(yarn_product_attrs)
+            expect(yarn_product.created_by).to eq user.id
+          end
 
-        it 'does not set unknown fiber content tags' do
-          expect(yarn_product.fiber_content.map(&:name)).to_not include 'Spaghetti'
+          it 'attaches the uploaded image' do
+            expect(ImageAttachmentService).to have_received(:call).with(hash_including(
+              images: kind_of(ActionDispatch::Http::UploadedFile), record: kind_of(YarnProduct)
+            ))
+          end
+
+          it 'sets the expected fiber content tags' do
+            expect(yarn_product.fiber_content.map(&:name)).to include 'Wool'
+          end
+
+          it 'does not set unknown fiber content tags' do
+            expect(yarn_product.fiber_content.map(&:name)).to_not include 'Spaghetti'
+          end
         end
       end
     end
@@ -102,47 +118,63 @@ RSpec.describe YarnDatabaseController do
 
       before do
         allow(ImageAttachmentService).to receive(:call)
-        allow(YarnProductPolicy).to receive(:new)
-                             .and_return(instance_double('YarnProductPolicy', update?: permit))
+        allow(YarnProductPolicy).to receive(:new).and_return(
+          instance_double('YarnProductPolicy', update?: permit, edit_referral_links?: permit_referral)
+        )
         sign_in user
         patch :update, params: {
           id: yarn_product.id,
-          yarn_product: { name: 'Merino and Silk', image: sample_image_data },
+          yarn_product: { name: 'Merino and Silk', image: sample_image_data, referral_link: 'foo' },
           fiber_content_tags: ['Wool', 'Fettuccine', 'Silk'].to_json
         }
         yarn_product.reload
       end
 
-      context 'when user is not authorized to create a yarn product' do
+      context 'when user is not authorized to update a yarn product' do
         let(:permit) { false }
+        let(:permit_referral) { false }
 
         it_behaves_like 'displays unauthorized flash'
         it_behaves_like 'redirects to root path'
       end
 
-      context 'when user is authorized to create a yarn product' do
+      context 'when user is authorized to update a yarn product' do
         let(:permit) { true }
 
-        it 'redirects to the yarn product' do
-          expect(response).to redirect_to yarn_product_path(yarn_product)
+        context 'when user is not authorized to update referral links' do
+          let(:permit_referral) { false }
+
+          it 'updates the yarn product with the expected attributes' do
+            expect(yarn_product.name).to eq 'Merino and Silk'
+            expect(yarn_product.referral_link).to_not eq 'foo'
+          end
         end
 
-        it 'updates the yarn product with the expected attributes' do
-          expect(yarn_product.name).to eq 'Merino and Silk'
-        end
+        context 'when user is authorized to update referral links' do
+          let(:permit_referral) { true }
 
-        it 'attaches the uploaded image' do
-          expect(ImageAttachmentService).to have_received(:call).with(hash_including(
-            images: kind_of(ActionDispatch::Http::UploadedFile), record: kind_of(YarnProduct)
-          ))
-        end
+          it 'redirects to the yarn product' do
+            expect(response).to redirect_to yarn_product_path(yarn_product)
+          end
 
-        it 'sets the expected fiber content tags' do
-          expect(yarn_product.fiber_content.map(&:name)).to include 'Silk'
-        end
+          it 'updates the yarn product with the expected attributes' do
+            expect(yarn_product.name).to eq 'Merino and Silk'
+            expect(yarn_product.referral_link).to eq 'foo'
+          end
 
-        it 'does not set unknown fiber content tags' do
-          expect(yarn_product.fiber_content.map(&:name)).to_not include 'Fettuccine'
+          it 'attaches the uploaded image' do
+            expect(ImageAttachmentService).to have_received(:call).with(hash_including(
+              images: kind_of(ActionDispatch::Http::UploadedFile), record: kind_of(YarnProduct)
+            ))
+          end
+
+          it 'sets the expected fiber content tags' do
+            expect(yarn_product.fiber_content.map(&:name)).to include 'Silk'
+          end
+
+          it 'does not set unknown fiber content tags' do
+            expect(yarn_product.fiber_content.map(&:name)).to_not include 'Fettuccine'
+          end
         end
       end
     end
