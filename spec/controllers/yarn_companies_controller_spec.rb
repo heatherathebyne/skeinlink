@@ -39,14 +39,16 @@ RSpec.describe YarnCompaniesController do
       end
 
       before do
-        allow(YarnCompanyPolicy).to receive(:new)
-                                .and_return(instance_double('YarnCompanyPolicy', create?: permit))
+        allow(YarnCompanyPolicy).to receive(:new).and_return(
+          instance_double 'YarnCompanyPolicy', create?: permit, edit_referral_links?: permit_referral
+        )
         sign_in user
         post :create, params: { yarn_company: yarn_company_attrs }
       end
 
       context 'when user is not authorized to create a yarn company' do
         let(:permit) { false }
+        let(:permit_referral) { false }
 
         it_behaves_like 'displays unauthorized flash'
         it_behaves_like 'redirects to root path'
@@ -56,13 +58,31 @@ RSpec.describe YarnCompaniesController do
         let(:permit) { true }
         let(:yarn_company) { YarnCompany.find_by(name: yarn_company_attrs['name']) }
 
-        it 'redirects to new yarn company' do
-          expect(response).to redirect_to yarn_company_path(yarn_company)
+        context 'when user is not authorized to create referral links' do
+          let(:permit_referral) { false }
+
+          it 'redirects to new yarn company' do
+            expect(response).to redirect_to yarn_company_path(yarn_company)
+          end
+
+          it 'creates the new yarn company with the expected attributes' do
+            expect(yarn_company.attributes).to include(yarn_company_attrs.reject { |k,v| k =~ /referral/ })
+            expect(yarn_company.created_by).to eq user.id
+            expect(yarn_company.referral_link).to_not eq yarn_company_attrs['referral_link']
+          end
         end
 
-        it 'creates the new yarn company with the expected attributes' do
-          expect(yarn_company.attributes).to include(yarn_company_attrs)
-          expect(yarn_company.created_by).to eq user.id
+        context 'when user is authorized to create referral links' do
+          let(:permit_referral) { true }
+
+          it 'redirects to new yarn company' do
+            expect(response).to redirect_to yarn_company_path(yarn_company)
+          end
+
+          it 'creates the new yarn company with the expected attributes' do
+            expect(yarn_company.attributes).to include(yarn_company_attrs)
+            expect(yarn_company.created_by).to eq user.id
+          end
         end
       end
     end
@@ -79,29 +99,50 @@ RSpec.describe YarnCompaniesController do
       let(:yarn_company) { create :yarn_company }
 
       before do
-        allow(YarnCompanyPolicy).to receive(:new)
-                                .and_return(instance_double('YarnCompanyPolicy', update?: permit))
+        allow(YarnCompanyPolicy).to receive(:new).and_return(
+          instance_double 'YarnCompanyPolicy', update?: permit, edit_referral_links?: permit_referral
+        )
         sign_in user
-        patch :update, params: { id: yarn_company.id, yarn_company: { name: 'Local Farm' } }
+        patch :update, params: { id: yarn_company.id, yarn_company: {
+          name: 'Local Farm', referral_link: 'some yarn store' } }
         yarn_company.reload
       end
 
-      context 'when user is not authorized to create a yarn company' do
+      context 'when user is not authorized to update a yarn company' do
         let(:permit) { false }
+        let(:permit_referral) { false }
 
         it_behaves_like 'displays unauthorized flash'
         it_behaves_like 'redirects to root path'
       end
 
-      context 'when user is authorized to create a yarn company' do
+      context 'when user is authorized to update a yarn company' do
         let(:permit) { true }
 
-        it 'redirects to the yarn company' do
-          expect(response).to redirect_to yarn_company_path(yarn_company)
+        context 'when user is not authorized to update referral links' do
+          let(:permit_referral) { false }
+
+          it 'redirects to the yarn company' do
+            expect(response).to redirect_to yarn_company_path(yarn_company)
+          end
+
+          it 'updates the yarn company with the expected attributes' do
+            expect(yarn_company.name).to eq 'Local Farm'
+            expect(yarn_company.referral_link).to_not eq 'some yarn store'
+          end
         end
 
-        it 'updates the yarn company with the expected attributes' do
-          expect(yarn_company.name).to eq 'Local Farm'
+        context 'when user is authorized to update referral links' do
+          let(:permit_referral) { true }
+
+          it 'redirects to the yarn company' do
+            expect(response).to redirect_to yarn_company_path(yarn_company)
+          end
+
+          it 'updates the yarn company with the expected attributes' do
+            expect(yarn_company.name).to eq 'Local Farm'
+            expect(yarn_company.referral_link).to eq 'some yarn store'
+          end
         end
       end
     end

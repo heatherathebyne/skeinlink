@@ -69,6 +69,8 @@ class YarnCompaniesController < ApplicationController
   end
 
   def yarn_company_params
-    params.require(:yarn_company).permit(:name, :website, :referral_link, :description, :referral_partner)
+    permitted = [:name, :website, :description]
+    permitted.concat [:referral_link, :referral_partner] if policy(YarnCompany).edit_referral_links?
+    params.require(:yarn_company).permit(permitted)
   end
 end
