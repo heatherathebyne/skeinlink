@@ -10,6 +10,38 @@ RSpec.describe Colorway do
     it { is_expected.to eq 'Lion Brand' }
   end
 
+  describe '#name_with_number' do
+    subject { Colorway.new(name: name, number: number).name_with_number }
+
+    context 'when it has only a name' do
+      let(:name) { 'foo' }
+      let(:number) { nil }
+
+      it { is_expected.to eq 'foo' }
+    end
+
+    context 'when it has only a number' do
+      let(:name) { nil }
+      let(:number) { '123' }
+
+      it { is_expected.to eq '123' }
+    end
+
+    context 'when it has both a name and a number' do
+      let(:name) { 'foo'}
+      let(:number) { '123' }
+
+      it { is_expected.to eq '123 foo' }
+    end
+
+    context 'when it has neither a name nor a number' do
+      let(:name) { nil }
+      let(:number) { nil }
+
+      it { is_expected.to be_blank }
+    end
+  end
+
   describe 'validations' do
     subject { Colorway.new(yarn_product: yarn_product, name: name, number: number) }
 

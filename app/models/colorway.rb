@@ -15,6 +15,10 @@ class Colorway < ApplicationRecord
     yarn_product.yarn_company_name
   end
 
+  def name_with_number
+    [number, name].join(' ').strip
+  end
+
   private
 
   def name_or_number_present
