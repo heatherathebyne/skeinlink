@@ -13,26 +13,26 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :name %> <%= f.text_field :name %>
+    <%= f.label :name %> <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class='form-group'>
-    <%= f.label :website%> <%= f.text_field :website %>
+    <%= f.label :website %> <%= f.text_field :website, class: 'form-control' %>
   </div>
 
   <% if policy(yarn_company).edit_referral_links? %>
     <div class='form-group'>
-      <%= f.label :referral_link %> <%= f.text_field :referral_link %>
+      <%= f.label :referral_link %> <%= f.text_field :referral_link, class: 'form-control' %>
     </div>
 
     <div class='form-group'>
-      <%= f.label :referral_partner %> <%= f.text_field :referral_partner %>
+      <%= f.label :referral_partner %> <%= f.text_field :referral_partner, class: 'form-control' %>
     </div>
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :description %> <%= f.text_area :description %>
+    <%= f.label :description %> <%= f.text_area :description, class: 'form-control' %>
   </div>
 
-  <%= f.submit 'Add Yarn Company' %>
+  <%= f.submit 'Add Yarn Company', class: 'btn btn-primary' %>
 <% end %>

@@ -23,7 +23,7 @@
            value='<%= stash_yarn&.yarn_product&.yarn_company&.name %>'>
     <input type='hidden' id='yarn_company_id'>
 
-    <div class='border-primary border-top border-bottom collapse' id='new_yarn_maker'>
+    <div class='border-primary border-top border-bottom my-2 py-2 collapse' id='new_yarn_maker'>
       <h5>Tell us about another yarn maker</h5>
       <div id='yarn_company_errors'></div>
       <%= render 'yarn_companies/form', yarn_company: YarnCompany.new, local_form: false %>
@@ -45,7 +45,7 @@
 
     <input type='text' class='form-control' id='yarn_product_search' value='<%= stash_yarn&.yarn_product&.name %>'>
 
-    <div class='form-group collapse' id='new_yarn_product'>
+    <div class='form-group border-primary border-top border-bottom my-2 py-2 collapse' id='new_yarn_product'>
       <h5>Tell us about another yarn</h5>
       <div id='yarn_product_errors'></div>
       <%= render 'yarn_database/inline_form', yarn_product: YarnProduct.new, local_form: false %>
@@ -56,22 +56,22 @@
     <h3>What color is this yarn?</h3>
     <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
 
-    <div class='form-group collapse' id='new_colorway'>
+    <div class='form-group border-primary border-top border-bottom my-2 py-2 collapse' id='new_colorway'>
       <h5>Tell us about another colorway</h5>
       <div id='colorway_errors'></div>
       <%= form_with(model: Colorway.new, id: 'colorway_form') do |f| %>
         <%= f.hidden_field :yarn_product_id %>
         <div class='form-group'>
-          <%= f.label :name %> <%= f.text_field :name %>
+          <%= f.label :name %> <%= f.text_field :name, class: 'form-control', placeholder: 'example: Peacock' %>
         </div>
         <div class='form-group'>
-          <%= f.label :number %> <%= f.text_field :number %>
+          <%= f.label :number %> <%= f.text_field :number, class: 'form-control', placeholder: 'example: 236' %>
         </div>
         <div class='form-group'>
-          <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+          <%= f.label :image, 'Add a picture' %> <%= f.file_field :image, class: 'form-control' %>
           <p class='text-muted'><small><%= image_attribution_notice %></small></p>
         </div>
-        <%= f.submit %>
+        <%= f.submit 'Create Colorway', class: 'btn btn-primary' %>
       <% end %>
     </div>
   </div>
