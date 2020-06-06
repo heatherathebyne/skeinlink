@@ -44,10 +44,16 @@
     </div>
   </div>
 
-  <div class='form-group collapse show' id='known_yarn_name'>
+  <div class='form-group collapse' id='known_yarn_name'>
     <h3>What is this yarn called?</h3>
 
     <input type='text' class='form-control' id='yarn_product_search' value='<%= stash_yarn&.yarn_product&.name %>'>
+
+    <div class='form-group collapse' id='new_yarn_product'>
+      <h5>Tell us about another yarn</h5>
+      <div id='yarn_product_errors'></div>
+      <%= render 'yarn_database/inline_form', yarn_product: YarnProduct.new, local_form: false %>
+    </div>
   </div>
 
   <%= form_with(model: stash_yarn, local: true) do |f| %>
@@ -60,16 +66,16 @@
       <%= f.text_field :name, placeholder: 'What do you call this yarn?', class: 'form-control' %>
     </div>
 
-    <div class='form-group collapse show'>
+    <div class='form-group collapse' id='known_colorway'>
       <h3>What color is this yarn?</h3>
       <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
     </div>
-    <div class='form-group collapse'>
+    <div class='form-group collapse' id='unknown_colorway'>
       <p>Tell us about another colorway</p>
       <input type='text' class='form-control' placeholder='What color is this yarn?'>
     </div>
 
-    <div class='form-group'>
+    <div class='form-group collapse' id='more_details'>
       <h3>More details</h3>
 
       <div class='collapse' id='static_attrs'>
@@ -111,7 +117,7 @@
     </div>
 
     <div class='form-group'>
-      <input type='submit' value='Stash It!' class='btn btn-primary'>
+      <input type='submit' value='Stash It!' class='btn btn-primary' disabled>
     </div>
   <% end %>
 </div>
@@ -128,6 +134,7 @@
         onChooseEvent: _ => {
           var itemValue = $('#yarn_company_search').getSelectedItemData().id;
           $('#yarn_company_id').val(itemValue);
+          $('#yarn_product_yarn_company_id').val(itemValue);
           if (itemValue == -1) {
             // self made
             $('#stash_yarn_other_maker_type').val(1);
@@ -197,6 +204,7 @@
       getValue: 'name',
       placeholder: 'Type the name of the yarn (example: Mandala)',
       requestDelay: 500,
+      adjustWidth: false,
       url: search_term => {
         companyId = $('#yarn_company_id').val();
         return '/yarn_database/autocomplete_name_for_stash.json?name=' + search_term + '&id=' + companyId;
@@ -206,8 +214,28 @@
         onChooseEvent: _ => {
           itemValue = $('#yarn_product_search').getSelectedItemData().id;
           $('#stash_yarn_yarn_product_id').val(itemValue);
+          if (itemValue == -3) {
+            // tell us about another yarn
+            $('#new_yarn_product').collapse('show');
+            $('#unknown_colorway').collapse('hide');
+            $('#known_colorway').collapse('hide');
+          } else {
+            $('#new_yarn_product').collapse('hide');
+            $('#known_colorway').collapse('show');
+          }
         }
       }
+    });
+
+    $('#yarn_product_form').on('ajax:success', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#yarn_product_search').val(data.name);
+      $('#yarn_product_id').val(data.id);
+      $('#new_yarn_product').collapse('hide');
+      $('#known_colorway').collapse('show');
+    }).on('ajax:error', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#yarn_product_errors').html(data.errors);
     });
 
     $('#colorway_search').easyAutocomplete({
@@ -216,6 +244,7 @@
       },
       placeholder: 'Type the colorway name or number (example: Peacock 226)',
       requestDelay: 500,
+      adjustWidth: false,
       url: search_term => {
         productId = $('#stash_yarn_yarn_product_id').val();
         return '/yarn_database/' + productId + '/colorways/autocomplete_name_or_number.json?term=' + search_term;
