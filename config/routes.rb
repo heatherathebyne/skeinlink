@@ -16,9 +16,12 @@ Rails.application.routes.draw do
       patch :update_attribution, on: :member
       collection do
         get :autocomplete_name_or_number
+        get :autocomplete_name_or_number_for_stash
       end
     end
   end
+
+  resources :colorways, only: [:create]
 
   resources :projects do
     member do

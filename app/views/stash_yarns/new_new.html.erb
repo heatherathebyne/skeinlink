@@ -56,6 +56,30 @@
     </div>
   </div>
 
+  <div class='form-group collapse' id='known_colorway'>
+    <h3>What color is this yarn?</h3>
+    <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
+
+    <div class='form-group collapse' id='new_colorway'>
+      <h5>Tell us about another colorway</h5>
+      <div id='colorway_errors'></div>
+      <%= form_with(model: Colorway.new, id: 'colorway_form') do |f| %>
+        <%= f.hidden_field :yarn_product_id %>
+        <div class='form-group'>
+          <%= f.label :name %> <%= f.text_field :name %>
+        </div>
+        <div class='form-group'>
+          <%= f.label :number %> <%= f.text_field :number %>
+        </div>
+        <div class='form-group'>
+          <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+          <p class='text-muted'><small><%= image_attribution_notice %></small></p>
+        </div>
+        <%= f.submit %>
+      <% end %>
+    </div>
+  </div>
+
   <%= form_with(model: stash_yarn, local: true) do |f| %>
     <%= f.hidden_field :other_maker_type %>
     <%= f.hidden_field :yarn_product_id %>
@@ -66,10 +90,6 @@
       <%= f.text_field :name, placeholder: 'What do you call this yarn?', class: 'form-control' %>
     </div>
 
-    <div class='form-group collapse' id='known_colorway'>
-      <h3>What color is this yarn?</h3>
-      <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
-    </div>
     <div class='form-group collapse' id='unknown_colorway'>
       <h3>What color is this yarn?</h3>
       <%= f.text_field :colorway_name, class: 'form-control' %>
@@ -224,6 +244,7 @@
         onChooseEvent: _ => {
           itemValue = $('#yarn_product_search').getSelectedItemData().id;
           $('#stash_yarn_yarn_product_id').val(itemValue);
+          $('#colorway_yarn_product_id').val(itemValue);
           if (itemValue == -3) {
             // tell us about another yarn
             $('#new_yarn_product').collapse('show');
@@ -257,15 +278,36 @@
       adjustWidth: false,
       url: search_term => {
         productId = $('#stash_yarn_yarn_product_id').val();
-        return '/yarn_database/' + productId + '/colorways/autocomplete_name_or_number.json?term=' + search_term;
+        return '/yarn_database/' + productId + '/colorways/autocomplete_name_or_number_for_stash.json?term=' + search_term;
       },
       list: {
         maxNumberOfElements: 8,
         onChooseEvent: _ => {
           itemValue = $('#colorway_search').getSelectedItemData().id;
           $('#stash_yarn_colorway_id').val(itemValue);
+
+          if (itemValue == -3) {
+            $('#new_colorway').collapse('show');
+          } else {
+            $('#new_colorway').collapse('hide');
+            $('#more_details').collapse('show');
+          }
         }
       }
+    });
+
+    $('#colorway_form').on('ajax:success', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#colorway_search').val(data.name_with_number);
+      $('#stash_yarn_colorway_id').val(data.id);
+      $('#new_colorway').collapse('hide');
+      $('#known_colorway').collapse('show');
+      $('#more_details').collapse('show');
+      $('#submit_button').prop('disabled', false);
+    }).on('ajax:error', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#colorway_errors').html(data.errors.join(', '));
+      $('#submit_button').prop('disabled', true);
     });
   });
 </script>
