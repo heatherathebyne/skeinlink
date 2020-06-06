@@ -13,6 +13,11 @@ class StashYarnsController < ApplicationController
 
   def new
     @stash_yarn = StashYarn.new
+    if params[:new_form]
+      render :new_new
+    else
+      render :new
+    end
   end
 
   def create
@@ -62,7 +67,7 @@ class StashYarnsController < ApplicationController
     params.require(:stash_yarn)
           .permit(:yarn_product_id, :colorway_id, :name, :handspun, :colorway_name, :purchase_date,
                   :purchased_at_name, :purchase_price, :skein_quantity, :total_yardage,
-                  :notes, :weight_id)
+                  :notes, :weight_id, :other_maker_type)
   end
 
   def stash_yarn_image_params

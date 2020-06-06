@@ -1,0 +1,232 @@
+<h1>Add Stash Yarn</h1>
+
+<% stash_yarn ||= @stash_yarn %>
+
+<% if stash_yarn.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(stash_yarn.errors.count, "error") %> prohibited this stash entry from being saved:</h2>
+
+    <ul>
+      <% stash_yarn.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<div class='container'>
+  <div class='form-group'>
+    <h3>Who made this yarn?</h3>
+
+    <div class='form-check'>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='yarn_maker_name' checked>
+      <label class='form-check-label' for='yarn_maker_name'>Pick a yarn maker's name</label>
+    </div>
+
+    <input type='text' class='form-control' id='yarn_company_search'
+           value='<%= stash_yarn&.yarn_product&.yarn_company&.name %>'>
+    <input type='hidden' id='yarn_company_id'>
+
+    <div class='border-primary border-top border-bottom collapse' id='new_yarn_maker'>
+      <h5>Tell us about another yarn maker</h5>
+      <div id='yarn_company_errors'></div>
+      <%= render 'yarn_companies/form', yarn_company: YarnCompany.new, local_form: false %>
+    </div>
+
+    <div class='form-check'>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='i_made_this'>
+      <label class='form-check-label' for='i_made_this'>I made this yarn</label>
+    </div>
+
+    <div class='form-check'>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='idk_who_made_this'>
+      <label class='form-check-label' for='idk_who_made_this'>I don't know who made this yarn</label>
+    </div>
+  </div>
+
+  <div class='form-group collapse show' id='known_yarn_name'>
+    <h3>What is this yarn called?</h3>
+
+    <input type='text' class='form-control' id='yarn_product_search' value='<%= stash_yarn&.yarn_product&.name %>'>
+  </div>
+
+  <%= form_with(model: stash_yarn, local: true) do |f| %>
+    <%= f.hidden_field :other_maker_type %>
+    <%= f.hidden_field :yarn_product_id %>
+    <%= f.hidden_field :colorway_id %>
+
+    <div class='form-group collapse' id='unknown_yarn_name'>
+      <h3>What do you call this yarn?</h3>
+      <%= f.text_field :name, placeholder: 'What do you call this yarn?', class: 'form-control' %>
+    </div>
+
+    <div class='form-group collapse show'>
+      <h3>What color is this yarn?</h3>
+      <input type='text' class='form-control' id='colorway_search' value='<%= stash_yarn&.colorway_name %>'>
+    </div>
+    <div class='form-group collapse'>
+      <p>Tell us about another colorway</p>
+      <input type='text' class='form-control' placeholder='What color is this yarn?'>
+    </div>
+
+    <div class='form-group'>
+      <h3>More details</h3>
+
+      <div class='collapse' id='static_attrs'>
+        <div class='form-group'>
+          <%= f.label :total_yardage %> <%= f.text_field :total_yardage, class: 'form-control' %>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :weight_id, 'Yarn weight' %>
+          <%= f.select :weight_id, options_for_select(stash_yarn.common_weight_select_options, stash_yarn.weight_id), {class: 'form-control'} %>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :skein_quantity, 'Number of skeins' %> <%= f.text_field :skein_quantity, class: 'form-control' %>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :purchase_date %> <%= f.text_field :purchase_date, placeholder: "example: #{Date.current}", class: 'form-control' %>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :purchased_at_name, 'I bought this from' %> <%= f.text_field :purchased_at_name, class: 'form-control' %>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :purchase_price %> <%= f.text_field :purchase_price, class: 'form-control' %>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :notes %><br>
+        <%= f.text_area :notes, class: 'form-control' %>
+      </div>
+
+      <div class='form-group'>
+        <%= f.label :image, 'Add a picture' %> <%= f.file_field :image, class: 'form-control' %>
+        <p class='text-muted'><small><%= image_attribution_notice %></small></p>
+      </div>
+    </div>
+
+    <div class='form-group'>
+      <input type='submit' value='Stash It!' class='btn btn-primary'>
+    </div>
+  <% end %>
+</div>
+
+<script type='text/javascript'>
+  $(document).ready(_ => {
+    $('#yarn_company_search').easyAutocomplete({
+      url: search_term => { return '/yarn_companies/autocomplete_name_for_stash.json?name=' + search_term },
+      getValue: 'name',
+      placeholder: "Type the maker's name (example: Lion Brand)",
+      requestDelay: 500,
+      list: {
+        maxNumberOfElements: 10,
+        onChooseEvent: _ => {
+          var itemValue = $('#yarn_company_search').getSelectedItemData().id;
+          $('#yarn_company_id').val(itemValue);
+          if (itemValue == -1) {
+            // self made
+            $('#stash_yarn_other_maker_type').val(1);
+            $('#unknown_yarn_name').collapse('show');
+            $('#known_yarn_name').collapse('hide');
+            $('#static_attrs').collapse('show');
+            $('#new_yarn_maker').collapse('hide');
+          } else if (itemValue == -2) {
+            // unknown maker
+            $('#stash_yarn_other_maker_type').val(2);
+            $('#unknown_yarn_name').collapse('show');
+            $('#known_yarn_name').collapse('hide');
+            $('#static_attrs').collapse('show');
+            $('#new_yarn_maker').collapse('hide');
+          } else if (itemValue == -3) {
+          // tell us about another yarn maker
+            $('#stash_yarn_other_maker_type').val(null);
+            $('#unknown_yarn_name').collapse('hide');
+            $('#known_yarn_name').collapse('show');
+            $('#static_attrs').collapse('hide');
+            $('#new_yarn_maker').collapse('show');
+          } else {
+            $('#unknown_yarn_name').collapse('hide');
+            $('#known_yarn_name').collapse('show');
+            $('#static_attrs').collapse('hide');
+            $('#new_yarn_maker').collapse('hide');
+          }
+        }
+      }
+    });
+
+    $('#yarn_maker_name').click(_ => {
+      $('#stash_yarn_other_maker_type').val(null);
+      $('#unknown_yarn_name').collapse('hide');
+      $('#known_yarn_name').collapse('show');
+      $('#static_attrs').collapse('hide');
+      $('#new_yarn_maker').collapse('hide');
+    });
+
+    $('#i_made_this').click(_ => {
+      $('#stash_yarn_other_maker_type').val(1);
+      $('#unknown_yarn_name').collapse('show');
+      $('#known_yarn_name').collapse('hide');
+      $('#static_attrs').collapse('show');
+      $('#new_yarn_maker').collapse('hide');
+    });
+
+    $('#idk_who_made_this').click(_ => {
+      $('#stash_yarn_other_maker_type').val(2);
+      $('#unknown_yarn_name').collapse('show');
+      $('#known_yarn_name').collapse('hide');
+      $('#static_attrs').collapse('show');
+      $('#new_yarn_maker').collapse('hide');
+    });
+
+    $('#yarn_company_form').on('ajax:success', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#yarn_company_search').val(data.name);
+      $('#yarn_company_id').val(data.id);
+      $('#new_yarn_maker').collapse('hide');
+    }).on('ajax:error', (event) => {
+      var data = JSON.parse(event.detail[0]);
+      $('#yarn_company_errors').html(data.errors);
+    });
+
+    $('#yarn_product_search').easyAutocomplete({
+      getValue: 'name',
+      placeholder: 'Type the name of the yarn (example: Mandala)',
+      requestDelay: 500,
+      url: search_term => {
+        companyId = $('#yarn_company_id').val();
+        return '/yarn_database/autocomplete_name_for_stash.json?name=' + search_term + '&id=' + companyId;
+      },
+      list: {
+        maxNumberOfElements: 10,
+        onChooseEvent: _ => {
+          itemValue = $('#yarn_product_search').getSelectedItemData().id;
+          $('#stash_yarn_yarn_product_id').val(itemValue);
+        }
+      }
+    });
+
+    $('#colorway_search').easyAutocomplete({
+      getValue: (item) => {
+        return item.name + ' ' + item.number;
+      },
+      placeholder: 'Type the colorway name or number (example: Peacock 226)',
+      requestDelay: 500,
+      url: search_term => {
+        productId = $('#stash_yarn_yarn_product_id').val();
+        return '/yarn_database/' + productId + '/colorways/autocomplete_name_or_number.json?term=' + search_term;
+      },
+      list: {
+        maxNumberOfElements: 8,
+        onChooseEvent: _ => {
+          itemValue = $('#colorway_search').getSelectedItemData().id;
+          $('#stash_yarn_colorway_id').val(itemValue);
+        }
+      }
+    });
+  });
+</script>

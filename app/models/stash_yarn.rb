@@ -1,4 +1,7 @@
 class StashYarn < ApplicationRecord
+  YARN_MAKER_SELF = 1
+  YARN_MAKER_UNKNOWN = 2
+
   include YarnWeight
   include ImageTools
 
@@ -10,7 +13,8 @@ class StashYarn < ApplicationRecord
   has_one_attached :image
   validate :has_a_name_or_product
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
-                     size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
+                    size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
+  validates :other_maker_type, inclusion: { in: [0..2] }, allow_nil: true
 
   def name
     yarn_product.try(:name) || super
@@ -26,6 +30,14 @@ class StashYarn < ApplicationRecord
 
   def default_image_owner
     user.name
+  end
+
+  def self_made?
+    other_maker_type == 1
+  end
+
+  def maker_unknown?
+    other_maker_type == 2
   end
 
   private
