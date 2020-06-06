@@ -17,7 +17,7 @@ class StashYarn < ApplicationRecord
   validates :other_maker_type, inclusion: { in: 0..2 }, allow_nil: true
 
   def name
-    yarn_product.try(:name) || super
+    yarn_product.try(:name_with_company) || super
   end
 
   def colorway_name
