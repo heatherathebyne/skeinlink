@@ -36,3 +36,4 @@
 # Site-specific configuration
 /config/skeinlink.yml
 /config/database.yml
+/config/initializers/devise_custom.rb
