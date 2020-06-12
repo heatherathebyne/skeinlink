@@ -2,8 +2,8 @@ class User < ApplicationRecord
   audited except: [:encrypted_password, :reset_password_token, :confirmation_token, :unlock_token,
                    :remember_created_at]
 
-  devise :database_authenticatable, :rememberable,
-         :trackable, :timeoutable, :validatable
+  devise :database_authenticatable, :rememberable, :recoverable, :lockable,
+         :trackable, :timeoutable, :validatable, :confirmable
 
   has_many :projects
 

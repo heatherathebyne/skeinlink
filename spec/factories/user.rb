@@ -2,6 +2,7 @@ FactoryBot.define do
   factory :user do
     email { Faker::Internet.email }
     password { 'yarnaddict1' }
+    confirmed_at { Time.current }
   end
 
   trait :superadmin do
