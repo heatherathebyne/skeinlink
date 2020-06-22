@@ -13,3 +13,4 @@ production:
 # storage_service_mirror_primary: local
 # storage_service_mirrors: [local]
   smtp_address: localhost
+  default_url_host: localhost
