@@ -8,6 +8,13 @@
   </head>
 
   <body>
+    <h2><%= Rails.configuration.skeinlink[:community_name] %> SkeinLink
+</h2>
     <%= yield %>
+
+    With 💜,<br>
+    <%= Rails.configuration.skeinlink[:community_name] %> SkeinLink
+
+    <p><small>You are receiving this email because you are a registered user at <%= link_to "#{Rails.configuration.skeinlink[:community_name]} SkeinLink", root_url %>.</small></p>
   </body>
 </html>
