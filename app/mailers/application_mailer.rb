@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  # Set default mailer sender in config/initializers/devise_custom.rb
   layout 'mailer'
 end
