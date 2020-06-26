@@ -15,8 +15,19 @@ class Admin::UsersController < AdminController
 
   def create
     @user = User.new(user_params)
+
+    # set a random password; user will change this
+    temp_pass = SecureRandom.base64(32)
+    @user.password = temp_pass
+    @user.password_confirmation = temp_pass
+
+    # set user as already confirmed, since they cannot change their password otherwise
+    @user.confirmed_at = Time.current
+
     if @user.save
-      redirect_to admin_user_path(@user)
+      @user.send_reset_password_instructions
+      flash[:notice] = 'User created successfully.'
+      redirect_to admin_users_path
     else
       render :new
     end
@@ -27,7 +38,7 @@ class Admin::UsersController < AdminController
 
   def update
     if @user.update(user_params)
-      redirect_to admin_user_path(@user)
+      redirect_to admin_users_path
     else
       render :edit
     end
