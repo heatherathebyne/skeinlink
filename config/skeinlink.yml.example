@@ -2,6 +2,7 @@ development:
   community_name: My Fiber Community (Development)
   exception_notifier_email: 'skeinlink@example.com'
   object_storage_service: local
+  referral_disclaimer: nil
 production:
   community_name: My Fiber Community
   exception_notifier_email: 'skeinlink@example.com'
@@ -16,3 +17,4 @@ production:
   default_url_host: localhost
   smtp_username: nil
   smtp_password: nil
+  referral_disclaimer: nil

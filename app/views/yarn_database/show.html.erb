@@ -31,6 +31,7 @@
         <%= link_to "Buy at #{@yarn_product.referral_partner}",
                     @yarn_product.referral_link,
                     class: 'btn btn-outline-primary', target: '_blank' %>
+        <small><%= Rails.configuration.skeinlink[:referral_disclaimer] %></small>
       </div>
     <% end %>
 

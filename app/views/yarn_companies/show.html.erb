@@ -8,6 +8,7 @@
 
 <% unless @yarn_company.referral_link.blank? || @yarn_company.referral_partner.blank? %>
   <div><%= link_to "Buy at #{@yarn_company.referral_partner}", @yarn_company.referral_link, class: 'btn btn-outline-primary', target: '_blank' %></div>
+  <small><%= Rails.configuration.skeinlink[:referral_disclaimer] %></small>
 <% end %>
 
 <hr>
