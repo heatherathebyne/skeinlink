@@ -14,3 +14,5 @@ production:
 # storage_service_mirrors: [local]
   smtp_address: localhost
   default_url_host: localhost
+  smtp_username: nil
+  smtp_password: nil

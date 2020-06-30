@@ -17,3 +17,6 @@ production:
   storage_service_mirror_primary: local
   storage_service_mirrors: [local]
   default_url_host: localhost
+  smtp_address: localhost
+  smtp_username: nil
+  smtp_password: nil

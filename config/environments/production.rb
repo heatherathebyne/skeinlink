@@ -64,7 +64,9 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: Rails.configuration.skeinlink[:default_url_host] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: Rails.configuration.skeinlink[:smtp_address]
+    address: Rails.configuration.skeinlink[:smtp_address],
+    user_name: Rails.configuration.skeinlink[:smtp_username],
+    password: Rails.configuration.skeinlink[:smtp_password]
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
