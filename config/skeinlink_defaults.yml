@@ -7,6 +7,7 @@ development:
   object_storage_service: local
   storage_service_mirror_primary: local
   storage_service_mirrors: [local]
+  referral_disclaimer: nil
 production:
   community_name: Configuration Defaults Loaded - Check configuration
   exception_notifier_email: 'skeinlink@example.com'
@@ -20,3 +21,4 @@ production:
   smtp_address: localhost
   smtp_username: nil
   smtp_password: nil
+  referral_disclaimer: nil
