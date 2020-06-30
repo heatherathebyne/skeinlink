@@ -84,7 +84,7 @@
       placeholder: 'Type to add a new tag',
       list: {
         match: { enabled: true },
-        sort: { enabled: true },
+        sort: { enabled: true, method: longwool },
         onChooseEvent: _ => {
           var itemValue = $('#tag-add').getSelectedItemData();
           addTag(itemValue);
@@ -131,4 +131,14 @@
     $('#fiber_content_tags').val(JSON.stringify(tags));
     link.parent().remove();
   });
+
+function longwool(a, b) {
+  if (a.length < b.length) {
+    return -1;
+  }
+  if (a.length > b.length) {
+    return 1;
+  }
+  return 0;
+}
 </script>
