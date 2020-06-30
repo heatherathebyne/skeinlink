@@ -235,6 +235,7 @@
       $('#yarn_company_search').val(data.name);
       $('#yarn_company_id').val(data.id);
       $('#new_yarn_maker').collapse('hide');
+      $('#yarn_product_yarn_company_id').val(data.id);
     }).on('ajax:error', (event) => {
       var data = JSON.parse(event.detail[0]);
       $('#yarn_company_errors').html(data.errors);
@@ -274,6 +275,8 @@
       $('#yarn_product_id').val(data.id);
       $('#new_yarn_product').collapse('hide');
       $('#known_colorway').collapse('show');
+      $('#stash_yarn_yarn_product_id').val(data.id);
+      $('#colorway_yarn_product_id').val(data.id);
     }).on('ajax:error', (event) => {
       var data = JSON.parse(event.detail[0]);
       $('#yarn_product_errors').html(data.errors);
