@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_04_093800) do
+ActiveRecord::Schema.define(version: 2020_07_01_190131) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -125,6 +125,7 @@ ActiveRecord::Schema.define(version: 2020_06_04_093800) do
     t.integer "weight_id", limit: 1
     t.string "yarn_company_name_freetext"
     t.integer "other_maker_type", limit: 1
+    t.string "dye_lot"
     t.index ["colorway_id"], name: "index_stash_yarns_on_colorway_id"
     t.index ["handspun"], name: "index_stash_yarns_on_handspun"
     t.index ["other_maker_type"], name: "index_stash_yarns_on_other_maker_type"

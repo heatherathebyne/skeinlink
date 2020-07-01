@@ -14,6 +14,9 @@
     <% end %>
 
     <p>Colorway <strong><%= @stash_yarn.colorway_name %></strong></p>
+    <% if @stash_yarn.dye_lot %>
+      <p>Dye lot <strong><%= @stash_yarn.dye_lot %></strong></p>
+    <% end %>
 
     <p><%= pluralize(@stash_yarn.skein_quantity, 'skein') %>, <%= @stash_yarn.total_yardage %> total yards</p>
 
