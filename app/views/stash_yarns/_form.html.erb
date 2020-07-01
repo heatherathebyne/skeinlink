@@ -15,7 +15,8 @@
     <h3>Who made this yarn?</h3>
 
     <div class='form-check'>
-      <input class='form-check-input' type='radio' name='yarn_maker' id='yarn_maker_name' checked>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='yarn_maker_name'
+        <%= 'checked' unless @stash_yarn.self_made? || @stash_yarn.maker_unknown? %>>
       <label class='form-check-label' for='yarn_maker_name'>Pick a yarn maker's name</label>
     </div>
 
@@ -30,12 +31,14 @@
     </div>
 
     <div class='form-check'>
-      <input class='form-check-input' type='radio' name='yarn_maker' id='i_made_this'>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='i_made_this'
+        <%= 'checked' if @stash_yarn.self_made? %>>
       <label class='form-check-label' for='i_made_this'>I made this yarn</label>
     </div>
 
     <div class='form-check'>
-      <input class='form-check-input' type='radio' name='yarn_maker' id='idk_who_made_this'>
+      <input class='form-check-input' type='radio' name='yarn_maker' id='idk_who_made_this'
+        <%= 'checked' if @stash_yarn.maker_unknown? %>>
       <label class='form-check-label' for='idk_who_made_this'>I don't know who made this yarn</label>
     </div>
   </div>
