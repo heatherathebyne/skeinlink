@@ -61,7 +61,8 @@
       </div>
     </nav>
 
-    <div class='container py-3'>
+    <% container_class = content_for?(:content) ? 'container-fluid' : 'container' %>
+    <div class='<%= container_class %> py-3'>
       <% if notice %>
         <div class='alert alert-info alert-dismissible fade show'>
           <%= notice %>
@@ -78,7 +79,7 @@
   </button>
       </div>
     <% end %>
-      <%= yield %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
 
     <footer class='py-1 bg-primary'>

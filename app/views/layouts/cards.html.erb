@@ -1,0 +1,40 @@
+<% content_for :content do %>
+<div class="row">
+  <div class="col-xl-2 col-lg-2">
+    <h1 class="my-4">
+      <%= @presenter.page_title %>
+    </h1>
+    <div class="list-group">
+      <%= @presenter.sidebar %>
+    </div>
+  </div>
+
+  <div class="col-10">
+    <div class="row">
+      <% @records.each do |record| %>
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <% unless record.image.blank? %>
+            <div class='square-container'>
+              <%= image_tag(record.thumb_image, class: 'card-img-top') %>
+            </div>
+          <% end %>
+          <div class="card-body">
+            <h4 class="card-title">
+              <%= @presenter.card_title(record) %>
+            </h4>
+            <%= @presenter.card_description(record) %>
+          </div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <!-- /.row -->
+
+    <div class='row'><div class='col'><%= page_entries_info(@records, entry_name: 'items') %></div></div>
+    <div class='row'><div class='col'><%= paginate @records %></div></div>
+  </div>
+</div>
+<% end %>
+
+<%= render template: 'layouts/application' %>
