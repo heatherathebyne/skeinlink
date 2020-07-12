@@ -18,6 +18,10 @@ class StashYarnPresenter
     new.card_description(stash_yarn)
   end
 
+  def self.sorting_options_partial
+    'stash_yarns/sorting_options'
+  end
+
   def sidebar
     link_to 'Add to My Stash', new_stash_yarn_path, class: 'list-group-item'
   end

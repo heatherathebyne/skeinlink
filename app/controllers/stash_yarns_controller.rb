@@ -4,7 +4,11 @@ class StashYarnsController < ApplicationController
   before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
 
   def index
-    @records = StashYarn.where(user_id: current_user.id).order(:yarn_product_id).page(params[:page])
+    @records = StashYarn.where(user_id: current_user.id)
+                        .includes(:colorway)
+                        .with_attached_image
+                        .public_send(sort_order_scope)
+                        .page(params[:page])
     @presenter = StashYarnPresenter
 
     # this is a bit weird and hacky right now but oh well
@@ -64,6 +68,25 @@ class StashYarnsController < ApplicationController
     @stash_yarn = StashYarn.where(user_id: current_user.id)
                            .includes(yarn_product: :yarn_company)
                            .find(params[:id])
+  end
+
+  def sort_order_scope
+    case params[:sort]
+    when 'newest'
+      :newest
+    when 'oldest'
+      :oldest
+    when 'yarn_a_z'
+      :yarn_name_a_z
+    when 'yarn_z_a'
+      :yarn_name_z_a
+    when 'maker_a_z'
+      :yarn_maker_name_a_z
+    when 'maker_z_a'
+      :yarn_maker_name_z_a
+    else
+      :newest
+    end
   end
 
   def stash_yarn_params
