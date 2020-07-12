@@ -31,6 +31,8 @@ class StashYarnPresenter
   end
 
   def card_description(stash_yarn)
-    "#{pluralize stash_yarn.skein_quantity, 'skein'} / #{stash_yarn.total_yardage} total yards"
+    desc = ''
+    desc << "#{stash_yarn.colorway_name}, " if stash_yarn.colorway_name
+    desc << "#{pluralize stash_yarn.skein_quantity, 'skein'} / #{stash_yarn.total_yardage} total yards"
   end
 end
