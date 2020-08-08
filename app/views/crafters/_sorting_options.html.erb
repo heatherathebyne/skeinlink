@@ -1,0 +1,26 @@
+<% sorted_by = case params[:sort]
+               when 'newest'
+                 'Newest'
+               when 'oldest'
+                 'Oldest'
+               when 'name_a_z'
+                 'Name A-Z'
+               when 'name_z_a'
+                 'Name Z-A'
+               else
+                 'Newest'
+               end
+             %>
+
+<div class='dropdown'>
+  <a class='btn btn-outline-primary btn-block dropdown-toggle' href='#' role='button' data-toggle='dropdown'>
+    Sort by <%= sorted_by %>
+  </a>
+
+  <div class='dropdown-menu'>
+    <%= link_to 'Newest', projects_crafter_path(sort: 'newest'), class: 'dropdown-item' %>
+    <%= link_to 'Oldest', projects_crafter_path(sort: 'oldest'), class: 'dropdown-item' %>
+    <%= link_to 'Name A-Z', projects_crafter_path(sort: 'name_a_z'), class: 'dropdown-item' %>
+    <%= link_to 'Name Z-A', projects_crafter_path(sort: 'name_z_a'), class: 'dropdown-item' %>
+  </div>
+</div>

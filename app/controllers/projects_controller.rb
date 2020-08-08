@@ -8,9 +8,15 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     if user_signed_in?
-      @projects = Project.all.order(id: :desc).page(params[:page])
+      @projects = Project.all
+                         .public_send(sort_order_scope)
+                         .with_attached_images
+                         .page(params[:page])
     else
-      @projects = Project.where(publicly_visible: true).order(id: :desc).page(params[:page])
+      @projects = Project.where(publicly_visible: true)
+                         .public_send(sort_order_scope)
+                         .with_attached_images
+                         .page(params[:page])
     end
   end
 
@@ -115,5 +121,20 @@ class ProjectsController < ApplicationController
 
   def project_images_params
     params.require(:project).permit(images: [])
+  end
+
+  def sort_order_scope
+    case params[:sort]
+    when 'newest'
+      :newest
+    when 'oldest'
+      :oldest
+    when 'name_a_z'
+      :name_a_z
+    when 'name_z_a'
+      :name_z_a
+    else
+      :newest
+    end
   end
 end
