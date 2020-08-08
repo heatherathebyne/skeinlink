@@ -11,11 +11,73 @@ class StashYarn < ApplicationRecord
   belongs_to :colorway, optional: true
   belongs_to :user
   has_one_attached :image
+
   validate :has_a_name_or_product
-  validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
-                    size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
+  validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif],
+                                    message: 'is not a PNG, JPG, or GIF image' },
+                    size: { less_than: 15.megabytes,
+                            message: 'Whoa, that image is too big! Try one that is smaller than 15 MB.' }
   validates :other_maker_type, inclusion: { in: 0..2 }, allow_nil: true
   validates :dye_lot, length: { maximum: 255 }
+
+  scope :newest, -> { order id: :desc }
+  scope :oldest, -> { order id: :asc }
+
+  scope :yarn_name_a_z, -> {
+    select(
+      'stash_yarns.*, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_products.name '\
+      'END) AS sortable_name'
+    )
+      .left_outer_joins(:yarn_product)
+      .includes(yarn_product: :yarn_company)
+      .order('sortable_name ASC')
+  }
+
+  scope :yarn_name_z_a, -> {
+    select(
+      'stash_yarns.*, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_products.name '\
+      'END) AS sortable_name'
+    )
+      .left_outer_joins(:yarn_product)
+      .includes(yarn_product: :yarn_company)
+      .order('sortable_name DESC')
+  }
+
+  # Sort first by maker name, then by yarn product name,
+  # interleaving stash without yarn product as if it was a maker name
+  scope :yarn_maker_name_a_z, -> {
+    select(
+      'stash_yarns.*, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_products.name '\
+      'END) AS sortable_name, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_companies.name '\
+      'END) AS maker_name'
+    )
+      .left_outer_joins(yarn_product: :yarn_company)
+      .includes(yarn_product: :yarn_company)
+      .order('maker_name ASC, sortable_name ASC')
+  }
+
+  scope :yarn_maker_name_z_a, -> {
+    select(
+      'stash_yarns.*, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_products.name '\
+      'END) AS sortable_name, '\
+      '(CASE '\
+        'WHEN stash_yarns.yarn_product_id IS NULL THEN stash_yarns.name ELSE yarn_companies.name '\
+      'END) AS maker_name'
+    )
+      .left_outer_joins(yarn_product: :yarn_company)
+      .includes(yarn_product: :yarn_company)
+      .order('maker_name DESC, sortable_name DESC')
+  }
 
   def name
     yarn_product.try(:name_with_company) || super

@@ -1,0 +1,32 @@
+<% sorted_by = case params[:sort]
+               when 'newest'
+                 'Newest'
+               when 'oldest'
+                 'Oldest'
+               when 'yarn_a_z'
+                 'Yarn name A-Z'
+               when 'yarn_z_a'
+                 'Yarn name Z-A'
+               when 'maker_a_z'
+                 'Yarn maker name A-Z'
+               when 'maker_z_a'
+                 'Yarn maker name Z-A'
+               else
+                 'Newest'
+               end
+             %>
+
+<div class='dropdown'>
+  <a class='btn btn-outline-primary btn-block dropdown-toggle' href='#' role='button' data-toggle='dropdown'>
+    Sort by <%= sorted_by %>
+  </a>
+
+  <div class='dropdown-menu'>
+    <%= link_to 'Newest', yarn_products_path(sort: 'newest'), class: 'dropdown-item' %>
+    <%= link_to 'Oldest', yarn_products_path(sort: 'oldest'), class: 'dropdown-item' %>
+    <%= link_to 'Yarn name A-Z', yarn_products_path(sort: 'yarn_a_z'), class: 'dropdown-item' %>
+    <%= link_to 'Yarn name Z-A', yarn_products_path(sort: 'yarn_z_a'), class: 'dropdown-item' %>
+    <%= link_to 'Yarn maker name A-Z', yarn_products_path(sort: 'maker_a_z'), class: 'dropdown-item' %>
+    <%= link_to 'Yarn maker name Z-A', yarn_products_path(sort: 'maker_z_a'), class: 'dropdown-item' %>
+  </div>
+</div>

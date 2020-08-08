@@ -4,7 +4,11 @@ class YarnDatabaseController < ApplicationController
   before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
 
   def index
-    @yarn_products = YarnProduct.all.order(created_at: :desc).page(params[:page])
+    @yarn_products = YarnProduct.all
+                                .public_send(sort_order_scope)
+                                .includes(:yarn_company)
+                                .with_attached_image
+                                .page(params[:page])
   end
 
   def show
@@ -86,6 +90,25 @@ class YarnDatabaseController < ApplicationController
 
   def set_yarn_product
     @yarn_product = YarnProduct.includes(:yarn_company).find(params[:id])
+  end
+
+  def sort_order_scope
+    case params[:sort]
+    when 'newest'
+      :newest
+    when 'oldest'
+      :oldest
+    when 'yarn_a_z'
+      :yarn_name_a_z
+    when 'yarn_z_a'
+      :yarn_name_z_a
+    when 'maker_a_z'
+      :yarn_maker_name_a_z
+    when 'maker_z_a'
+      :yarn_maker_name_z_a
+    else
+      :newest
+    end
   end
 
   def yarn_product_params

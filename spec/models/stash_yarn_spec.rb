@@ -62,4 +62,65 @@ RSpec.describe StashYarn do
       end
     end
   end
+
+  describe 'scopes' do
+    describe '#yarn_name_a_z' do
+      let!(:stash_1) { create :stash_yarn, name: 'ddddd' }
+      let!(:stash_2) do
+        create :stash_yarn, name: 'irrelevant', yarn_product: create(:yarn_product, name: 'ccccc')
+      end
+      let!(:stash_3) { create :stash_yarn, name: 'BBBBB' }
+      let!(:stash_4) do
+        create :stash_yarn, name: 'super irrelevant',
+          yarn_product: create(:yarn_product, name: 'aaaaa')
+      end
+
+      subject { StashYarn.yarn_name_a_z }
+
+      it 'returns records in the expected order' do
+        expect(subject.first).to eq stash_4
+        expect(subject.second).to eq stash_3
+        expect(subject.third).to eq stash_2
+        expect(subject.fourth).to eq stash_1
+      end
+
+      it 'can be chained with other relational things' do
+        expect(subject.limit(2).length).to eq 2
+      end
+    end
+
+    describe '#yarn_maker_name_a_z' do
+      let!(:a_yarn_company) { create(:yarn_company, name: 'AaaYarnCompany') }
+      let!(:z_yarn_company) { create(:yarn_company, name: 'ZzzYarnCompany') }
+
+      let!(:stash_1) { create :stash_yarn, name: 'ddddd' }
+      let!(:stash_2) do
+        create :stash_yarn, name: 'irrelevant',
+          yarn_product: create(:yarn_product, name: 'ccccc', yarn_company: z_yarn_company)
+      end
+      let!(:stash_3) { create :stash_yarn, name: 'BBBBB' }
+      let!(:stash_4) do
+        create :stash_yarn, name: 'super irrelevant',
+          yarn_product: create(:yarn_product, name: 'aaaaa', yarn_company: z_yarn_company)
+      end
+      let!(:stash_5) do
+        create :stash_yarn,
+          yarn_product: create(:yarn_product, name: 'eeeee', yarn_company: a_yarn_company)
+      end
+
+      subject { StashYarn.yarn_maker_name_a_z }
+
+      it 'returns records in the expected order' do
+        expect(subject.first).to eq stash_5
+        expect(subject.second).to eq stash_3
+        expect(subject.third).to eq stash_1
+        expect(subject.fourth).to eq stash_4
+        expect(subject.fifth).to eq stash_2
+      end
+
+      it 'can be chained with other relational things' do
+        expect(subject.limit(2).length).to eq 2
+      end
+    end
+  end
 end
