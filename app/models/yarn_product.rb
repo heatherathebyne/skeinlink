@@ -15,6 +15,8 @@ class YarnProduct < ApplicationRecord
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
                      size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
 
+  before_save :fix_referral_link
+
   scope :newest, -> { order id: :desc }
   scope :oldest, -> { order id: :asc }
   scope :yarn_name_a_z, -> { order name: :asc }
@@ -42,5 +44,11 @@ class YarnProduct < ApplicationRecord
 
   def yarn_company_name
     yarn_company&.name || ''
+  end
+
+  private
+
+  def fix_referral_link
+    self.referral_link = Addressable::URI.heuristic_parse(referral_link).to_s
   end
 end
