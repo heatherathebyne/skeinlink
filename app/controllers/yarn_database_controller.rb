@@ -3,12 +3,13 @@ class YarnDatabaseController < ApplicationController
 
   before_action :set_yarn_product, only: [:show, :edit, :update, :update_attribution]
 
+  # before you switch this to the cards layout. remember you've got a json view too
   def index
     @yarn_products = YarnProduct.all
-                                .public_send(sort_order_scope)
-                                .includes(:yarn_company)
-                                .with_attached_image
-                                .page(params[:page])
+                          .public_send(sort_order_scope)
+                          .includes(:yarn_company)
+                          .with_attached_image
+                          .page(params[:page])
   end
 
   def show
