@@ -66,11 +66,11 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
+    amazing_print (1.2.1)
     audited (4.9.0)
       activerecord (>= 4.2, < 6.1)
     autoprefixer-rails (9.7.6)
       execjs
-    awesome_print (1.8.0)
     aws-eventstream (1.1.0)
     aws-partitions (1.321.0)
     aws-sdk-core (3.96.1)
@@ -332,8 +332,8 @@ DEPENDENCIES
   active_storage_validations
   activerecord-nulldb-adapter
   acts-as-taggable-on (~> 6.0)
+  amazing_print
   audited
-  awesome_print
   aws-sdk-s3
   bcrypt_pbkdf
   bootstrap

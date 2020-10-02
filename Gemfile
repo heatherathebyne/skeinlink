@@ -34,7 +34,7 @@ gem 'sprockets'
 gem 'sprockets-rails', require: 'sprockets/railtie'
 
 group :development, :test do
-  gem 'awesome_print', require: 'awesome_print'
+  gem 'amazing_print'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-byebug'
