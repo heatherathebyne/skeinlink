@@ -9,6 +9,8 @@ class Project < ApplicationRecord
   has_many_attached :images
   has_many :journal_entries
   belongs_to :user
+  has_many :stash_usages
+  has_many :stash_yarns, through: :stash_usages
 
   validates :images, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
                      size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }
