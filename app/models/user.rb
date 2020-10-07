@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :trackable, :timeoutable, :validatable, :confirmable
 
   has_many :projects
+  has_many :stash_yarns
 
   validates :name, :active, presence: true
 
