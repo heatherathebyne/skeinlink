@@ -13,7 +13,7 @@ jobs:
       with:
         ruby-version: 2.6.x
     - name: Set up environment
-      run: echo '::set-env name=RAILS_ENV::test'
+      run: echo "RAILS_ENV=test" >> $GITHUB_ENV
     - name: Start MySQL
       run: |
         sudo /etc/init.d/mysql start
