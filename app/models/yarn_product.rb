@@ -49,6 +49,6 @@ class YarnProduct < ApplicationRecord
   private
 
   def fix_referral_link
-    self.referral_link = Addressable::URI.heuristic_parse(referral_link).to_s
+    self.referral_link = ::Addressable::URI.heuristic_parse(referral_link).to_s
   end
 end
