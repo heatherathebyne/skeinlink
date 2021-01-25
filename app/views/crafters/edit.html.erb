@@ -1,0 +1,35 @@
+<h1>Edit My Profile</h1>
+
+<%= form_with(model: @crafter, url: crafter_path, local: true) do |f| %>
+  <% if @crafter.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@crafter.errors.count, "error") %> when trying to update your profile:</h2>
+
+      <ul>
+        <% @crafter.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class='form-group'>
+    <%= f.label :name, 'Display name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+    <small class='form-text text-muted'>This is visible to everyone</small>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :email, 'Email address' %>
+    <%= f.text_field :email, class: 'form-control' %>
+    <small class='form-text text-muted'>Only you and administrators can see this</small>
+  </div>
+
+  <div class='form-group'>
+    <%= f.label :about_me %>
+    <%= f.text_area :about_me, class: 'form-control' %>
+    <small class='form-text text-muted'>This is visible to everyone</small>
+  </div>
+
+  <%= f.submit 'Update My Profile', class: 'btn btn-primary' %>
+<% end %>

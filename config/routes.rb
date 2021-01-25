@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :crafters, only: [:show] do
+  resources :crafters, only: [:show, :edit, :update] do
     member do
       get :projects
       get :stash

@@ -48,6 +48,9 @@
                   <%= link_to 'Admin CP', admin_users_path, class: 'nav-link' %>
                 </li>
               <% end %>
+              <li class='nav-item'>
+                <%= link_to 'My Profile', crafter_path(current_user.id), class: 'nav-link' %>
+              </li>
               <li>
                 <%= link_to('Logout', destroy_user_session_path, class: 'nav-link', method: :delete) %>
               </li>
