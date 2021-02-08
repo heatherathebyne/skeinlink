@@ -1,10 +1,12 @@
-<%= form_with(model: [:admin, user], local: true) do |f| %>
-  <% if user.errors.any? %>
+<h1>Edit My Profile</h1>
+
+<%= form_with(model: @crafter, url: crafter_path, local: true) do |f| %>
+  <% if @crafter.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@crafter.errors.count, "error") %> when trying to update your profile:</h2>
 
       <ul>
-        <% user.errors.full_messages.each do |message| %>
+        <% @crafter.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -20,7 +22,7 @@
   <div class='form-group'>
     <%= f.label :email, 'Email address' %>
     <%= f.text_field :email, class: 'form-control' %>
-    <small class='form-text text-muted'>Only the crafter and administrators can see this</small>
+    <small class='form-text text-muted'>Only you and administrators can see this</small>
   </div>
 
   <div class='form-group'>
@@ -29,6 +31,5 @@
     <small class='form-text text-muted'>This is visible to everyone</small>
   </div>
 
-  <%= f.submit 'Update crafter profile', class: 'btn btn-primary' %>
-  <%= link_to 'Cancel and go back', admin_users_path, class: 'btn btn-secondary' %>
+  <%= f.submit 'Update My Profile', class: 'btn btn-primary' %>
 <% end %>

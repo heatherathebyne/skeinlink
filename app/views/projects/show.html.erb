@@ -3,8 +3,10 @@
 <h1>
   <%= @project.name %>
   <small class='text-muted'><small><%= @project.status_name %></small></small>
-  <%= link_to icon('far', 'edit'), edit_project_path(@project) %></h1>
+  <%= link_to icon('far', 'edit'), edit_project_path(@project) if user_signed_in? && @project.user == current_user %>
 </h1>
+
+<h4>by <%= link_to @project.user.name, crafter_path(@project.user_id) %></h4>
 
 <div class='row text-center text-lg-left py-4'>
   <% @project.thumb_and_full_images.each do |variants| %>

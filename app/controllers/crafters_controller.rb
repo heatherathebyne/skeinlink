@@ -1,4 +1,29 @@
 class CraftersController < ApplicationController
+  def show
+    @crafter = User.find_by(id: params[:id])
+
+    unless @crafter
+      flash[:notice] = "We couldn't find that crafter."
+      redirect_back(fallback_location: root_path)
+      return
+    end
+
+    @latest_projects = @crafter.projects.newest.with_attached_images.limit(3)
+  end
+
+  def edit
+    @crafter = current_user
+  end
+
+  def update
+    @crafter = current_user
+    if @crafter.update(crafter_params)
+      redirect_to crafter_path(@crafter)
+    else
+      render :edit
+    end
+  end
+
   def projects
     @projects = if params[:id].to_i == current_user.id
                   @project_user = current_user
@@ -15,13 +40,17 @@ class CraftersController < ApplicationController
                 end
 
     unless @projects.any?
-      flash[:notice] = "There aren't any projects for that user."
+      flash[:notice] = "There aren't any projects for that crafter."
       redirect_back(fallback_location: root_path)
       return
     end
   end
 
   private
+
+  def crafter_params
+    params.require(:user).permit(:email, :name, :about_me)
+  end
 
   def sort_order_scope
     case params[:sort]

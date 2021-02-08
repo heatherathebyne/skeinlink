@@ -20,4 +20,9 @@ FactoryBot.define do
   trait :moderator do
     role_moderator { true }
   end
+
+  trait :crafter do
+    name { 'Test Crafter' }
+    about_me { 'Testing all the things' }
+  end
 end
