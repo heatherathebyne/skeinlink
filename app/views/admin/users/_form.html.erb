@@ -12,16 +12,23 @@
   <% end %>
 
   <div class='form-group'>
-    <%= f.label :name %> <%= f.text_field :name %>
+    <%= f.label :name, 'Display name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+    <small class='form-text text-muted'>This is visible to everyone</small>
   </div>
 
   <div class='form-group'>
-    <%= f.label :email %> <%= f.text_field :email %>
+    <%= f.label :email, 'Email address' %>
+    <%= f.text_field :email, class: 'form-control' %>
+    <small class='form-text text-muted'>Only the crafter and administrators can see this</small>
   </div>
 
   <div class='form-group'>
-    <%= f.label :about_me %> <%= f.text_area :about_me %>
+    <%= f.label :about_me %>
+    <%= f.text_area :about_me, class: 'form-control' %>
+    <small class='form-text text-muted'>This is visible to everyone</small>
   </div>
 
-  <%= f.submit 'Userify' %>
+  <%= f.submit 'Update crafter profile', class: 'btn btn-primary' %>
+  <%= link_to 'Cancel and go back', admin_users_path, class: 'btn btn-secondary' %>
 <% end %>
