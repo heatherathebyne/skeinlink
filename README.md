@@ -4,18 +4,9 @@ Free and open web application software for tracking fiber arts projects and supp
 knitting, crocheting, weaving, and spinning projects, and catalog stash, for an entire fiber arts
 community.
 
-## Important information
+If you just want to use SkeinLink for your projects, come join the [FiberKind community](https://www.fiberkind.com)!
 
-**Personal project warning!** I am writing this on my own time as a personal project. If you're here
-to check out my code quality, welcome! Know that this isn't my most polished work, and for the sake
-of my time, I make some choices here that I wouldn't make on a larger team. We can chat if you have
-questions.
-
-**This is not desktop software!** If you are here looking for a personal download-and-install project
-tracker, this isn't it. This is a web application designed to be hosted on a web server. You can, of
-course, run it locally on your own system, but there are extra steps involved.
-
-**This is nowhere near feature complete!** We're approaching feature adequate.
+If you want to run your own SkeinLink or contribute code, read on.
 
 ## What this software is made of
 
