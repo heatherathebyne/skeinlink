@@ -4,6 +4,12 @@ RSpec.shared_examples 'successful response' do
   end
 end
 
+RSpec.shared_examples 'unauthorized response' do
+  it 'renders an unauthorized response' do
+    expect(response.status).to eq 401
+  end
+end
+
 RSpec.shared_examples 'redirects to login' do
   it 'redirects to login page' do
     expect(response).to redirect_to new_user_session_path
