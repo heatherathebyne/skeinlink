@@ -62,6 +62,20 @@ class StashYarnsController < ApplicationController
     redirect_to stash_yarns_url, notice: "#{@stash_yarn.name} was removed from your stash."
   end
 
+  def autocomplete_name
+    # can search by yarn maker name plus yarn name, or makerless yarn name:
+    # Cascade Yarns Cascade 220
+    # or
+    # My Own Handspun
+    #
+    # Note to implementers:
+    # Come back after you've satisfactorily designed a workflow for searching
+    # "cascade pima rose"
+    # and retrieving the YarnProduct and Colorway for Cascade Yarns Ultra Pima Fine,
+    # colorway 3840 Veiled Rose.
+    # That's why there's nothing here right now, and we search for projects from our stash yarn.
+  end
+
   private
 
   def set_stash_yarn
