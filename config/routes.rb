@@ -46,6 +46,10 @@ Rails.application.routes.draw do
   end
 
   resources :crafters, only: [:show, :edit, :update] do
+    collection do
+      get :autocomplete_project_name_for_current_user
+    end
+
     member do
       get :projects
       get :stash

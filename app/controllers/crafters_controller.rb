@@ -46,6 +46,14 @@ class CraftersController < ApplicationController
     end
   end
 
+  def autocomplete_project_name_for_current_user
+    @projects = current_user.projects
+                            .where("name LIKE ?", "%#{params[:name]}%")
+                            .name_a_z
+                            .limit(6)
+    render :index
+  end
+
   private
 
   def crafter_params

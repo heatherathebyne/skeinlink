@@ -30,15 +30,52 @@
       </p>
     <% end %>
 
+    <hr>
+
     <% if @stash_yarn.notes %>
       <h4>Notes</h4>
       <p><%= @stash_yarn.notes %></p>
     <% end %>
+
+    <hr>
+
+    <% if @stash_yarn.projects.any? %>
+      <h4>Used in projects</h4>
+      <% @stash_yarn.projects.each do |project| %>
+        <%= @project.name %>
+      <% end %>
+
+      <h5>Add this yarn to another project</h5>
+    <% else %>
+      <h5>Add this yarn to a project</h5>
+    <% end %>
+
+    <div class='form-group'>
+      <input type='text' id='project-add'>
+    </div>
   </div>
 </div>
 
 <% if belongs_to_current_user?(@stash_yarn) %>
 <div class='container'>
-  <%= link_to 'Add to My Stash', new_stash_yarn_path, class: 'btn btn-primary' %>
+  <%= link_to 'Add another yarn to My Stash', new_stash_yarn_path, class: 'btn btn-primary' %>
 </div>
 <% end %>
+
+<script type='text/javascript'>
+  $(document).ready(_ => {
+    $('#project-add').easyAutocomplete({
+      url: search_term => { return '/crafters/autocomplete_project_name_for_current_user.json?name=' + search_term },
+      getValue: 'name',
+      placeholder: 'Type the name of your project',
+      requestDelay: 500,
+      list: {
+        sort: { enabled: true },
+        onChooseEvent: _ => {
+          var itemValue = $('#project-add').getSelectedItemData().id;
+          console.log(itemValue);
+        }
+      }
+    });
+  });
+</script>
