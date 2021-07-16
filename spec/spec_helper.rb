@@ -14,6 +14,9 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require 'simplecov'
+SimpleCov.start 'rails'
+
 require 'pundit/rspec'
 
 RSpec.configure do |config|

@@ -33,6 +33,9 @@
 /config/deploy/*.rb
 /config/deploy.rb
 
+# SimpleCov
+/coverage
+
 # Site-specific configuration
 /config/skeinlink.yml
 /config/database.yml
