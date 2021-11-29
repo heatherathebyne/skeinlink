@@ -24,7 +24,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     if user_signed_in?
-      @project = Project.with_attached_images.find(params[:id])
+      @project = Project.with_attached_images.find_by(id: params[:id])
     else
       @project = Project.with_attached_images.where(publicly_visible: true).find_by(id: params[:id])
     end
