@@ -39,20 +39,30 @@
 
     <hr>
 
-    <% if @stash_yarn.projects.any? %>
-      <h4>Used in projects</h4>
-      <% @stash_yarn.projects.each do |project| %>
-        <%= @project.name %>
+    <% if @stash_yarn.stash_usages.any? %>
+      <h4>Uses in your projects</h4>
+      <% @stash_yarn.stash_usages.each do |usage| %>
+        <p><%= link_to usage&.project&.name, usage&.project %>: <%= usage.yards_used %> yards</p>
       <% end %>
 
+      <p>Total yards used: <%= @stash_yarn.stash_usages.sum(&:yards_used) %></p>
       <h5>Add this yarn to another project</h5>
     <% else %>
       <h5>Add this yarn to a project</h5>
     <% end %>
 
     <div class='form-group'>
-      <input type='text' id='project-add'>
+      <input type='text' class='form-control' id='project-add'>
     </div>
+
+    <%= form_with(model: StashUsage.new) do |f| %>
+      <div class='form-group' id='stash-usage-form' style='display:none'>
+        <%= f.label :yards_used %> <%= f.text_field :yards_used %>
+        <%= f.hidden_field :project_id %>
+        <%= f.hidden_field :stash_yarn_id, value: @stash_yarn.id %>
+        <%= f.submit 'Add to Project', class: 'btn btn-primary' %>
+      </div>
+    <% end %>
   </div>
 </div>
 
@@ -69,11 +79,14 @@
       getValue: 'name',
       placeholder: 'Type the name of your project',
       requestDelay: 500,
+      adjustWidth: false,
       list: {
         sort: { enabled: true },
         onChooseEvent: _ => {
           var itemValue = $('#project-add').getSelectedItemData().id;
           console.log(itemValue);
+          $('#stash-usage-form').show();
+          $('#stash_usage_project_id').val(itemValue);
         }
       }
     });

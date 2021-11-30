@@ -59,8 +59,6 @@ Rails.application.routes.draw do
   resources :stash_usages, only: [:create] do
     collection do
       delete :destroy # we delete by project and stash yarn, not stash_usage.id
-      get :autocomplete_project
-      get :autocomplete_stash_yarn
     end
   end
 

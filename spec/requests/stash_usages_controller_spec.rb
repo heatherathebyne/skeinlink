@@ -19,30 +19,15 @@ RSpec.describe StashUsagesController, type: :request do
         { stash_usage: { project_id: project.id, stash_yarn_id: stash_yarn.id, yards_used: 400 } }
       end
 
-      before { sign_in user }
-
-      context 'when stash usage exists' do
-        let!(:stash_usage) do
-          create :stash_usage, project: project, stash_yarn: stash_yarn, yards_used: 200
-        end
-
-        before { subject }
-
-        it_behaves_like 'successful response'
-
-        it 'updates the existing stash usage' do
-          expect(stash_usage.reload.yards_used).to eq 400
-        end
+      before do
+        sign_in user
+        subject
       end
 
-      context 'when stash usage does not exist' do
-        before { subject }
+      it_behaves_like 'successful response'
 
-        it_behaves_like 'successful response'
-
-        it 'creates a new stash usage with the specified yardage' do
-          expect(project.stash_usages.find_by(stash_yarn: stash_yarn).yards_used).to eq 400
-        end
+      it 'creates a new stash usage with the specified yardage' do
+        expect(project.stash_usages.find_by(stash_yarn: stash_yarn).yards_used).to eq 400
       end
     end
   end

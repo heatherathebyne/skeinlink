@@ -1,7 +1,7 @@
 class StashYarnsController < ApplicationController
   include UpdateAttributionAction
 
-  before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
+  before_action :set_stash_yarn, only: [:edit, :update, :update_attribution, :destroy]
 
   def index
     @records = StashYarn.where(user_id: current_user.id)
@@ -16,6 +16,10 @@ class StashYarnsController < ApplicationController
   end
 
   def show
+    @stash_yarn = StashYarn.where(user_id: current_user.id)
+                           .includes(yarn_product: :yarn_company)
+                           .includes(stash_usages: :project)
+                           .find(params[:id])
   end
 
   def new

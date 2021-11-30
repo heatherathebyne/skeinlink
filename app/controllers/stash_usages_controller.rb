@@ -4,9 +4,9 @@
 
 class StashUsagesController < ApplicationController
   def create
-    @stash_usage = StashUsage.find_or_initialize_by(project_id: stash_usage_params[:project_id],
-                                                    stash_yarn_id: stash_usage_params[:stash_yarn_id])
-    @stash_usage.yards_used = stash_usage_params[:yards_used]
+    # The decision to .new rather than .find_or_initialize_by is deliberate. Creating duplicate
+    # records is less surprising than updating an existing record.
+    @stash_usage = StashUsage.new(stash_usage_params)
 
     authorize @stash_usage, :create?
 
@@ -20,7 +20,6 @@ class StashUsagesController < ApplicationController
   def destroy
     @stash_usage = StashUsage.find_by(project_id: stash_usage_params[:project_id],
                                       stash_yarn_id: stash_usage_params[:stash_yarn_id])
-   # binding.pry
 
     return render status: :ok, json: {} unless @stash_usage
 
