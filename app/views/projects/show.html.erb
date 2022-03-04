@@ -51,11 +51,11 @@
   <h4>
     Project journal
     <% if user_signed_in? && @project.user == current_user %>
-      <a class='btn btn-outline-primary btn-sm' data-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
+      <a class='btn btn-outline-primary btn-sm ms-2' data-bs-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
     <% end %>
   </h4>
 
-  <div class='collapse' id='journalForm'>
+  <div class='collapse mb-3' id='journalForm'>
     <%= render 'journal_entries/form', journal_entry: JournalEntry.new(entry_timestamp: Time.current, project_id: @project.id) %>
   </div>
 
@@ -64,7 +64,7 @@
     <strong><%= j.entry_timestamp %></strong>
 
     <% if user_signed_in? && @project.user == current_user %>
-      <a data-toggle='collapse' href='#journalForm-<%= j.id %>' aria-expanded='false' aria-controls='journalForm-<%= j.id %>'><%= icon('fas', 'edit') %></a>
+      <a data-bs-toggle='collapse' href='#journalForm-<%= j.id %>' aria-expanded='false' aria-controls='journalForm-<%= j.id %>'><%= icon('fas', 'edit') %></a>
     <% end %>
 
     <div class='collapse' id='journalForm-<%= j.id %>'>
