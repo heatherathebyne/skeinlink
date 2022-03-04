@@ -1,10 +1,10 @@
 <%= form_with(model: journal_entry, local: true) do |f| %>
-  <div class='form-group'>
-    <%= f.text_field :entry_timestamp %>
+  <div class='row'><%= f.text_area :content, class: 'form-control' %></div>
+  <div class='row mb-3'><small>Journal entries support Markdown formatting.</small></div>
+  <div class='row'>
+    <div class='col-auto'><%= f.label :entry_timestamp, 'Date for this entry', class: 'align-middle' %></div>
+    <div class='col-auto'><%= f.text_field :entry_timestamp, class: 'form-control' %></div>
+    <%= f.hidden_field :project_id %>
+    <div class='col-auto'><%= f.submit 'Create journal entry', class: 'btn btn-primary' %></div>
   </div>
-  <div class='form-group'>
-    <%= f.text_area :content, class: 'form-control' %>
-  </div>
-  <%= f.hidden_field :project_id %>
-  <%= f.submit %>
 <% end %>
