@@ -103,6 +103,14 @@ class StashYarn < ApplicationRecord
     other_maker_type == 2
   end
 
+  def total_yardage
+    if yarn_product.try(:skein_yards) && skein_quantity
+      yarn_product.skein_yards * skein_quantity
+    else
+      super
+    end
+  end
+
   private
 
   def has_a_name_or_product
