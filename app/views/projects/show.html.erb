@@ -42,6 +42,17 @@
     <% if user_signed_in? && @project.user == current_user && !@project.private_notes.blank? %>
       <dd class='col-sm-1 text-right'>Private notes</dd> <dt class='col-sm-11'><%= @project.private_notes %></dt>
     <% end %>
+
+    <% if @project.stash_usages.any? %>
+      <dd class='col-sm-1 text-right'>Yarn used</dd> <dt class='col-sm-11'>
+      <% @project.stash_usages.each do |usage| %>
+        <% yarn_title = usage&.stash_yarn&.name
+        yarn_title << " (#{usage.yards_used} yards)" if usage.yards_used > 0
+      %>
+        <%= link_to yarn_title, usage.stash_yarn, class: 'fw-normal btn btn-outline-primary mb-1' %>
+      <% end %>
+      </dt>
+    <% end %>
   </dl>
 </div>
 
@@ -51,7 +62,7 @@
   <h4>
     Project journal
     <% if user_signed_in? && @project.user == current_user %>
-      <a class='btn btn-outline-primary btn-sm ms-2' data-bs-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
+      <a class='btn btn-primary btn-sm ms-2' data-bs-toggle='collapse' href='#journalForm' role='button' aria-expanded='false' aria-controls='journalForm'>New journal entry ▼</a>
     <% end %>
   </h4>
 
