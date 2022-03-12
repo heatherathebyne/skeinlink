@@ -1,6 +1,5 @@
 FROM ruby:2.7.5-slim-buster
 
-ENV RAILS_ENV development
 ENV BINDING 0.0.0.0
 
 RUN apt-get update -qq && \
