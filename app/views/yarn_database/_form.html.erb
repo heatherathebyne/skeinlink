@@ -35,7 +35,7 @@
 
   <div class='form-group' id='its_full_of_tags'>
     <% yarn_product.fiber_content_list.each do |tag| %>
-      <span class='badge badge-primary badge-pill font-weight-normal'>
+      <span class='badge bg-primary rounded-pill font-weight-normal'>
         <%= tag %><%= link_to icon('far', 'trash-alt'), '#', class: 'text-white pl-2', 'data-tag-name' => tag %>
       </span>
     <% end %>

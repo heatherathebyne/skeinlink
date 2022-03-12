@@ -1,6 +1,6 @@
 <h1>Editing <%= @yarn_product.yarn_company.try(:name) %> <%= @yarn_product.name %></h1>
 
-<div class='row text-center text-lg-left py-4'>
+<div class='row text-lg-left py-4'>
   <% unless @yarn_product.image.blank? %>
     <% image = @yarn_product.image %>
     <div class='col-lg-3 col-md-4 col-6' id='project-image-<%= image.id %>'>

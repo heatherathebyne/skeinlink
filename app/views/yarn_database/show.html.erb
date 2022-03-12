@@ -20,10 +20,10 @@
 
     <div class='my-1'><strong><%= @yarn_product.common_weight %></strong> weight</div>
 
-    <% if @yarn_product.fiber_content.any? %>
-      <div class='my-1'><%= @yarn_product.fiber_content.join(', ') %></div>
-    <% end %>
     <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
+    <% if @yarn_product.fiber_content.any? %>
+      <div class='my-1 badge bg-primary rounded-pill'><%= @yarn_product.fiber_content.join(', ') %></div>
+    <% end %>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
       <div class='my-3'>
