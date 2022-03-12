@@ -10,10 +10,21 @@ class StashUsagesController < ApplicationController
 
     authorize @stash_usage, :create?
 
-    if @stash_usage.save
-      render status: :ok, json: {}
-    else
-      render status: :not_acceptable, json: { errors: @stash_usage.errors.full_messages }
+    respond_to do |format|
+      if @stash_usage.save
+        format.html do
+          redirect_back(fallback_location: stash_yarns_path, notice: 'Added yarn to project!')
+        end
+
+        format.json { render status: :ok, json: {} }
+      else
+        format.html do
+          redirect_back(fallback_location: stash_yarns_path,
+                        alert: "We're sorry, but we couldn't add that yarn to the project: #{@stash_usage.errors.full_messages}")
+        end
+
+        format.json { render status: :not_acceptable, json: { errors: @stash_usage.errors.full_messages } }
+      end
     end
   end
 
@@ -25,10 +36,19 @@ class StashUsagesController < ApplicationController
 
     authorize @stash_usage, :destroy?
 
-    if @stash_usage.destroy
-      render status: :ok, json: {}
-    else
-      render status: :not_acceptable, json: { errors: @stash_usage.errors.full_messages }
+    respond_to do |format|
+      if @stash_usage.destroy
+        format.html { redirect_back(fallback_location: stash_yarns_path, notice: 'Removed yarn from project!') }
+        format.json { render status: :ok, json: {} }
+      else
+        format.html do
+          redirect_back(fallback_location: stash_yarns_path,
+                        alert: "We're sorry, but we couldn't remove that yarn from the project: #{@stash_usage.errors.full_messages}")
+        end
+        format.json do
+          render status: :not_acceptable, json: { errors: @stash_usage.errors.full_messages }
+        end
+      end
     end
   end
 
