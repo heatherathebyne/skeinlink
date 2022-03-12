@@ -1,0 +1,17 @@
+version: '2.4'
+volumes:
+  sql_persistent:
+services:
+  db:
+    image: mysql:5
+    volumes:
+      - sql_persistent:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+  web:
+    build:
+      context: .
+    volumes:
+      - .:/srv/skeinlink
+    ports:
+      - 3000:3000

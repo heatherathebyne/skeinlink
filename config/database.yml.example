@@ -3,7 +3,7 @@ default: &default
   read_timeout: 30
   write_timeout: 30
   connect_timeout: 30
-  host: localhost
+  host: db
   username: skeinlink
   password: password
   encoding: utf8mb4

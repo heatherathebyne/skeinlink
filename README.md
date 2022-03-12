@@ -8,29 +8,20 @@ If you just want to use SkeinLink for your projects, come join the [FiberKind co
 
 If you want to run your own SkeinLink or contribute code, read on.
 
-## What this software is made of
-
-* MRI Ruby 2.6.6
-* Rails 6.0
-
-## Additional requirements
-
-* ImageMagick
-* MariaDB 10.4+
-
 ## How to run locally
 
-1. Ensure you have Ruby 2.6.6 with Bundler installed. I like [rbenv](https://github.com/rbenv/rbenv).
-2. Clone this repo.
-3. `cd` to the cloned repo and `bundle`.
-4. Configure a local MySQL or MariaDB database connection by copying `config/database.yml.example` to `config/database.yml`.
-5. Set site-specific SkeinLink configuration in `config/skeinlink.yml`. Start with copying `config/skeinlink.yml.example`.
-6. Set site-specific Devise authentication configuration in `config/initializers/devise_custom.yml`. This file overrides the defaults in `config/initializers/devise.yml`.
-7. Set up the database with `bundle exec rake db:create db:schema:load db:seed`.
-8. Run `bundle exec rails s` and open the URL it displays.
-9. Register as a new user. (As of now, you will need to edit `app/models/user.rb` to enable `:registerable`.)
-10. Unless you really want to set up Mailcatcher or a local mail server, manually confirm your new user. Open the Rails console with `bundle exec rails c` and run `User.update_all confirmed_at: DateTime.now`, then `exit`.
-11. Log in!
+You will need Docker and Docker Compose installed.
+
+1. Clone this repo.
+2. Configure a local MySQL or MariaDB database connection by copying `config/database.yml.example` to `config/database.yml`. You shouldn't need to make any changes to it for Docker use.
+3. Set site-specific SkeinLink configuration in `config/skeinlink.yml`. Start with copying `config/skeinlink.yml.example`.
+4. Set site-specific Devise authentication configuration in `config/initializers/devise_custom.yml`. This file overrides the defaults in `config/initializers/devise.yml`.
+5. Run `docker-compose up`.
+6. Set up the database with `docker-compose exec web bundle exec rake db:create db:schema:load db:seed`.
+7. Open `http://localhost:3000` in your browser. You should see SkeinLink loaded.
+8. Register as a new user. (As of now, you will need to edit `app/models/user.rb` to enable `:registerable`.)
+9. Unless you really want to set up Mailcatcher or a local mail server, manually confirm your new user. Open the Rails console with `bundle exec rails c` and run `User.update_all confirmed_at: DateTime.now`, then `exit`.
+10. Log in!
 
 ## Contributing
 
