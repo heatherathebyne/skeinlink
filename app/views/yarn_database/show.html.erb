@@ -22,9 +22,8 @@
 
     <% if @yarn_product.fiber_content.any? %>
       <div class='my-1'><%= @yarn_product.fiber_content.join(', ') %></div>
-    <% else %>
-      <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
     <% end %>
+    <div><strong><%= @yarn_product.fiber_type_name %></strong> fiber</div>
 
     <% unless @yarn_product.referral_link.blank? || @yarn_product.referral_partner.blank? %>
       <div class='my-3'>
