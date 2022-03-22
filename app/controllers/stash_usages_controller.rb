@@ -29,8 +29,7 @@ class StashUsagesController < ApplicationController
   end
 
   def destroy
-    @stash_usage = StashUsage.find_by(project_id: stash_usage_params[:project_id],
-                                      stash_yarn_id: stash_usage_params[:stash_yarn_id])
+    @stash_usage = StashUsage.find_by(id: params[:id])
 
     return render status: :ok, json: {} unless @stash_usage
 

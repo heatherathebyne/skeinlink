@@ -33,10 +33,10 @@ RSpec.describe StashUsagesController, type: :request do
   end
 
   describe '#destroy' do
-    subject { delete "/stash_usages.json", params: params }
+    subject { delete "/stash_usages/#{stash_usage_id}.json" }
 
     context 'when no user is logged in' do
-      let(:params) { {} }
+      let(:stash_usage_id) { -1 }
       before { subject }
       it_behaves_like 'unauthorized response'
     end
@@ -45,27 +45,43 @@ RSpec.describe StashUsagesController, type: :request do
       # Scoping to current user is implicit. See StashUsagePolicy.
       let(:user) { create(:user) }
       let(:project) { create(:project, user: user) }
+      let(:someone_elses_project) { create(:project, user: create(:user)) }
       let(:stash_yarn) { create(:stash_yarn, :with_name, user: user) }
 
       before { sign_in user }
 
       context 'when stash usage exists' do
-        let(:params) { { stash_usage: { project_id: project.id, stash_yarn_id: stash_yarn.id } } }
-        let!(:existing_usage) do
-          create :stash_usage, project: project, stash_yarn: stash_yarn, yards_used: 200
-        end
-
         before { subject }
 
-        it_behaves_like 'successful response'
+        context 'when user has a project matching stash usage' do
+          let!(:usage) do
+            create :stash_usage, project: project, stash_yarn: stash_yarn, yards_used: 200
+          end
+          let(:stash_usage_id) { usage.id }
 
-        it 'removes the stash usage' do
-          expect{ existing_usage.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          it 'removes the stash usage' do
+            expect{ usage.reload }.to raise_error(ActiveRecord::RecordNotFound)
+          end
+
+          it_behaves_like 'successful response'
+        end
+
+        context 'when user does not have a project matching stash usage' do
+          let!(:usage) do
+            create :stash_usage, project: someone_elses_project, stash_yarn: stash_yarn, yards_used: 200
+          end
+          let(:stash_usage_id) { usage.id }
+
+          it 'does not remove the stash usage' do
+            expect(usage.reload).to_not be_changed
+          end
+
+          it_behaves_like 'redirects to root path'
         end
       end
 
       context 'when stash usage does not exist' do
-        let(:params) { { stash_usage: { project_id: project.id, stash_yarn_id: stash_yarn.id } } }
+        let(:stash_usage_id) { -1 }
 
         before { subject }
 

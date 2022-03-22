@@ -42,7 +42,7 @@
     <% if @stash_yarn.stash_usages.any? %>
       <h4>Uses in your projects</h4>
       <% @stash_yarn.stash_usages.each do |usage| %>
-        <p><%= link_to usage&.project&.name, usage&.project %>: <%= usage.yards_used %> yards <%= link_to icon('far', 'trash-alt'), stash_usages_path(params: { stash_usage: { project_id: usage&.project&.id, stash_yarn_id: @stash_yarn.id } }), method: :delete %></p>
+        <p><%= link_to usage&.project&.name, usage&.project %>: <%= usage.yards_used %> yards <%= link_to icon('far', 'trash-alt'), stash_usage_path(usage), method: :delete %></p>
       <% end %>
 
       <p>Total yards used: <%= @stash_yarn.stash_usages.sum(&:yards_used) %></p>
