@@ -11,6 +11,8 @@ class StashYarn < ApplicationRecord
   belongs_to :colorway, optional: true
   belongs_to :user
   has_one_attached :image
+  has_many :stash_usages
+  has_many :projects, through: :stash_usages
 
   validate :has_a_name_or_product
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif],

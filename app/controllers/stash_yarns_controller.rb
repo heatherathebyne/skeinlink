@@ -1,7 +1,7 @@
 class StashYarnsController < ApplicationController
   include UpdateAttributionAction
 
-  before_action :set_stash_yarn, only: [:show, :edit, :update, :update_attribution, :destroy]
+  before_action :set_stash_yarn, only: [:edit, :update, :update_attribution, :destroy]
 
   def index
     @records = StashYarn.where(user_id: current_user.id)
@@ -16,6 +16,10 @@ class StashYarnsController < ApplicationController
   end
 
   def show
+    @stash_yarn = StashYarn.where(user_id: current_user.id)
+                           .includes(yarn_product: :yarn_company)
+                           .includes(stash_usages: :project)
+                           .find(params[:id])
   end
 
   def new
@@ -60,6 +64,20 @@ class StashYarnsController < ApplicationController
   def destroy
     @stash_yarn.destroy
     redirect_to stash_yarns_url, notice: "#{@stash_yarn.name} was removed from your stash."
+  end
+
+  def autocomplete_name
+    # can search by yarn maker name plus yarn name, or makerless yarn name:
+    # Cascade Yarns Cascade 220
+    # or
+    # My Own Handspun
+    #
+    # Note to implementers:
+    # Come back after you've satisfactorily designed a workflow for searching
+    # "cascade pima rose"
+    # and retrieving the YarnProduct and Colorway for Cascade Yarns Ultra Pima Fine,
+    # colorway 3840 Veiled Rose.
+    # That's why there's nothing here right now, and we search for projects from our stash yarn.
   end
 
   private

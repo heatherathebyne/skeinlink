@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_190131) do
+ActiveRecord::Schema.define(version: 2020_10_07_192830) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -105,6 +105,16 @@ ActiveRecord::Schema.define(version: 2020_07_01_190131) do
     t.index ["publicly_visible"], name: "index_projects_on_publicly_visible"
     t.index ["status"], name: "index_projects_on_status"
     t.index ["user_id"], name: "index_projects_on_user_id"
+  end
+
+  create_table "stash_usages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "stash_yarn_id", null: false
+    t.integer "yards_used", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_stash_usages_on_project_id"
+    t.index ["stash_yarn_id"], name: "index_stash_usages_on_stash_yarn_id"
   end
 
   create_table "stash_yarns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

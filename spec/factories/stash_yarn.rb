@@ -3,6 +3,10 @@ FactoryBot.define do
     user
   end
 
+  trait :with_name do
+    name { SecureRandom.hex(6) }
+  end
+
   trait :with_yarn_product do
     yarn_product
   end
