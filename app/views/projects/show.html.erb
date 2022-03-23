@@ -49,7 +49,11 @@
         <% yarn_title = usage&.stash_yarn&.name
         yarn_title << " (#{usage.yards_used} yards)" if usage.yards_used > 0
       %>
-        <%= link_to yarn_title, usage.stash_yarn, class: 'fw-normal btn btn-outline-primary mb-1' %>
+        <% if user_signed_in? && @project.user == current_user %>
+          <%= link_to yarn_title, usage.stash_yarn, class: 'fw-normal btn btn-outline-primary mb-1' %>
+        <% else %>
+          <%= link_to yarn_title, yarn_product_path(usage.stash_yarn_id), class: 'fw-normal btn btn-outline-primary mb-1' %>
+        <% end %>
       <% end %>
       </dt>
     <% end %>
