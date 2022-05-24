@@ -60,8 +60,8 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    acts-as-taggable-on (6.5.0)
-      activerecord (>= 5.0, < 6.1)
+    acts-as-taggable-on (9.0.1)
+      activerecord (>= 6.0, < 7.1)
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     airbrussh (1.4.0)
@@ -118,7 +118,7 @@ GEM
       xpath (~> 3.2)
     childprocess (3.0.0)
     coderay (1.1.2)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.1.10)
     crass (1.0.6)
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -338,7 +338,7 @@ PLATFORMS
 DEPENDENCIES
   active_storage_validations
   activerecord-nulldb-adapter
-  acts-as-taggable-on (~> 6.0)
+  acts-as-taggable-on (~> 9.0)
   addressable
   amazing_print
   audited

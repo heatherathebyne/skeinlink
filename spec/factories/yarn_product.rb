@@ -10,7 +10,6 @@ FactoryBot.define do
       description { Faker::Lorem.paragraph }
       referral_link { Faker::Internet.url }
       referral_partner { Faker::Dessert.variety }
-      yarn_company_name_freetext { SecureRandom.hex(6) }
       weight_id { rand 10..20 }
     end
   end
