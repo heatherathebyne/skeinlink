@@ -33,7 +33,7 @@
     <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name, class: 'form-control', placeholder: 'such as 50% Superwash Wool, 50% Silk' %>
   </div>
 
-    <%= label_tag 'Fiber type tags (such as Superwash Wool, Silk; makes this yarn searchable by fiber [soon])' %>
+  <%= label_tag 'Fiber type tags (such as Superwash Wool, Silk; makes this yarn searchable by fiber [soon])' %>
   <div class='mb-3' id='its_full_of_tags'>
     <% yarn_product.fiber_content_list.each do |tag| %>
       <span class='badge bg-primary rounded-pill font-weight-normal'>
