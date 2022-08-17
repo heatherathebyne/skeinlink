@@ -51,5 +51,5 @@
     <%= f.file_field :images, multiple: true, class: 'form-control' %>
     <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
-  <%= f.submit %>
+  <%= f.submit 'Add project', class: 'btn btn-primary' %>
 <% end %>
