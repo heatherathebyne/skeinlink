@@ -11,45 +11,45 @@
     </div>
   <% end %>
 
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :craft %>
-    <%= f.select :craft_id, Craft.all.map {|c| [c.name, c.id]} %>
+    <%= f.select :craft_id, Craft.all.map {|c| [c.name, c.id]}, {}, { class: 'form-select' } %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :name, 'Project name' %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: 'form-control' %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :pattern_name, 'Pattern name' %>
-    <%= f.text_field :pattern_name %>
+    <%= f.text_field :pattern_name, class: 'form-control' %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :status_name, 'Project status' %>
-    <%= f.text_field :status_name %>
+    <%= f.text_field :status_name, class: 'form-control' %>
   </div>
-  <div class='form-group'>
-    <%= f.radio_button :publicly_visible, false %>
-    <%= f.label :publicly_visible, 'Visible only to logged in crafters', value: false %>
+  <div class='mb-3'>
+    <%= f.radio_button :publicly_visible, false, class: 'form-check-input' %>
+    <%= f.label :publicly_visible, 'Visible only to logged in crafters', value: false, class: 'form-check-label' %>
     <br>
-    <%= f.radio_button :publicly_visible, true %>
-    <%= f.label :publicly_visible, 'Visible to everyone even if they aren\'t a member', value: true %>
+    <%= f.radio_button :publicly_visible, true, class: 'form-check-input' %>
+    <%= f.label :publicly_visible, 'Visible to everyone even if they aren\'t a member', value: true, class: 'form-check-label' %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :notes %>
     <%= f.text_area :notes, class: 'form-control' %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= f.label :private_notes %>
     <%= f.text_area :private_notes, class: 'form-control' %>
   </div>
-  <div class='form-group'>
-    <%= f.label :tools_freetext %>
-    <%= f.text_field :tools_freetext %>
+  <div class='mb-3'>
+    <%= f.label :tools_freetext, 'Tools used (for example, size 7 crochet hook)' %>
+    <%= f.text_field :tools_freetext, class: 'form-control' %>
   </div>
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= label_tag :images %>
-    <%= f.file_field :images, multiple: true %>
+    <%= f.file_field :images, multiple: true, class: 'form-control' %>
     <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
-  <%= f.submit %>
+  <%= f.submit 'Add project', class: 'btn btn-primary' %>
 <% end %>

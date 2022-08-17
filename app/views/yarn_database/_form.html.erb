@@ -12,68 +12,69 @@
     </div>
   <% end %>
 
-  <div class='form-group'>
-    <%= label_tag 'Yarn company name' %> <%= text_field_tag :yarn_company_search, yarn_product&.yarn_company&.name %>
+  <div class='mb-3'>
+    <%= label_tag 'Yarn company name' %> <%= text_field_tag :yarn_company_search, yarn_product&.yarn_company&.name, class: 'form-control' %>
     <%= f.hidden_field :yarn_company_id %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :name, 'Yarn name' %> <%= f.text_field :name %>
+  <div class='mb-3'>
+    <%= f.label :name, 'Yarn name' %> <%= f.text_field :name, class: 'form-control' %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :skein_gram_weight, 'Skein weight in grams' %> <%= f.text_field :skein_gram_weight %>
+  <div class='mb-3'>
+    <%= f.label :skein_gram_weight, 'Skein weight in grams' %> <%= f.text_field :skein_gram_weight, class: 'form-control' %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :skein_yards, 'Skein yardage' %> <%= f.text_field :skein_yards %>
+  <div class='mb-3'>
+    <%= f.label :skein_yards, 'Skein yardage' %> <%= f.text_field :skein_yards, class: 'form-control' %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name %>
+  <div class='mb-3'>
+    <%= f.label :fiber_type_name, 'Fiber type description' %> <%= f.text_field :fiber_type_name, class: 'form-control', placeholder: 'such as 50% Superwash Wool, 50% Silk' %>
   </div>
 
-  <div class='form-group' id='its_full_of_tags'>
+  <%= label_tag 'Fiber type tags (such as Superwash Wool, Silk; makes this yarn searchable by fiber [soon])' %>
+  <div class='mb-3' id='its_full_of_tags'>
     <% yarn_product.fiber_content_list.each do |tag| %>
       <span class='badge bg-primary rounded-pill font-weight-normal'>
         <%= tag %><%= link_to icon('far', 'trash-alt'), '#', class: 'text-white pl-2', 'data-tag-name' => tag %>
       </span>
     <% end %>
-    <span id='proto' class='badge badge-primary badge-pill font-weight-normal' style='display:none'>
+    <span id='proto' class='badge bg-primary rounded-pill font-weight-normal' style='display:none'>
       <%= link_to icon('far', 'trash-alt'), '#', class: 'text-white pl-2' %>
     </span>
   </div>
 
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= text_field_tag 'tag-add' %>
     <%= hidden_field_tag :fiber_content_tags, yarn_product.fiber_content_list.to_json %>
   </div>
 
-  <div class='form-group'>
+  <div class='mb-3'>
     <%= f.label :weight_id, 'Yarn weight' %>
-    <%= f.select :weight_id, options_for_select(yarn_product.common_weight_select_options, yarn_product.weight_id) %>
+    <%= f.select :weight_id, options_for_select(yarn_product.common_weight_select_options, yarn_product.weight_id), {}, { class: 'form-select' } %>
   </div>
 
   <% if policy(yarn_product).edit_referral_links? %>
-    <div class='form-group'>
-      <%= f.label :referral_link %> <%= f.text_field :referral_link %>
+    <div class='mb-3'>
+      <%= f.label :referral_link %> <%= f.text_field :referral_link, class: 'form-control' %>
     </div>
 
-    <div class='form-group'>
-      <%= f.label :referral_partner %> <%= f.text_field :referral_partner %>
+    <div class='mb-3'>
+      <%= f.label :referral_partner %> <%= f.text_field :referral_partner, class: 'form-control' %>
     </div>
   <% end %>
 
-  <div class='form-group'>
-    <%= f.label :description %> <%= f.text_area :description %>
+  <div class='mb-3'>
+    <%= f.label :description %> <%= f.text_area :description, class: 'form-control' %>
   </div>
 
-  <div class='form-group'>
-    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image %>
+  <div class='mb-3'>
+    <%= f.label :image, 'Add a picture' %> <%= f.file_field :image, class: 'form-control' %>
     <p class='text-muted'><small><%= image_attribution_notice %></small></p>
   </div>
 
-  <%= f.submit 'Add yarn to database' %>
+  <%= f.submit 'Add yarn to database', class: 'btn btn-primary' %>
 <% end %>
 
 <script type='text/javascript'>
