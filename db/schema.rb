@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_192830) do
+ActiveRecord::Schema.define(version: 2022_05_24_022118) do
 
-  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.integer "record_id", null: false
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "colorways", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "colorways", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "yarn_product_id", null: false
     t.string "name"
     t.string "number"
@@ -71,11 +71,11 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["yarn_product_id"], name: "index_colorways_on_yarn_product_id"
   end
 
-  create_table "crafts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "crafts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "journal_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "journal_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "project_id"
     t.datetime "entry_timestamp", null: false
     t.text "content"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["project_id"], name: "fk_rails_2d674f2d76"
   end
 
-  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "craft_id", null: false
     t.integer "user_id"
     t.string "name", null: false
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["stash_yarn_id"], name: "index_stash_usages_on_stash_yarn_id"
   end
 
-  create_table "stash_yarns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "stash_yarns", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "yarn_product_id"
     t.integer "colorway_id"
     t.integer "user_id", null: false
@@ -133,7 +133,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.text "notes"
     t.boolean "handspun"
     t.integer "weight_id", limit: 1
-    t.string "yarn_company_name_freetext"
     t.integer "other_maker_type", limit: 1
     t.string "dye_lot"
     t.index ["colorway_id"], name: "index_stash_yarns_on_colorway_id"
@@ -146,7 +145,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["yarn_product_id"], name: "index_stash_yarns_on_yarn_product_id"
   end
 
-  create_table "taggings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "taggings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
     t.integer "taggable_id"
@@ -154,6 +153,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.integer "tagger_id"
     t.string "context", limit: 128
     t.datetime "created_at"
+    t.string "tenant", limit: 128
     t.index ["context"], name: "index_taggings_on_context"
     t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
@@ -163,9 +163,10 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
     t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
     t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+    t.index ["tenant"], name: "index_taggings_on_tenant"
   end
 
-  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "tags", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", collation: "utf8_bin"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -173,7 +174,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -212,7 +213,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
-  create_table "yarn_companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "yarn_companies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -225,7 +226,7 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["name"], name: "index_yarn_companies_on_name", unique: true
   end
 
-  create_table "yarn_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+  create_table "yarn_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.integer "yarn_company_id"
     t.integer "colorway_id"
     t.string "name", null: false
@@ -239,7 +240,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.text "description"
     t.string "referral_link"
     t.string "referral_partner"
-    t.string "yarn_company_name_freetext"
     t.bigint "created_by"
     t.index ["colorway_id"], name: "index_yarn_products_on_colorway_id"
     t.index ["craft_yarn_council_weight"], name: "index_yarn_products_on_craft_yarn_council_weight"
@@ -247,7 +247,6 @@ ActiveRecord::Schema.define(version: 2020_10_07_192830) do
     t.index ["name"], name: "index_yarn_products_on_name"
     t.index ["weight_id"], name: "index_yarn_products_on_weight_id"
     t.index ["yarn_company_id"], name: "index_yarn_products_on_yarn_company_id"
-    t.index ["yarn_company_name_freetext"], name: "index_yarn_products_on_yarn_company_name_freetext"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
