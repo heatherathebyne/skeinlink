@@ -28,5 +28,12 @@ module Skeinlink
     config.to_prepare do
       ActiveStorage::Attachment.include CoreExtensions::ActiveStorage::Attachment::AttachmentMetadata
     end
+
+    # https://github.com/collectiveidea/audited/issues/631
+    # https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+    config.active_record.yaml_column_permitted_classes =
+      %w[String Integer NilClass Float Time Date FalseClass Hash Array DateTime TrueClass BigDecimal
+      ActiveSupport::TimeWithZone ActiveSupport::TimeZone ActiveSupport::HashWithIndifferentAccess
+      ActsAsTaggableOn::TagList Symbol ActsAsTaggableOn::DefaultParser]
   end
 end
