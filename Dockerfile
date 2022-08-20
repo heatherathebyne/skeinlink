@@ -9,7 +9,9 @@ RUN apt-get update -qq && \
       libxslt1-dev \
       imagemagick \
       libmariadb-dev \
-      libsqlite3-dev
+      libsqlite3-dev \
+      vim \
+      mariadb-client
 
 VOLUME /srv/skeinlink
 WORKDIR /srv/skeinlink
