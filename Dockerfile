@@ -1,4 +1,4 @@
-FROM ruby:2.7.5-slim-buster
+FROM ruby:3.1.2-slim-buster
 
 ENV BINDING 0.0.0.0
 
