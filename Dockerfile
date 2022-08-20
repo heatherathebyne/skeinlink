@@ -15,6 +15,7 @@ VOLUME /srv/skeinlink
 WORKDIR /srv/skeinlink
 
 ADD Gemfile* /srv/skeinlink/
+RUN gem update --system
 RUN bundle install -j4 --retry 3
 
 CMD ["bundle", "exec", "rails", "server"]

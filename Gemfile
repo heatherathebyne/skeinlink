@@ -5,7 +5,7 @@ ruby '2.7.5'
 
 gem 'rails', '~> 6.1.0'
 gem 'mysql2'
-gem 'puma', '~> 4.3'
+gem 'puma', '~> 5.6'
 gem 'sass-rails', '>= 6'
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
