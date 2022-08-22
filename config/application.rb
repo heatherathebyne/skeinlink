@@ -35,5 +35,7 @@ module Skeinlink
       %w[String Integer NilClass Float Time Date FalseClass Hash Array DateTime TrueClass BigDecimal
       ActiveSupport::TimeWithZone ActiveSupport::TimeZone ActiveSupport::HashWithIndifferentAccess
       ActsAsTaggableOn::TagList Symbol ActsAsTaggableOn::DefaultParser]
+
+    config.active_storage.variant_processor = :mini_magick
   end
 end
