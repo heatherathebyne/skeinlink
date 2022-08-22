@@ -48,7 +48,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @project = current_user.projects.with_attached_images.find(params[:id])
+    @project = current_user.projects.with_attached_images.find_by(id: params[:id])
+
+    unless @project
+      flash[:notice] = "Sorry, we couldn't find that project."
+      redirect_back(fallback_location: root_path)
+      return
+    end
   end
 
   # POST /projects
@@ -57,7 +63,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
     @project.user_id = current_user.id
 
-    ImageAttachmentService.new(record: @project, images: project_images_params[:images]).call
+    ImageAttachmentService.call(record: @project, images: project_images_params[:images])
 
     respond_to do |format|
       if @project.save
@@ -73,7 +79,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
-    ImageAttachmentService.new(record: @project, images: project_images_params[:images]).call
+    ImageAttachmentService.call(record: @project, images: project_images_params[:images])
 
     respond_to do |format|
       if @project.update(project_params)
