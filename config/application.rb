@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Skeinlink
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
     # Include site-specific configuration
     begin
@@ -28,5 +28,14 @@ module Skeinlink
     config.to_prepare do
       ActiveStorage::Attachment.include CoreExtensions::ActiveStorage::Attachment::AttachmentMetadata
     end
+
+    # https://github.com/collectiveidea/audited/issues/631
+    # https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
+    config.active_record.yaml_column_permitted_classes =
+      %w[String Integer NilClass Float Time Date FalseClass Hash Array DateTime TrueClass BigDecimal
+      ActiveSupport::TimeWithZone ActiveSupport::TimeZone ActiveSupport::HashWithIndifferentAccess
+      ActsAsTaggableOn::TagList Symbol ActsAsTaggableOn::DefaultParser]
+
+    config.active_storage.variant_processor = :mini_magick
   end
 end
