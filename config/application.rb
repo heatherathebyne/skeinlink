@@ -27,6 +27,8 @@ module Skeinlink
 
     config.to_prepare do
       ActiveStorage::Attachment.include CoreExtensions::ActiveStorage::Attachment::AttachmentMetadata
+
+      Warden::Strategies.add(:sso_with_discourse, SsoWithDiscourseStrategy)
     end
 
     # https://github.com/collectiveidea/audited/issues/631
