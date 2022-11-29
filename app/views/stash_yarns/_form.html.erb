@@ -62,7 +62,7 @@
     <div class='form-group border-primary border-top border-bottom my-2 py-2 collapse' id='new_colorway'>
       <h5>Tell us about another colorway</h5>
       <div id='colorway_errors'></div>
-      <%= form_with(model: Colorway.new, id: 'colorway_form') do |f| %>
+      <%= form_with(model: Colorway.new, local: false, id: 'colorway_form') do |f| %>
         <%= f.hidden_field :yarn_product_id %>
         <div class='form-group'>
           <%= f.label :name %> <%= f.text_field :name, class: 'form-control', placeholder: 'example: Peacock' %>
