@@ -43,7 +43,7 @@
       <dd class='col-sm-1 text-right'>Private notes</dd> <dt class='col-sm-11'><%= @project.private_notes %></dt>
     <% end %>
 
-    <% if @project.stash_usages.any? %>
+    <% if @project.stash_usages.any? || @project.user == current_user %>
       <dd class='col-sm-1 text-right'>Yarn used</dd> <dt class='col-sm-11'>
       <% @project.stash_usages.each do |usage| %>
         <% yarn_title = usage&.stash_yarn&.name
@@ -54,6 +54,9 @@
         <% else %>
           <%= link_to yarn_title, yarn_product_path(usage.stash_yarn.yarn_product_id), class: 'fw-normal btn btn-outline-primary mb-1' %>
         <% end %>
+      <% end %>
+      <% if @project.user == current_user %>
+        <%= link_to 'Add yarn from My Stash', stash_yarns_path, class: 'fw-normal btn btn-outline-primary mb-1' %>
       <% end %>
       </dt>
     <% end %>
