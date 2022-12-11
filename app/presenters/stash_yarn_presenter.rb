@@ -22,6 +22,10 @@ class StashYarnPresenter
     'stash_yarns/sorting_options'
   end
 
+  def self.yards_remaining(stash_yarn)
+    new.yards_remaining(stash_yarn)
+  end
+
   def sidebar
     link_to 'Add to My Stash', new_stash_yarn_path, class: 'list-group-item'
   end
@@ -32,9 +36,20 @@ class StashYarnPresenter
 
   def card_description(stash_yarn)
     desc = ''
-    desc << "#{stash_yarn.colorway_name}, " if stash_yarn.colorway_name
+    desc << "#{stash_yarn.colorway_name}, " unless stash_yarn.colorway_name.blank?
     desc << "#{pluralize stash_yarn.skein_quantity, 'skein'}"
     desc << " / #{stash_yarn.total_yardage} total yards" if stash_yarn.total_yardage
+    desc << yards_remaining(stash_yarn)
     desc
+  end
+
+  def yards_remaining(stash_yarn)
+    if stash_yarn.stash_usages.any?
+      used = stash_yarn.stash_usages.map(&:yards_used).sum
+      remaining = stash_yarn.total_yardage - used
+      " (#{remaining} yards remaining)"
+    else
+      ''
+    end
   end
 end
