@@ -1,6 +1,6 @@
 <div class="row">
 
-  <div class="col-lg-3">
+  <div class="col-xl-2 col-lg-2">
     <h1 class="my-4"><%= @project_user.try(:name) || 'Anonymous Crafter' %>'s Projects</h1>
     <% if @project_user == current_user %>
       <div class="list-group">
@@ -13,12 +13,12 @@
   </div>
   <!-- /.col-lg-3 -->
 
-  <div class="col-lg-9">
+  <div class="col-10">
 
     <div class="row">
 
       <% @projects.each do |project| %>
-      <div class="col-lg-4 col-md-6 mb-4">
+      <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
           <% if project.thumb_images.last %>
             <div class='square-container'>
