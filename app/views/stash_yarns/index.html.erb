@@ -17,11 +17,11 @@
       <% @stash_yarns.each do |stash_yarn| %>
       <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
-          <% unless stash_yarn.image.blank? %>
-            <div class='square-container'>
+          <div class='square-container'>
+            <% unless stash_yarn.image.blank? %>
               <%= image_tag(stash_yarn.thumb_image, class: 'card-img-top') %>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
           <div class="card-body">
             <h4 class="card-title">
               <%= presenter.card_title stash_yarn %>
@@ -37,8 +37,4 @@
     <div class='row'><div class='col'><%= paginate @stash_yarns %></div></div>
 
   </div>
-  <!-- /.col-lg-9 -->
-
 </div>
-<!-- /.row -->
-
