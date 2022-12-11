@@ -4,14 +4,33 @@
 
   <div class="col-xl-2 col-lg-2">
     <h1 class="my-4">Yarn Database</h1>
-    <div class="list-group">
+
+    <h2 class='my-2'>Search</h2>
+    <div>
+      <%= search_form_for @q do |f| %>
+        <div class='form-group'>
+          <%= f.label :name_cont, 'Yarn name contains' %>
+          <%= f.search_field :name_cont, class: 'form-control' %>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :yarn_company_name_cont, 'Yarn maker name contains' %>
+          <%= f.search_field :yarn_company_name_cont, class: 'form-control' %>
+        </div>
+
+        <%= f.submit 'Search', class: 'btn btn-primary mt-2' %>
+      <% end %>
+    </div>
+
+    <h2 class='mt-4'>Sort by</h2>
+    <div><%= sort_link(@q, :name, 'Yarn name') %></div>
+    <div><%= sort_link(@q, :yarn_company_name, 'Yarn maker name') %></div>
+    <div><%= sort_link(@q, :created_at) %></div>
+
+    <div class="my-4 list-group">
       <%= link_to 'Add Yarn', new_yarn_product_path, class: 'list-group-item' %>
     </div>
-    <div class='my-4'>
-      <%= render partial: 'yarn_database/sorting_options' %>
-    </div>
   </div>
-  <!-- /.col-lg-3 -->
 
   <div class="col-10">
 
