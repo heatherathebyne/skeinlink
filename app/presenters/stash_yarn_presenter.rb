@@ -44,7 +44,7 @@ class StashYarnPresenter
   end
 
   def yards_remaining(stash_yarn)
-    if stash_yarn.stash_usages.any?
+    if stash_yarn.stash_usages.any? && stash_yarn.total_yardage
       used = stash_yarn.stash_usages.map(&:yards_used).sum
       remaining = stash_yarn.total_yardage - used
       " (#{remaining} yards remaining)"
