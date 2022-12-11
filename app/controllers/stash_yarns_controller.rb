@@ -4,15 +4,11 @@ class StashYarnsController < ApplicationController
   before_action :set_stash_yarn, only: [:edit, :update, :update_attribution, :destroy]
 
   def index
-    @records = StashYarn.where(user_id: current_user.id)
+    @stash_yarns = StashYarn.where(user_id: current_user.id)
                         .includes(:colorway)
                         .with_attached_image
                         .public_send(sort_order_scope)
                         .page(params[:page])
-    @presenter = StashYarnPresenter
-
-    # this is a bit weird and hacky right now but oh well
-    render layout: 'layouts/cards', html: nil
   end
 
   def show
