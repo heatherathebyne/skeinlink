@@ -19,6 +19,31 @@
 
 <hr>
 
+<% if @yarn_company.yarn_products.any? %>
+  <div class="col-10">
+    <div class="row">
+      <% # this should never be sorting more than a few hundred items
+        @yarn_company.yarn_products.sort_by{ |yp| yp.name }.each do |yarn_product| %>
+        <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+          <div class="card h-100">
+            <div class='square-container'>
+              <% unless yarn_product.image.blank? %>
+                <%= image_tag(yarn_product.thumb_image, class: 'card-img-top') %>
+              <% end %>
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">
+                <%= link_to yarn_product.name, yarn_product_path(yarn_product), class: 'stretched-link' %>
+              </h4>
+              <%= "#{yarn_product.fiber_type_name}, #{yarn_product.skein_gram_weight} grams / #{yarn_product.skein_yards} yards, #{ yarn_product.common_weight } weight" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <hr>
+<% end %>
+
 <div class='container'>
   <%= link_to 'Add Another Yarn Company', new_yarn_company_path, class: 'btn btn-primary' %>
 </div>

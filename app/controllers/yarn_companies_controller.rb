@@ -1,11 +1,12 @@
 class YarnCompaniesController < ApplicationController
-  before_action :set_yarn_company, only: [:show, :edit, :update]
+  before_action :set_yarn_company, only: [:edit, :update]
 
   def index
     @yarn_companies = YarnCompany.all.order(:name).page(params[:page])
   end
 
   def show
+    @yarn_company = YarnCompany.includes(yarn_products: :image_attachment).find(params[:id])
   end
 
   def new
