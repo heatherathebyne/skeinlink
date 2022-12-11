@@ -22,6 +22,10 @@ class StashYarnPresenter
     'stash_yarns/sorting_options'
   end
 
+  def self.yards_remaining(stash_yarn)
+    new.yards_remaining(stash_yarn)
+  end
+
   def sidebar
     link_to 'Add to My Stash', new_stash_yarn_path, class: 'list-group-item'
   end
@@ -38,8 +42,6 @@ class StashYarnPresenter
     desc << yards_remaining(stash_yarn)
     desc
   end
-
-  private
 
   def yards_remaining(stash_yarn)
     if stash_yarn.stash_usages.any?
