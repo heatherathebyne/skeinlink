@@ -6,6 +6,7 @@ class StashYarnsController < ApplicationController
   def index
     @stash_yarns = StashYarn.where(user_id: current_user.id)
                         .includes(:colorway)
+                        .includes(:stash_usages)
                         .with_attached_image
                         .public_send(sort_order_scope)
                         .page(params[:page])
