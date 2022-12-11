@@ -5,6 +5,16 @@
     <div class='list-group'>
       <%= link_to 'Add Yarn Company', new_yarn_company_path, class: 'list-group-item' %>
     </div>
+
+    <div class='my-4'>
+      <%= search_form_for @q do |f| %>
+        <div class='form-group'>
+          <%= f.label :name_cont %>
+          <%= f.search_field :name_cont, class: 'form-control' %>
+        </div>
+        <%= f.submit 'Search', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
   </div>
 
   <div class='col-lg-9'>
