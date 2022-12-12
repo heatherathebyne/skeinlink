@@ -4,12 +4,13 @@ class StashYarnsController < ApplicationController
   before_action :set_stash_yarn, only: [:edit, :update, :update_attribution, :destroy]
 
   def index
-    @stash_yarns = StashYarn.where(user_id: current_user.id)
-                        .includes(:colorway)
-                        .includes(:stash_usages)
-                        .with_attached_image
-                        .public_send(sort_order_scope)
-                        .page(params[:page])
+    @q = StashYarn.where(user_id: current_user.id).ransack(params[:q])
+    @stash_yarns = @q.result
+                     .includes(yarn_product: :yarn_company)
+                     .includes(:colorway)
+                     .includes(:stash_usages)
+                     .with_attached_image
+                     .page(params[:page])
   end
 
   def show

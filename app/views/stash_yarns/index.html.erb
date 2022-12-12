@@ -4,11 +4,31 @@
 
   <div class="col-xl-2 col-lg-2">
     <h1 class="my-4"><%= presenter.page_title %></h1>
-    <div class="list-group">
-      <%= presenter.sidebar %>
+
+    <h2 class='my-2'>Search</h2>
+    <div>
+      <%= search_form_for @q do |f| %>
+        <div class='form-group'>
+          <%= f.label :name_or_yarn_product_name_cont, 'Yarn name contains' %>
+          <%= f.search_field :name_or_yarn_product_name_cont, class: 'form-control' %>
+        </div>
+
+        <div class='form-group'>
+          <%= f.label :yarn_product_yarn_company_name_cont, 'Yarn maker name contains' %>
+          <%= f.search_field :yarn_product_yarn_company_name_cont, class: 'form-control' %>
+        </div>
+
+        <%= f.submit 'Search', class: 'btn btn-primary mt-2' %>
+      <% end %>
     </div>
-    <div class='my-4'>
-      <%= render presenter.sorting_options_partial %>
+
+    <h2 class='mt-4'>Sort by</h2>
+    <div><%= sort_link(@q, :yarn_name, 'Yarn name') %></div>
+    <div><%= sort_link(@q, :yarn_maker_name, 'Yarn maker name') %></div>
+    <div><%= sort_link(@q, :created_at) %></div>
+
+    <div class="my-4 list-group">
+      <%= presenter.sidebar %>
     </div>
   </div>
 

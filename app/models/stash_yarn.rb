@@ -25,7 +25,7 @@ class StashYarn < ApplicationRecord
   scope :newest, -> { order id: :desc }
   scope :oldest, -> { order id: :asc }
 
-  scope :yarn_name_a_z, -> {
+  scope :sort_by_yarn_name_asc, -> {
     select(
       'stash_yarns.*, '\
       '(CASE '\
@@ -37,7 +37,7 @@ class StashYarn < ApplicationRecord
       .order('sortable_name ASC')
   }
 
-  scope :yarn_name_z_a, -> {
+  scope :sort_by_yarn_name_desc, -> {
     select(
       'stash_yarns.*, '\
       '(CASE '\
@@ -51,7 +51,7 @@ class StashYarn < ApplicationRecord
 
   # Sort first by maker name, then by yarn product name,
   # interleaving stash without yarn product as if it was a maker name
-  scope :yarn_maker_name_a_z, -> {
+  scope :sort_by_yarn_maker_name_asc, -> {
     select(
       'stash_yarns.*, '\
       '(CASE '\
@@ -66,7 +66,7 @@ class StashYarn < ApplicationRecord
       .order('maker_name ASC, sortable_name ASC')
   }
 
-  scope :yarn_maker_name_z_a, -> {
+  scope :sort_by_yarn_maker_name_desc, -> {
     select(
       'stash_yarns.*, '\
       '(CASE '\

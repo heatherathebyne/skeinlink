@@ -64,7 +64,7 @@ RSpec.describe StashYarn do
   end
 
   describe 'scopes' do
-    describe '#yarn_name_a_z' do
+    describe '#sort_by_yarn_name_asc' do
       let!(:stash_1) { create :stash_yarn, name: 'ddddd' }
       let!(:stash_2) do
         create :stash_yarn, name: 'irrelevant', yarn_product: create(:yarn_product, name: 'ccccc')
@@ -75,7 +75,7 @@ RSpec.describe StashYarn do
           yarn_product: create(:yarn_product, name: 'aaaaa')
       end
 
-      subject { StashYarn.yarn_name_a_z }
+      subject { StashYarn.sort_by_yarn_name_asc }
 
       it 'returns records in the expected order' do
         expect(subject.first).to eq stash_4
@@ -89,7 +89,7 @@ RSpec.describe StashYarn do
       end
     end
 
-    describe '#yarn_maker_name_a_z' do
+    describe '#sort_by_yarn_maker_name_asc' do
       let!(:a_yarn_company) { create(:yarn_company, name: 'AaaYarnCompany') }
       let!(:z_yarn_company) { create(:yarn_company, name: 'ZzzYarnCompany') }
 
@@ -108,7 +108,7 @@ RSpec.describe StashYarn do
           yarn_product: create(:yarn_product, name: 'eeeee', yarn_company: a_yarn_company)
       end
 
-      subject { StashYarn.yarn_maker_name_a_z }
+      subject { StashYarn.sort_by_yarn_maker_name_asc }
 
       it 'returns records in the expected order' do
         expect(subject.first).to eq stash_5
