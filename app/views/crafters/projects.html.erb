@@ -2,14 +2,28 @@
 
   <div class="col-xl-2 col-lg-2">
     <h1 class="my-4"><%= @project_user.try(:name) || 'Anonymous Crafter' %>'s Projects</h1>
+
+    <h2 class='my-2'>Search</h2>
+    <div>
+      <%= search_form_for(@q, url: projects_crafter_path(@project_user.id) ) do |f| %>
+        <div class='form-group'>
+          <%= f.label :name_cont, 'Project name contains' %>
+          <%= f.search_field :name_cont, class: 'form-control' %>
+        </div>
+
+        <%= f.submit 'Search', class: 'btn btn-primary mt-2' %>
+      <% end %>
+    </div>
+
+    <h2 class='mt-4'>Sort by</h2>
+    <div><%= sort_link(@q, :name, 'Project name') %></div>
+    <div><%= sort_link(@q, :created_at) %></div>
+
     <% if @project_user == current_user %>
-      <div class="list-group">
+      <div class="my-4 list-group">
         <%= link_to 'New Project', new_project_path, class: 'list-group-item' %>
       </div>
     <% end %>
-    <div class='my-4'>
-      <%= render partial: 'crafters/sorting_options' %>
-    </div>
   </div>
   <!-- /.col-lg-3 -->
 

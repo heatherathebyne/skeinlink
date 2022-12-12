@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   resources :crafters, only: [:show, :edit, :update] do
     collection do
       get :autocomplete_project_name_for_current_user
+      get :my_projects
     end
 
     member do

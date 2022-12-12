@@ -25,25 +25,28 @@ class CraftersController < ApplicationController
   end
 
   def projects
-    @projects = if params[:id].to_i == current_user.id
-                  @project_user = current_user
-                  current_user.projects
-                              .public_send(sort_order_scope)
-                              .with_attached_images
-                              .page(params[:page])
-                else
-                  @project_user = User.find_by(id: params[:id])
-                  Project.public_for_user(params[:id])
-                         .public_send(sort_order_scope)
-                         .with_attached_images
-                         .page(params[:page])
-                end
+    @project_user = if params[:id].to_i == current_user.id
+      current_user
+    else
+      User.find_by(id: params[:id])
+    end
+
+    @q = @project_user.projects.ransack(params[:q])
+
+    @projects = @q.result
+                  .with_attached_images
+                  .page(params[:page])
 
     unless @projects.any?
       flash[:notice] = "There aren't any projects for that crafter."
       redirect_back(fallback_location: root_path)
       return
     end
+  end
+
+  def my_projects
+    redirect_to projects_crafter_path(current_user)
+    return
   end
 
   def autocomplete_project_name_for_current_user
