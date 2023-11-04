@@ -7,6 +7,7 @@ class User < ApplicationRecord
 
   has_many :projects
   has_many :stash_yarns
+  has_many :patterns
 
   validates :name, :active, presence: true
 

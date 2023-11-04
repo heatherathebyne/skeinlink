@@ -40,3 +40,4 @@
 /config/skeinlink.yml
 /config/database.yml
 /config/initializers/devise_custom.rb
+/config/locales/skeinlink_custom.en.yml

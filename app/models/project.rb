@@ -11,6 +11,8 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :stash_usages
   has_many :stash_yarns, through: :stash_usages
+  has_many :pattern_projects
+  has_many :patterns, through: :pattern_projects
 
   validates :images, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
                      size: { less_than: 15.megabytes, message: "Whoa, that image is too big! Try one that is smaller than 15 MB." }

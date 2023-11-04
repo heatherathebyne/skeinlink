@@ -10,6 +10,8 @@ class YarnProduct < ApplicationRecord
   belongs_to :yarn_company, optional: true # y tho
   has_many :colorways, inverse_of: :yarn_product
   has_one_attached :image
+  has_many :pattern_yarn_products
+  has_many :patterns, through: :pattern_yarn_products
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
   validates :image, content_type: { in: [:png, :jpg, :jpeg, :gif], message: 'is not a PNG, JPG, or GIF image' },
