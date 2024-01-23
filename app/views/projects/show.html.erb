@@ -52,7 +52,7 @@
         <% if user_signed_in? && @project.user == current_user %>
           <%= link_to yarn_title, usage.stash_yarn, class: 'fw-normal btn btn-outline-primary mb-1' %>
         <% else %>
-          <%= link_to yarn_title, yarn_product_path(usage.stash_yarn.yarn_product_id), class: 'fw-normal btn btn-outline-primary mb-1' %>
+          <span class='fw-normal btn btn-outline-primary mb-1'><%= yarn_title %></span>
         <% end %>
       <% end %>
       <% if @project.user == current_user %>
