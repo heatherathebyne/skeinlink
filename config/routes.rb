@@ -53,6 +53,7 @@ Rails.application.routes.draw do
     member do
       get :projects
       get :stash
+      get :all_projects
     end
   end
 

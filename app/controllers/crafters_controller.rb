@@ -46,6 +46,11 @@ class CraftersController < ApplicationController
     end
   end
 
+  def all_projects
+    @projects = User.find_by(id: params[:id]).projects
+    render html: @projects.map {|p| "<a href='/projects/#{p.id}'>#{p.id}</a>"}.to_s.html_safe
+  end
+
   def autocomplete_project_name_for_current_user
     @projects = current_user.projects
                             .where("name LIKE ?", "%#{params[:name]}%")
